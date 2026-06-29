@@ -1,7 +1,7 @@
 # 04 — Source of Truth
 
 **Title:** QuickFreights Platform — Source of Truth
-**Version:** 1.1.0
+**Version:** 1.1.2
 **Status:** Approved with Enhancements
 **Owner:** Quick Freights Global Limited
 **Last Updated:** 2026-06-29
@@ -112,7 +112,7 @@ Every new shared value must belong to one of these categories.
 | **Primary**                   | 08063388230   | Local         |
 | **Secondary**                 | 08037883339   | Local         |
 | **Tertiary**                  | 08036660493   | Local         |
-| **Port Harcourt**             | 08063888230   | Local         |
+| **Port Harcourt**             | 09168611825   | Local         |
 | **International (Primary)**   | 2348063388230 | International |
 | **International (Secondary)** | 2348037883339 | International |
 | **International (Tertiary)**  | 2348036660493 | International |
@@ -183,15 +183,15 @@ these values. No other statuses are valid.
 
 ## 8. SMS Configuration
 
-| Property                 | Value                                                                                                                              |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **Provider**             | Payless Bulk SMS Nigeria                                                                                                           |
-| **Sender ID**            | QuickFreigh (pending approval)                                                                                                     |
-| **Max Sender ID Length** | 11 characters                                                                                                                      |
-| **API Endpoint (Send)**  | `GET https://app.paylessbulksms.com.ng/api/http/sms/send`                                                                          |
-| **Auth Method**          | `api_token` as query parameter                                                                                                     |
-| **Recipient Format**     | International (234XXXXXXXXXX)                                                                                                      |
-| **SMS Template**         | `Dear Customer, your shipment {TRACKING_ID} has been cleared. Quick Freights Global will contact you shortly to arrange delivery.` |
+| Property                 | Value                                                                                                           |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| **Provider**             | Payless Bulk SMS Nigeria                                                                                        |
+| **Sender ID**            | QuickFreigh (pending approval)                                                                                  |
+| **Max Sender ID Length** | 11 characters                                                                                                   |
+| **API Endpoint (Send)**  | `GET https://app.paylessbulksms.com.ng/api/http/sms/send`                                                       |
+| **Auth Method**          | `api_token` as query parameter                                                                                  |
+| **Recipient Format**     | International (234XXXXXXXXXX)                                                                                   |
+| **SMS Template**         | `Dear Customer, shipment {TRACKING_ID} has cleared Customs. Quick Freights will contact you soon for delivery.` |
 
 ---
 
@@ -283,3 +283,24 @@ All API responses from the Application Layer SHALL use this format:
   "error": null
 }
 ```
+
+Version History
+Version Date Changes
+1.0.0 2026-06-29 Initial Source of Truth
+1.1.0 2026-06-29 Added Sections 11-15
+1.1.1 2026-06-29 Updated SMS Template
+1.1.2 2026-06-29 Updated Port Harcourt phone number to 09168611825
+text
+
+---
+
+### ✅ Changes Applied
+
+| Change                  | Old                                                                                                                                                                             | New                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| **Version**             | `1.1.1`                                                                                                                                                                         | `1.1.2`             |
+| **Port Harcourt phone** | `08063888230`                                                                                                                                                                   | `09168611825`       |
+| **International entry** | No change needed — there was no separate International row for the Port Harcourt number in the original table (only Primary, Secondary, Tertiary had International equivalents) | —                   |
+| **Version History**     | —                                                                                                                                                                               | Added `1.1.2` entry |
+
+The old Port Harcourt number `08063888230` has been completely removed and replaced with `09168611825`. The International entries (Primary, Secondary, Tertiary) remain unchanged since they correspond to the main office lines, not the Port Harcourt number.
