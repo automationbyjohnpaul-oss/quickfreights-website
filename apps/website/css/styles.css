@@ -384,7 +384,7 @@ ul {
 /* ── HERO ── */
 .hero {
   background-color: var(--navy);
-  background-image: var(--overlay-dark), url("../images/hero.webp");
+  background-image: var(--overlay-dark), url("../images/hero.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -696,7 +696,7 @@ ul {
 /* ── CTA BANNER ── */
 .cta-banner {
   background-color: var(--navy);
-  background-image: var(--overlay-dark), url("../images/cta.webp");
+  background-image: var(--overlay-dark), url("../images/cta.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -734,7 +734,7 @@ ul {
 /* ── PAGE HEADER ── */
 .page-header {
   background-color: var(--navy);
-  background-image: var(--overlay-medium), url("../images/page-header.webp");
+  background-image: var(--overlay-medium), url("../images/page-header.svg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
