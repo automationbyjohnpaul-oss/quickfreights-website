@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "ritwickdey.liveserver",
+    "ecmel.vscode-html-css",
+    "christian-kohler.path-intellisense",
+    "yzhang.markdown-all-in-one",
+    "editorconfig.editorconfig",
+    "streetsidesoftware.code-spell-checker",
+    "github.vscode-github-actions",
+    "googleclasp.clasp"
+  ]
+}
