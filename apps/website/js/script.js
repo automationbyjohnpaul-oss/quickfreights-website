@@ -339,6 +339,9 @@ async function handleFormSubmit(event) {
     attachmentData: fileData,
   };
 
+  // DIAGNOSTIC: Log the entire payload before sending
+  console.log("Submitting payload:", JSON.stringify(formData, null, 2));
+
   var apiUrl = CONFIG.apiUrl;
   if (!apiUrl) {
     console.error("API URL not configured.");
