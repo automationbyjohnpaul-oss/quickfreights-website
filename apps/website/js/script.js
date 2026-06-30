@@ -347,7 +347,7 @@ async function handleFormSubmit(event) {
   try {
     var response = await fetch(apiUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain" },
       body: JSON.stringify(formData),
     });
 
