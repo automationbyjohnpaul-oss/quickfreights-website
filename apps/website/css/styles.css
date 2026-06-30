@@ -1321,6 +1321,65 @@ ul {
   color: var(--white);
 }
 
+/* ── TRACKING ID COPY ── */
+.tracking-id-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.tracking-id-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--navy);
+  background: rgba(218, 165, 32, 0.1);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  border: 2px dashed var(--gold);
+  letter-spacing: 1px;
+  word-break: break-all;
+}
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 18px;
+  background: var(--navy);
+  color: var(--white);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  min-height: 48px;
+}
+.copy-btn:hover {
+  background: var(--navy-light);
+}
+.copy-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.35);
+}
+.copy-feedback {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--success);
+  min-height: 20px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+@media (max-width: 480px) {
+  .tracking-id-row {
+    flex-direction: column;
+  }
+  .tracking-id-value {
+    font-size: 1.3rem;
+  }
+}
+
 /* ── PRINT ── */
 @media print {
   .site-header,

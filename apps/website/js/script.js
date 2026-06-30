@@ -54,6 +54,7 @@ function initMobileMenu() {
     menuToggle.classList.add("active");
     overlay.classList.add("active");
     menuToggle.setAttribute("aria-expanded", "true");
+    menuToggle.setAttribute("aria-label", "Close navigation menu");
     overlay.setAttribute("aria-hidden", "false");
     document.body.classList.add("menu-open");
     var firstLink = navList.querySelector("a");
@@ -68,6 +69,7 @@ function initMobileMenu() {
     menuToggle.classList.remove("active");
     overlay.classList.remove("active");
     menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation menu");
     overlay.setAttribute("aria-hidden", "true");
     document.body.classList.remove("menu-open");
     menuToggle.focus();
@@ -338,9 +340,13 @@ async function handleFormSubmit(event) {
 
   var apiUrl = CONFIG.apiUrl;
   if (!apiUrl) {
-    console.error(
-      "API URL not configured. Add data-api attribute to body tag.",
-    );
+    console.error("API URL not configured.");
+
+    isSubmitting = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+    submitBtn.classList.remove("is-loading");
+
     return;
   }
 
@@ -366,7 +372,13 @@ async function handleFormSubmit(event) {
     errorMsg.style.display = "none";
 
     document.getElementById("trackingIdDisplay").textContent = data.trackingId;
-    document.getElementById("confirmPhone").textContent = formData.phoneNumber;
+
+    // Display phone in local Nigerian format
+    var displayPhone = formData.phoneNumber;
+    if (displayPhone.startsWith("234") && displayPhone.length === 13) {
+      displayPhone = "0" + displayPhone.substring(3);
+    }
+    document.getElementById("confirmPhone").textContent = displayPhone;
 
     successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
   } catch (error) {
@@ -449,9 +461,39 @@ function resetForm() {
     fileError.textContent = "";
   }
 
+  // Clear copy feedback
+  var copyFeedback = document.getElementById("copyFeedback");
+  if (copyFeedback) {
+    copyFeedback.textContent = "";
+  }
+
   isSubmitting = false;
 
   if (blForm) blForm.scrollIntoView({ behavior: "smooth", block: "start" });
   var nameInput = document.getElementById("customerName");
   if (nameInput) nameInput.focus();
+}
+
+// ================================================================
+// COPY TRACKING ID TO CLIPBOARD
+// ================================================================
+function copyTrackingId() {
+  var id = document.getElementById("trackingIdDisplay").textContent.trim();
+  var feedback = document.getElementById("copyFeedback");
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard
+      .writeText(id)
+      .then(function () {
+        feedback.textContent = "Copied!";
+        setTimeout(function () {
+          feedback.textContent = "";
+        }, 2000);
+      })
+      .catch(function () {
+        feedback.textContent = "Unable to copy.";
+      });
+  } else {
+    feedback.textContent = "Copy not supported.";
+  }
 }

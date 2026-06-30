@@ -44,6 +44,7 @@
     />
     <link rel="canonical" href="https://quickfreightsglobal.com/track.html" />
     <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
     <title>Submit Bill of Lading | Quick Freights Global Limited</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -304,9 +305,49 @@
             </div>
             <h2>Submission Successful!</h2>
             <p>Your Tracking ID is:</p>
-            <div class="tracking-id-display" id="trackingIdDisplay">
-              QF-2026-001
+
+            <div class="tracking-id-row">
+              <code class="tracking-id-value" id="trackingIdDisplay"
+                >QF-2026-001</code
+              >
+              <button
+                type="button"
+                class="copy-btn"
+                onclick="copyTrackingId()"
+                aria-label="Copy tracking ID"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <rect
+                    x="4"
+                    y="4"
+                    width="10"
+                    height="10"
+                    rx="2"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M2 12V3a1 1 0 011-1h8"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  />
+                </svg>
+                Copy
+              </button>
             </div>
+
+            <span
+              class="copy-feedback"
+              id="copyFeedback"
+              aria-live="polite"
+            ></span>
+
             <p>
               You will receive an SMS at
               <strong id="confirmPhone"></strong> when your cargo is cleared.
