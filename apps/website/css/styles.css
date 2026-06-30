@@ -1321,6 +1321,23 @@ ul {
   color: var(--white);
 }
 
+/* ── REMEMBER ME CHECKBOX ── */
+.checkbox-label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  font-weight: 400 !important;
+  font-size: 0.82rem !important;
+  color: var(--grey);
+  cursor: pointer;
+}
+.checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
 /* ── TRACKING ID COPY ── */
 .tracking-id-row {
   display: flex;

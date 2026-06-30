@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   initMobileMenu();
   initFormHandler();
   initFileUpload();
+  initFormMemory();
 });
 
 // ================================================================
@@ -380,6 +381,9 @@ async function handleFormSubmit(event) {
     }
     document.getElementById("confirmPhone").textContent = displayPhone;
 
+    // Save customer details if opted in
+    saveCustomerMemory(formData.customerName, formData.phoneNumber);
+
     successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
   } catch (error) {
     console.error("Submission error:", error);
@@ -410,6 +414,47 @@ function readFileAsBase64(file) {
     };
     reader.readAsDataURL(file);
   });
+}
+
+// ================================================================
+// FORM MEMORY — Remembers customer name & phone only (opt-in)
+// ================================================================
+var FORM_MEMORY_KEY = "quickfreights_customer";
+
+function saveCustomerMemory(name, phone) {
+  try {
+    var remember = document.getElementById("rememberMe");
+    if (!remember || !remember.checked) return;
+    localStorage.setItem(
+      FORM_MEMORY_KEY,
+      JSON.stringify({
+        customerName: name,
+        phoneNumber: phone,
+      }),
+    );
+  } catch (e) {
+    // localStorage not available — silently fail
+  }
+}
+
+function loadCustomerMemory() {
+  try {
+    var data = localStorage.getItem(FORM_MEMORY_KEY);
+    if (!data) return;
+    var customer = JSON.parse(data);
+    var nameEl = document.getElementById("customerName");
+    var phoneEl = document.getElementById("phoneNumber");
+    var rememberEl = document.getElementById("rememberMe");
+    if (nameEl && customer.customerName) nameEl.value = customer.customerName;
+    if (phoneEl && customer.phoneNumber) phoneEl.value = customer.phoneNumber;
+    if (rememberEl) rememberEl.checked = true;
+  } catch (e) {
+    // localStorage not available — silently fail
+  }
+}
+
+function initFormMemory() {
+  loadCustomerMemory();
 }
 
 // ================================================================
