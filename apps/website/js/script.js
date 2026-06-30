@@ -278,6 +278,62 @@ function validateForm() {
 }
 
 // ================================================================
+// PROCESSING OVERLAY
+// ================================================================
+var processingTimer = null;
+var processingSeconds = 0;
+var processingMessages = [
+  "Validating your information...",
+  "Uploading your attachment...",
+  "Registering your shipment...",
+  "Generating your Tracking ID...",
+];
+
+function showProcessingOverlay() {
+  var overlay = document.getElementById("processingOverlay");
+  var status = document.getElementById("processingStatus");
+  var timer = document.getElementById("elapsedTime");
+
+  processingSeconds = 0;
+
+  overlay.classList.add("active");
+
+  var messageIndex = 0;
+
+  status.textContent = processingMessages[0];
+  timer.textContent = "00:00";
+
+  processingTimer = setInterval(function () {
+    processingSeconds++;
+
+    var mins = String(Math.floor(processingSeconds / 60)).padStart(2, "0");
+    var secs = String(processingSeconds % 60).padStart(2, "0");
+
+    timer.textContent = mins + ":" + secs;
+
+    if (
+      processingSeconds % 2 === 0 &&
+      messageIndex < processingMessages.length - 1
+    ) {
+      messageIndex++;
+      status.textContent = processingMessages[messageIndex];
+    }
+
+    if (processingSeconds >= 15) {
+      status.textContent =
+        "Still working... Large attachments may take a little longer.";
+    }
+  }, 1000);
+}
+
+function hideProcessingOverlay() {
+  clearInterval(processingTimer);
+
+  var overlay = document.getElementById("processingOverlay");
+  overlay.classList.remove("active");
+}
+
+// ================================================================
 // FORM HANDLER
 // ================================================================
 function initFormHandler() {
@@ -355,6 +411,8 @@ async function handleFormSubmit(event) {
   }
 
   try {
+    showProcessingOverlay();
+
     var response = await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "text/plain" },
@@ -399,6 +457,7 @@ async function handleFormSubmit(event) {
     submitBtn.textContent = originalText;
     submitBtn.classList.remove("is-loading");
   } finally {
+    hideProcessingOverlay();
     isSubmitting = false;
   }
 }

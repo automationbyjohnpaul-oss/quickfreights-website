@@ -473,5 +473,22 @@
     </footer>
 
     <script defer src="js/script.js"></script>
+
+    <div id="processingOverlay" class="processing-overlay" aria-hidden="true">
+      <div class="processing-card">
+        <div class="spinner"></div>
+
+        <h2>Submitting your Bill of Lading</h2>
+
+        <p id="processingStatus">Validating your information...</p>
+
+        <div class="processing-timer">
+          Elapsed time:
+          <strong id="elapsedTime">00:00</strong>
+        </div>
+
+        <p class="processing-note">Please don't close or refresh this page.</p>
+      </div>
+    </div>
   </body>
 </html>
