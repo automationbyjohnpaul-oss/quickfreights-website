@@ -384,7 +384,7 @@ ul {
 /* ── HERO ── */
 .hero {
   background-color: var(--navy);
-  background-image: var(--overlay-dark), url("../images/hero.svg");
+  background-image: var(--overlay-dark), url("../images/hero.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -696,7 +696,7 @@ ul {
 /* ── CTA BANNER ── */
 .cta-banner {
   background-color: var(--navy);
-  background-image: var(--overlay-dark), url("../images/cta.svg");
+  background-image: var(--overlay-dark), url("../images/cta.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -734,7 +734,7 @@ ul {
 /* ── PAGE HEADER ── */
 .page-header {
   background-color: var(--navy);
-  background-image: var(--overlay-medium), url("../images/page-header.svg");
+  background-image: var(--overlay-medium), url("../images/page-header.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1492,3 +1492,4 @@ textarea:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
