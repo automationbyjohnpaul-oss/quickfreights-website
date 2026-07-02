@@ -41,13 +41,13 @@
   --header-height: 70px;
   --overlay-dark: linear-gradient(
     160deg,
-    rgba(10, 31, 63, 0.55) 0%,
-    rgba(6, 15, 32, 0.65) 100%
+    rgba(10, 31, 63, 0.92) 0%,
+    rgba(6, 15, 32, 0.94) 100%
   );
   --overlay-medium: linear-gradient(
     160deg,
-    rgba(10, 31, 63, 0.50) 0%,
-    rgba(13, 43, 84, 0.55) 100%
+    rgba(10, 31, 63, 0.88) 0%,
+    rgba(13, 43, 84, 0.84) 100%
   );
 }
 
@@ -662,10 +662,9 @@ ul {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(6, 15, 32, 0.5) 0%,
     rgba(6, 15, 32, 0.45) 0%,
     rgba(6, 15, 32, 0.70) 100%
-  display: flex;
+  );
   align-items: center;
   justify-content: center;
   text-align: center;
