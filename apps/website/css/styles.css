@@ -1442,6 +1442,13 @@ ul {
   color: var(--grey);
   font-size: 0.95rem;
 }
+.processing-subtext {
+  font-size: 0.85rem;
+  color: var(--grey);
+  margin-top: 0.25rem;
+  min-height: 1.2em;
+  transition: opacity 0.3s ease;
+}
 .processing-timer {
   margin: 18px 0;
   font-size: 1rem;
@@ -1492,4 +1499,3 @@ textarea:focus-visible {
     scroll-behavior: auto !important;
   }
 }
-

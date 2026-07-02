@@ -1,6 +1,6 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.3
-// Configuration from body data-api | Real API responses
+// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4
+// Configuration from body data-api | Real API responses | Staged progress UX
 // ================================================================
 
 var CONFIG = {
@@ -278,52 +278,71 @@ function validateForm() {
 }
 
 // ================================================================
-// PROCESSING OVERLAY
+// PROCESSING OVERLAY — Staged progress with reassurance
 // ================================================================
 var processingTimer = null;
 var processingSeconds = 0;
-var processingMessages = [
-  "Validating your information...",
-  "Uploading your attachment...",
-  "Registering your shipment...",
-  "Generating your Tracking ID...",
+
+var processingStages = [
+  { max: 2, message: "Validating your information..." },
+  { max: 5, message: "Preparing your shipment details..." },
+  { max: 10, message: "Uploading your supporting document..." },
+  { max: 99, message: "Generating your Tracking ID..." },
 ];
 
 function showProcessingOverlay() {
   var overlay = document.getElementById("processingOverlay");
   var status = document.getElementById("processingStatus");
   var timer = document.getElementById("elapsedTime");
+  var subtext = document.getElementById("processingSubtext");
 
   processingSeconds = 0;
 
   overlay.classList.add("active");
 
-  var messageIndex = 0;
-
-  status.textContent = processingMessages[0];
+  status.textContent = processingStages[0].message;
   timer.textContent = "00:00";
+  if (subtext) {
+    subtext.textContent =
+      "Please keep this page open while we securely process your submission.";
+  }
+
+  // Clear the initial reassurance after 8 seconds (stages provide enough context by then)
+  setTimeout(function () {
+    if (subtext && subtext.textContent.indexOf("keep this page open") > -1) {
+      subtext.textContent = "";
+    }
+  }, 8000);
 
   processingTimer = setInterval(function () {
     processingSeconds++;
 
     var mins = String(Math.floor(processingSeconds / 60)).padStart(2, "0");
     var secs = String(processingSeconds % 60).padStart(2, "0");
-
     timer.textContent = mins + ":" + secs;
 
-    if (
-      processingSeconds % 2 === 0 &&
-      messageIndex < processingMessages.length - 1
-    ) {
-      messageIndex++;
-      status.textContent = processingMessages[messageIndex];
+    // Cycle through stages based on elapsed time
+    for (var i = 0; i < processingStages.length; i++) {
+      if (processingSeconds <= processingStages[i].max) {
+        status.textContent = processingStages[i].message;
+        break;
+      }
     }
 
-    if (processingSeconds >= 15) {
-      status.textContent =
-        "Still working... Large attachments may take a little longer.";
+    // After 15 seconds, provide network/attachment context
+    if (processingSeconds === 15 && subtext) {
+      subtext.textContent =
+        "Large attachments or slower internet connections may take a little longer.";
     }
   }, 1000);
+}
+
+// Called just before showing success — truthful "Almost done" message
+function signalProcessingComplete() {
+  var status = document.getElementById("processingStatus");
+  if (status) {
+    status.textContent = "Almost done... Finalizing your submission.";
+  }
 }
 
 function hideProcessingOverlay() {
@@ -428,6 +447,14 @@ async function handleFormSubmit(event) {
     if (!data.success) {
       throw new Error(data.error || "Submission failed. Please try again.");
     }
+
+    // TRUTHFUL: Backend responded successfully — now show "Almost done"
+    signalProcessingComplete();
+
+    // Brief pause so users can see the completion message
+    await new Promise(function (resolve) {
+      setTimeout(resolve, 800);
+    });
 
     blForm.style.display = "none";
     successMsg.style.display = "block";
