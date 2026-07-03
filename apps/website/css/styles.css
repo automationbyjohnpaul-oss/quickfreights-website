@@ -628,15 +628,15 @@ ul {
   margin-bottom: 6px;
   line-height: 1;
 }
+.why-card h3,
 .why-card h4 {
-  font-size: 1rem;
   font-weight: 700;
   color: var(--white);
   margin-bottom: var(--space-xs);
 }
 .why-card p {
   font-size: 0.87rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.7;
 }
 @media (min-width: 576px) {
