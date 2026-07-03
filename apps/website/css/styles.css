@@ -12,7 +12,7 @@
   --navy-dark: #060f20;
   --gold: #daa520;
   --gold-light: #f0d060;
-  --gold-dark: #b8860b;
+  --gold-dark: #8B6914;
   --white: #ffffff;
   --light-grey: #f5f6f8;
   --grey: #6b7280;
@@ -254,7 +254,7 @@ ul {
 }
 .logo-rc {
   font-size: 0.5rem;
-  color: rgba(255, 255, 255, 0.32);
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.5px;
   margin-top: 1px;
 }
