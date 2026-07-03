@@ -2,7 +2,6 @@
 // QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4
 // Configuration from body data-api | Real API responses | Staged progress UX
 // ================================================================
-
 var CONFIG = {
   maxFileSize: 5 * 1024 * 1024,
   allowedMimeTypes: [
@@ -13,24 +12,19 @@ var CONFIG = {
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   ],
 };
-
 var isSubmitting = false;
-
 document.addEventListener("DOMContentLoaded", function () {
   // Read API URL from body data attribute
   var apiUrl = document.body.getAttribute("data-api");
   if (apiUrl) CONFIG.apiUrl = apiUrl;
-
   // Dynamic copyright year
   var yearEl = document.getElementById("copyrightYear");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
-
   initMobileMenu();
   initFormHandler();
   initFileUpload();
   initFormMemory();
 });
-
 // ================================================================
 // MOBILE MENU WITH FOCUS TRAP
 // ================================================================
@@ -38,18 +32,15 @@ function initMobileMenu() {
   var menuToggle = document.getElementById("menuToggle");
   var navList = document.getElementById("navList");
   if (!menuToggle || !navList) return;
-
   var overlay = document.createElement("div");
   overlay.className = "nav-overlay";
   overlay.setAttribute("aria-hidden", "true");
   document.body.appendChild(overlay);
-
   function getFocusableElements() {
     return navList.querySelectorAll(
       "a[href], button:not([disabled]), input:not([disabled])",
     );
   }
-
   function openMenu() {
     navList.classList.add("active");
     menuToggle.classList.add("active");
@@ -64,7 +55,6 @@ function initMobileMenu() {
         firstLink.focus();
       }, 100);
   }
-
   function closeMenu() {
     navList.classList.remove("active");
     menuToggle.classList.remove("active");
@@ -75,18 +65,14 @@ function initMobileMenu() {
     document.body.classList.remove("menu-open");
     menuToggle.focus();
   }
-
   menuToggle.addEventListener("click", function (e) {
     e.stopPropagation();
     navList.classList.contains("active") ? closeMenu() : openMenu();
   });
-
   overlay.addEventListener("click", closeMenu);
-
   navList.querySelectorAll("a").forEach(function (link) {
     link.addEventListener("click", closeMenu);
   });
-
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && navList.classList.contains("active")) {
       closeMenu();
@@ -105,7 +91,6 @@ function initMobileMenu() {
       }
     }
   });
-
   var touchStartX = 0;
   navList.addEventListener(
     "touchstart",
@@ -114,7 +99,6 @@ function initMobileMenu() {
     },
     { passive: true },
   );
-
   navList.addEventListener(
     "touchend",
     function (e) {
@@ -122,11 +106,9 @@ function initMobileMenu() {
     },
     { passive: true },
   );
-
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.setAttribute("aria-label", "Open navigation menu");
 }
-
 // ================================================================
 // FILE UPLOAD UI
 // ================================================================
@@ -136,12 +118,10 @@ function initFileUpload() {
   var fileInfo = document.getElementById("fileInfo");
   var fileError = document.getElementById("fileError");
   if (!fileInput || !fileLabel || !fileInfo) return;
-
   fileInput.addEventListener("change", function () {
     var file = fileInput.files[0];
     fileLabel.classList.remove("is-valid", "is-error");
     if (fileError) fileError.textContent = "";
-
     if (!file) {
       fileLabel.querySelector("span").textContent =
         "Click to upload or drag & drop";
@@ -149,9 +129,7 @@ function initFileUpload() {
       fileInfo.style.color = "";
       return;
     }
-
     var sizeMB = (file.size / 1048576).toFixed(1);
-
     if (file.size > CONFIG.maxFileSize) {
       fileLabel.classList.add("is-error");
       fileInfo.textContent = "File too large (" + sizeMB + "MB). Max 5MB.";
@@ -160,7 +138,6 @@ function initFileUpload() {
       fileInput.value = "";
       return;
     }
-
     if (CONFIG.allowedMimeTypes.indexOf(file.type) === -1) {
       fileLabel.classList.add("is-error");
       fileInfo.textContent =
@@ -170,22 +147,18 @@ function initFileUpload() {
       fileInput.value = "";
       return;
     }
-
     fileLabel.classList.add("is-valid");
     fileLabel.querySelector("span").textContent = file.name;
     fileInfo.textContent = sizeMB + " MB · Ready";
     fileInfo.style.color = "var(--success)";
   });
-
   fileLabel.addEventListener("dragover", function (e) {
     e.preventDefault();
     fileLabel.classList.add("is-dragover");
   });
-
   fileLabel.addEventListener("dragleave", function () {
     fileLabel.classList.remove("is-dragover");
   });
-
   fileLabel.addEventListener("drop", function (e) {
     e.preventDefault();
     fileLabel.classList.remove("is-dragover");
@@ -198,7 +171,6 @@ function initFileUpload() {
     fileInput.dispatchEvent(new Event("change"));
   });
 }
-
 // ================================================================
 // PHONE NORMALIZATION
 // ================================================================
@@ -208,7 +180,6 @@ function normalizePhone(phone) {
   if (!cleaned.startsWith("234")) cleaned = "234" + cleaned;
   return cleaned;
 }
-
 // ================================================================
 // FORM VALIDATION
 // ================================================================
@@ -218,14 +189,12 @@ function validateForm() {
     ".form-group input, .form-group textarea",
   );
   var errors = document.querySelectorAll(".field-error");
-
   for (var i = 0; i < els.length; i++) {
     els[i].classList.remove("is-error");
   }
   for (var j = 0; j < errors.length; j++) {
     errors[j].textContent = "";
   }
-
   var nameInput = document.getElementById("customerName");
   if (!nameInput.value.trim()) {
     nameInput.classList.add("is-error");
@@ -233,7 +202,6 @@ function validateForm() {
     if (nameErr) nameErr.textContent = "Please enter your full name.";
     isValid = false;
   }
-
   var phoneInput = document.getElementById("phoneNumber");
   var phoneValue = phoneInput.value.trim().replace(/\s+/g, "");
   var normalized = normalizePhone(phoneValue);
@@ -249,7 +217,6 @@ function validateForm() {
       phoneErr2.textContent = "Enter a valid Nigerian phone number.";
     isValid = false;
   }
-
   var blInput = document.getElementById("blNumber");
   if (!blInput.value.trim()) {
     blInput.classList.add("is-error");
@@ -257,7 +224,6 @@ function validateForm() {
     if (blErr) blErr.textContent = "Please enter your B/L number.";
     isValid = false;
   }
-
   var cargoInput = document.getElementById("cargoDescription");
   if (!cargoInput.value.trim()) {
     cargoInput.classList.add("is-error");
@@ -265,7 +231,6 @@ function validateForm() {
     if (cargoErr) cargoErr.textContent = "Please describe your cargo.";
     isValid = false;
   }
-
   if (!isValid) {
     var firstError = document.querySelector(".is-error");
     if (firstError) {
@@ -273,54 +238,43 @@ function validateForm() {
       firstError.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
-
   return isValid;
 }
-
 // ================================================================
 // PROCESSING OVERLAY — Staged progress with reassurance
 // ================================================================
 var processingTimer = null;
 var processingSeconds = 0;
-
 var processingStages = [
   { max: 2, message: "Validating your information..." },
   { max: 5, message: "Preparing your shipment details..." },
   { max: 10, message: "Uploading your supporting document..." },
   { max: 99, message: "Generating your Tracking ID..." },
 ];
-
 function showProcessingOverlay() {
   var overlay = document.getElementById("processingOverlay");
   var status = document.getElementById("processingStatus");
   var timer = document.getElementById("elapsedTime");
   var subtext = document.getElementById("processingSubtext");
-
   processingSeconds = 0;
-
   overlay.classList.add("active");
-
   status.textContent = processingStages[0].message;
   timer.textContent = "00:00";
   if (subtext) {
     subtext.textContent =
       "Please keep this page open while we securely process your submission.";
   }
-
   // Clear the initial reassurance after 8 seconds (stages provide enough context by then)
   setTimeout(function () {
     if (subtext && subtext.textContent.indexOf("keep this page open") > -1) {
       subtext.textContent = "";
     }
   }, 8000);
-
   processingTimer = setInterval(function () {
     processingSeconds++;
-
     var mins = String(Math.floor(processingSeconds / 60)).padStart(2, "0");
     var secs = String(processingSeconds % 60).padStart(2, "0");
     timer.textContent = mins + ":" + secs;
-
     // Cycle through stages based on elapsed time
     for (var i = 0; i < processingStages.length; i++) {
       if (processingSeconds <= processingStages[i].max) {
@@ -328,7 +282,6 @@ function showProcessingOverlay() {
         break;
       }
     }
-
     // After 15 seconds, provide network/attachment context
     if (processingSeconds === 15 && subtext) {
       subtext.textContent =
@@ -336,7 +289,6 @@ function showProcessingOverlay() {
     }
   }, 1000);
 }
-
 // Called just before showing success — truthful "Almost done" message
 function signalProcessingComplete() {
   var status = document.getElementById("processingStatus");
@@ -344,14 +296,11 @@ function signalProcessingComplete() {
     status.textContent = "Almost done... Finalizing your submission.";
   }
 }
-
 function hideProcessingOverlay() {
   clearInterval(processingTimer);
-
   var overlay = document.getElementById("processingOverlay");
   overlay.classList.remove("active");
 }
-
 // ================================================================
 // FORM HANDLER
 // ================================================================
@@ -359,7 +308,6 @@ function initFormHandler() {
   var blForm = document.getElementById("blForm");
   if (!blForm) return;
   blForm.addEventListener("submit", handleFormSubmit);
-
   var inputs = blForm.querySelectorAll("input, textarea");
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener("input", function () {
@@ -369,29 +317,22 @@ function initFormHandler() {
     });
   }
 }
-
 async function handleFormSubmit(event) {
   event.preventDefault();
-
   if (isSubmitting) return;
   if (!validateForm()) return;
-
   isSubmitting = true;
-
   var submitBtn = document.getElementById("submitBtn");
   var blForm = document.getElementById("blForm");
   var successMsg = document.getElementById("successMessage");
   var errorMsg = document.getElementById("errorMessage");
-
   var originalText = submitBtn.textContent;
   submitBtn.disabled = true;
   submitBtn.textContent = "Submitting...";
   submitBtn.classList.add("is-loading");
-
   var fileInput = document.getElementById("attachment");
   var fileData = null;
   var fileName = null;
-
   if (fileInput && fileInput.files[0]) {
     try {
       var file = fileInput.files[0];
@@ -401,7 +342,6 @@ async function handleFormSubmit(event) {
       console.error("File read error:", err);
     }
   }
-
   var formData = {
     customerName: document.getElementById("customerName").value.trim(),
     phoneNumber: normalizePhone(
@@ -413,65 +353,48 @@ async function handleFormSubmit(event) {
     attachmentName: fileName,
     attachmentData: fileData,
   };
-
   // DIAGNOSTIC: Log the entire payload before sending
-  console.log("Submitting payload:", JSON.stringify(formData, null, 2));
-
   var apiUrl = CONFIG.apiUrl;
   if (!apiUrl) {
     console.error("API URL not configured.");
-
     isSubmitting = false;
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
     submitBtn.classList.remove("is-loading");
-
     return;
   }
-
   try {
     showProcessingOverlay();
-
     var response = await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "text/plain" },
       body: JSON.stringify(formData),
     });
-
     if (!response.ok) {
       throw new Error("Server error. Please try again.");
     }
-
     var data = await response.json();
-
     if (!data.success) {
       throw new Error(data.error || "Submission failed. Please try again.");
     }
-
     // TRUTHFUL: Backend responded successfully — now show "Almost done"
     signalProcessingComplete();
-
     // Brief pause so users can see the completion message
     await new Promise(function (resolve) {
       setTimeout(resolve, 800);
     });
-
     blForm.style.display = "none";
     successMsg.style.display = "block";
     errorMsg.style.display = "none";
-
     document.getElementById("trackingIdDisplay").textContent = data.trackingId;
-
     // Display phone in local Nigerian format
     var displayPhone = formData.phoneNumber;
     if (displayPhone.startsWith("234") && displayPhone.length === 13) {
       displayPhone = "0" + displayPhone.substring(3);
     }
     document.getElementById("confirmPhone").textContent = displayPhone;
-
     // Save customer details if opted in
     saveCustomerMemory(formData.customerName, formData.phoneNumber);
-
     successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
   } catch (error) {
     console.error("Submission error:", error);
@@ -488,7 +411,6 @@ async function handleFormSubmit(event) {
     isSubmitting = false;
   }
 }
-
 // ================================================================
 // FILE HELPERS
 // ================================================================
@@ -504,12 +426,10 @@ function readFileAsBase64(file) {
     reader.readAsDataURL(file);
   });
 }
-
 // ================================================================
 // FORM MEMORY — Remembers customer name & phone only (opt-in)
 // ================================================================
 var FORM_MEMORY_KEY = "quickfreights_customer";
-
 function saveCustomerMemory(name, phone) {
   try {
     var remember = document.getElementById("rememberMe");
@@ -525,7 +445,6 @@ function saveCustomerMemory(name, phone) {
     // localStorage not available — silently fail
   }
 }
-
 function loadCustomerMemory() {
   try {
     var data = localStorage.getItem(FORM_MEMORY_KEY);
@@ -541,11 +460,9 @@ function loadCustomerMemory() {
     // localStorage not available — silently fail
   }
 }
-
 function initFormMemory() {
   loadCustomerMemory();
 }
-
 // ================================================================
 // FORM RESET
 // ================================================================
@@ -554,10 +471,9 @@ function resetForm() {
   var successMsg = document.getElementById("successMessage");
   var errorMsg = document.getElementById("errorMessage");
   var submitBtn = document.getElementById("submitBtn");
-
   if (blForm) {
     blForm.reset();
-    blForm.style.display = "";
+    blForm.style.display = 'flex';
   }
   if (successMsg) successMsg.style.display = "none";
   if (errorMsg) errorMsg.style.display = "none";
@@ -566,7 +482,6 @@ function resetForm() {
     submitBtn.textContent = "Submit Bill of Lading";
     submitBtn.classList.remove("is-loading");
   }
-
   var els = document.querySelectorAll(
     ".form-group input, .form-group textarea",
   );
@@ -577,11 +492,9 @@ function resetForm() {
   for (var j = 0; j < errors.length; j++) {
     errors[j].textContent = "";
   }
-
   var fileLabel = document.getElementById("fileLabel");
   var fileInfo = document.getElementById("fileInfo");
   var fileError = document.getElementById("fileError");
-
   if (fileLabel) {
     fileLabel.querySelector("span").textContent =
       "Click to upload or drag & drop";
@@ -594,27 +507,22 @@ function resetForm() {
   if (fileError) {
     fileError.textContent = "";
   }
-
   // Clear copy feedback
   var copyFeedback = document.getElementById("copyFeedback");
   if (copyFeedback) {
     copyFeedback.textContent = "";
   }
-
   isSubmitting = false;
-
   if (blForm) blForm.scrollIntoView({ behavior: "smooth", block: "start" });
   var nameInput = document.getElementById("customerName");
   if (nameInput) nameInput.focus();
 }
-
 // ================================================================
 // COPY TRACKING ID TO CLIPBOARD
 // ================================================================
 function copyTrackingId() {
   var id = document.getElementById("trackingIdDisplay").textContent.trim();
   var feedback = document.getElementById("copyFeedback");
-
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard
       .writeText(id)
