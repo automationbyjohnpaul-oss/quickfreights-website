@@ -49,15 +49,21 @@ function initMobileMenu() {
     menuToggle.setAttribute("aria-label", "Close navigation menu");
     overlay.setAttribute("aria-hidden", "false");
     document.body.classList.add("menu-open");
-    var firstLink = navList.querySelector("a");
-    if (firstLink)
-      setTimeout(function () {
-        firstLink.focus();
-      }, 100);
+    navList.addEventListener(
+        "transitionend",
+        function handler() {
+            var firstLink = navList.querySelector("a");
+            if (firstLink) {
+                firstLink.focus();
+            }
+            navList.removeEventListener("transitionend", handler);
+        },
+        { once: true }
+    );
   }
+
   function closeMenu() {
     navList.classList.remove("active");
-    menuToggle.classList.remove("active");
     overlay.classList.remove("active");
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "Open navigation menu");
