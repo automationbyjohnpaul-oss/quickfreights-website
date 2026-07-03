@@ -39,9 +39,12 @@
     transform 0.28s ease, box-shadow 0.28s ease;
   --header-height: 70px;
   --overlay-dark: linear-gradient(
-    160deg,
-    rgba(10, 31, 63, 0.55) 0%,
-    rgba(6, 15, 32, 0.65) 100%
+    90deg,
+    rgba(10, 31, 63, 0.92) 0%,
+    rgba(10, 31, 63, 0.82) 28%,
+    rgba(10, 31, 63, 0.58) 52%,
+    rgba(10, 31, 63, 0.22) 72%,
+    rgba(10, 31, 63, 0) 100%
   );
   --overlay-medium: linear-gradient(
     160deg,
@@ -386,7 +389,7 @@ ul {
   background-image: var(--overlay-dark), url("../images/hero.webp");
   background-size: cover;
   background-position: center;
-  padding: 88px 0 72px;
+  padding: 96px 0 80px;
   position: relative;
   text-align: left;
 }
@@ -394,7 +397,7 @@ ul {
   position: relative;
   z-index: 1;
   color: var(--white);
-  max-width: 620px;
+  max-width: 660px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -414,7 +417,7 @@ ul {
   font-weight: 800;
   color: var(--white);
   line-height: 1.1;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 .hero-company-main {
   display: block;
@@ -433,8 +436,8 @@ ul {
   margin-bottom: 20px;
 }
 .hero-headline {
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 800;
+  font-size: clamp(1.2rem, 2.3vw, 1.55rem);
+  font-weight: 700;
   color: var(--gold);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -519,7 +522,7 @@ ul {
     min-height: 620px;
   }
   .hero-content {
-    max-width: 620px;
+    max-width: 660px;
     width: 100%;
   }
 }

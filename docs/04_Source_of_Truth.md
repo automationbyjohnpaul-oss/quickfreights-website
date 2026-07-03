@@ -1,10 +1,10 @@
 # 04 — Source of Truth
 
 **Title:** QuickFreights Platform — Source of Truth
-**Version:** 1.1.2
-**Status:** Approved with Enhancements
+**Version:** 1.2.0
+**Status:** Approved
 **Owner:** Quick Freights Global Limited
-**Last Updated:** 2026-06-29
+**Last Updated:** 2026-07-03
 
 ---
 
@@ -57,13 +57,14 @@ Those belong in their respective governing documents.
 
 ## Configuration Categories
 
-The Source of Truth contains five categories of information:
+The Source of Truth contains six categories of information:
 
 1. **Business Identity** — Company details, offices, contact information
 2. **Business Rules** — Statuses, validation rules, tracking ID format
 3. **Technical Configuration** — Sheet names, folder names, API endpoints
-4. **User Interface Standards** — Colors, typography, breakpoints
+4. **User Interface Standards** — Colors, typography, breakpoints, layout
 5. **Integration Configuration** — SMS settings, file upload rules
+6. **Frozen Brand Decisions** — Finalized design and copy decisions
 
 Every new shared value must belong to one of these categories.
 
@@ -283,24 +284,3 @@ All API responses from the Application Layer SHALL use this format:
   "error": null
 }
 ```
-
-Version History
-Version Date Changes
-1.0.0 2026-06-29 Initial Source of Truth
-1.1.0 2026-06-29 Added Sections 11-15
-1.1.1 2026-06-29 Updated SMS Template
-1.1.2 2026-06-29 Updated Port Harcourt phone number to 09168611825
-text
-
----
-
-### ✅ Changes Applied
-
-| Change                  | Old                                                                                                                                                                             | New                 |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| **Version**             | `1.1.1`                                                                                                                                                                         | `1.1.2`             |
-| **Port Harcourt phone** | `08063888230`                                                                                                                                                                   | `09168611825`       |
-| **International entry** | No change needed — there was no separate International row for the Port Harcourt number in the original table (only Primary, Secondary, Tertiary had International equivalents) | —                   |
-| **Version History**     | —                                                                                                                                                                               | Added `1.1.2` entry |
-
-The old Port Harcourt number `08063888230` has been completely removed and replaced with `09168611825`. The International entries (Primary, Secondary, Tertiary) remain unchanged since they correspond to the main office lines, not the Port Harcourt number.

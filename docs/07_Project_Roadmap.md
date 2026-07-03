@@ -1,10 +1,10 @@
 # 07 — Project Roadmap
 
 **Title:** QuickFreights Platform — Project Roadmap
-**Version:** 1.1.0
+**Version:** 2.0.0
 **Status:** Approved
 **Owner:** Quick Freights Global Limited
-**Last Updated:** 2026-06-29
+**Last Updated:** 2026-07-03
 
 ---
 
@@ -54,23 +54,46 @@ Features are prioritized by:
 
 ## 3. Phase Overview
 
-| Phase | Name                     | Status         |
-| ----- | ------------------------ | -------------- |
-| 0     | Foundation               | ✅ Complete    |
-| 1     | Platform Design          | ✅ Complete    |
-| 2     | Development Environment  | 🔄 In Progress |
-| 3     | Website Architecture     | ⏳ Pending     |
-| 4     | Backend Architecture     | ⏳ Pending     |
-| 5     | Feature Development      | ⏳ Pending     |
-| 6     | Testing                  | ⏳ Pending     |
-| 7     | Deployment               | ⏳ Pending     |
-| 8     | Operations & Maintenance | ⏳ Pending     |
+| Phase | Name                                   | Status      |
+| ----- | -------------------------------------- | ----------- |
+| 0     | Foundation                             | ✅ Complete |
+| 1     | Planning & Requirements                | ✅ Complete |
+| 2     | Architecture & Backend                 | ✅ Complete |
+| 3     | Frontend Development                   | ✅ Complete |
+| 4     | Integration & Testing                  | ✅ Complete |
+| 5     | Performance, Accessibility & UX Polish | ✅ Complete |
+| 6     | SEO & Content Enhancement              | 🚧 Next     |
+| 7     | Final Visual Polish                    | ⬜ Pending  |
+| 8     | Operational Testing                    | ⬜ Pending  |
+| 9     | Production Launch                      | ⬜ Pending  |
 
 ---
 
-## 4. Detailed Milestones
+## 4. Major Milestones Achieved
 
-### Phase 0 — Foundation
+| Milestone                                    | Phase |
+| -------------------------------------------- | ----- |
+| Responsive website complete (5 pages)        | 3     |
+| Bill of Lading submission workflow complete  | 4     |
+| Google Sheets integration complete           | 4     |
+| SMS notifications complete                   | 4     |
+| Tracking ID generation complete              | 4     |
+| File upload to Google Drive complete         | 4     |
+| Duplicate B/L detection complete             | 4     |
+| Lighthouse performance optimization complete | 5     |
+| Accessibility audit complete                 | 5     |
+| Image optimization (WebP, lazy loading)      | 5     |
+| Submission UX improvements (overlay, timer)  | 5     |
+| Hero redesign with cinematic overlay         | 5     |
+| Brand messaging finalized and frozen         | 5     |
+| CSS architecture cleaned and validated       | 5     |
+| JavaScript performance fixes (reflow, fonts) | 5     |
+
+---
+
+## 5. Detailed Milestones
+
+### Phase 0 — Foundation ✅
 
 | ID  | Milestone    | Deliverables                                                    | Status |
 | --- | ------------ | --------------------------------------------------------------- | ------ |
@@ -81,125 +104,158 @@ Features are prioritized by:
 
 ---
 
-### Phase 1 — Platform Design
+### Phase 1 — Planning & Requirements ✅
 
-| ID   | Milestone        | Deliverables                                     | Status |
-| ---- | ---------------- | ------------------------------------------------ | ------ |
-| 1.1  | Blueprint        | `00_Project_Blueprint.md` v1.2.2 Approved        | ✅     |
-| 1.2  | Project Journey  | `00A_Project_Journey.md` v1.1.0 Active           | ✅     |
-| 1.3  | Architecture     | `01_System_Architecture.md` v1.1.0 Approved      | ✅     |
-| 1.4  | Constitution     | `02_Engineering_Constitution.md` v1.1.0 Approved | ✅     |
-| 1.5  | AI Guide         | `03_AI_Engineering_Guide.md` v1.1.0 Approved     | ✅     |
-| 1.6  | Source of Truth  | `04_Source_of_Truth.md` v1.1.0 Approved          | ✅     |
-| 1.7  | Coding Standards | `05_Coding_Standards.md` v1.1.0 Approved         | ✅     |
-| 1.8  | Decision Log     | `06_Decision_Log.md` v1.1.0 Approved             | ✅     |
-| 1.9  | Roadmap          | `07_Project_Roadmap.md` — this document          | ✅     |
-| 1.10 | Glossary         | `08_Glossary.md` v1.0.0 Draft                    | ✅     |
-
----
-
-### Phase 2 — Development Environment
-
-| ID  | Milestone            | Deliverables                               | Status |
-| --- | -------------------- | ------------------------------------------ | ------ |
-| 2.1 | VS Code Config       | `.vscode/settings.json`, `extensions.json` | ✅     |
-| 2.2 | GitHub Remote        | Repository connected and pushed            | 🔄     |
-| 2.3 | Development Workflow | Documented workflow from feature to merge  | ⏳     |
-| 2.4 | Tooling              | Linting, formatting, Live Server           | ✅     |
+| ID   | Milestone        | Deliverables                              | Status |
+| ---- | ---------------- | ----------------------------------------- | ------ |
+| 1.1  | Blueprint        | `00_Project_Blueprint.md` Approved        | ✅     |
+| 1.2  | Project Journey  | `00A_Project_Journey.md` Active           | ✅     |
+| 1.3  | Architecture     | `01_System_Architecture.md` Approved      | ✅     |
+| 1.4  | Constitution     | `02_Engineering_Constitution.md` Approved | ✅     |
+| 1.5  | AI Guide         | `03_AI_Engineering_Guide.md` Approved     | ✅     |
+| 1.6  | Source of Truth  | `04_Source_of_Truth.md` Approved          | ✅     |
+| 1.7  | Coding Standards | `05_Coding_Standards.md` Approved         | ✅     |
+| 1.8  | Decision Log     | `06_Decision_Log.md` Approved             | ✅     |
+| 1.9  | Roadmap          | `07_Project_Roadmap.md` — this document   | ✅     |
+| 1.10 | Glossary         | `08_Glossary.md` Draft                    | ✅     |
 
 ---
 
-### Phase 3 — Website Architecture
+### Phase 2 — Architecture & Backend ✅
 
-| ID  | Milestone           | Deliverables                          | Status |
-| --- | ------------------- | ------------------------------------- | ------ |
-| 3.1 | Page Inventory      | List all pages and their components   | ⏳     |
-| 3.2 | Component Design    | Reusable components defined           | ⏳     |
-| 3.3 | Asset Management    | Local images, fonts, icons            | ⏳     |
-| 3.4 | Responsive Design   | Mobile-first layout confirmed         | ⏳     |
-| 3.5 | Accessibility Audit | All pages meet baseline accessibility | ⏳     |
-
----
-
-### Phase 4 — Backend Architecture
-
-| ID  | Milestone         | Deliverables                             | Status |
-| --- | ----------------- | ---------------------------------------- | ------ |
-| 4.1 | API Specification | Endpoints, request/response formats      | ⏳     |
-| 4.2 | Sheet Schema      | Column definitions, validation rules     | ⏳     |
-| 4.3 | Module Design     | Service modules defined per architecture | ⏳     |
-| 4.4 | SMS Integration   | Provider configuration, templates        | ⏳     |
-| 4.5 | File Storage      | Google Drive integration, security       | ⏳     |
+| ID  | Milestone         | Deliverables                         | Status |
+| --- | ----------------- | ------------------------------------ | ------ |
+| 2.1 | GitHub Setup      | Repository, GitHub Pages, Actions    | ✅     |
+| 2.2 | Apps Script       | Web App deployed, Sheets integration | ✅     |
+| 2.3 | Google Sheets     | Submissions, Status, SMS Log sheets  | ✅     |
+| 2.4 | Google Drive      | Attachment folder, access control    | ✅     |
+| 2.5 | SMS Integration   | Payless Bulk SMS configured          | ✅     |
+| 2.6 | API Specification | Endpoints, request/response formats  | ✅     |
 
 ---
 
-### Phase 5 — Feature Development
+### Phase 3 — Frontend Development ✅
 
-| ID  | Milestone        | Deliverables                         | Status |
-| --- | ---------------- | ------------------------------------ | ------ |
-| 5.1 | Homepage         | Company landing page with images     | ⏳     |
-| 5.2 | B/L Submission   | Form with validation and file upload | ⏳     |
-| 5.3 | Tracking ID      | ID generation and display            | ⏳     |
-| 5.4 | SMS Notification | Automated SMS on clearance           | ⏳     |
-| 5.5 | Admin Panel      | Google Sheets-based management       | ⏳     |
-| 5.6 | About Page       | Company story and values             | ⏳     |
-| 5.7 | Services Page    | Service descriptions with icons      | ⏳     |
-| 5.8 | Contact Page     | Office locations and phone numbers   | ⏳     |
-
----
-
-### Phase 6 — Testing
-
-| ID  | Milestone             | Deliverables                        | Status |
-| --- | --------------------- | ----------------------------------- | ------ |
-| 6.1 | Functional Testing    | All features tested end-to-end      | ⏳     |
-| 6.2 | Responsive Testing    | Mobile, tablet, desktop verified    | ⏳     |
-| 6.3 | Accessibility Testing | Keyboard navigation, screen readers | ⏳     |
-| 6.4 | SMS Testing           | Notification delivery verified      | ⏳     |
-| 6.5 | File Upload Testing   | Size limits, type validation        | ⏳     |
-| 6.6 | Regression Testing    | Existing features still work        | ⏳     |
+| ID  | Milestone         | Deliverables                            | Status |
+| --- | ----------------- | --------------------------------------- | ------ |
+| 3.1 | HTML Structure    | 5 pages, semantic markup, accessibility | ✅     |
+| 3.2 | CSS Design System | Variables, responsive, mobile-first     | ✅     |
+| 3.3 | Homepage          | Hero, expertise cards, stats, CTA       | ✅     |
+| 3.4 | About Page        | Company story, values, team             | ✅     |
+| 3.5 | Services Page     | Service descriptions, icons             | ✅     |
+| 3.6 | Contact Page      | Office locations, phone numbers, email  | ✅     |
+| 3.7 | Submit B/L Page   | Form with validation, file upload       | ✅     |
+| 3.8 | Mobile Navigation | Off-canvas menu, focus trap             | ✅     |
 
 ---
 
-### Phase 7 — Deployment
+### Phase 4 — Integration & Testing ✅
 
-| ID  | Milestone         | Deliverables                           | Status |
-| --- | ----------------- | -------------------------------------- | ------ |
-| 7.1 | GitHub Pages      | Website deployed to production         | ⏳     |
-| 7.2 | Apps Script       | Backend deployed as Web App            | ⏳     |
-| 7.3 | Domain Setup      | Custom domain configured (if acquired) | ⏳     |
-| 7.4 | Go-Live Checklist | All systems verified                   | ⏳     |
-
----
-
-### Phase 8 — Operations & Maintenance
-
-| ID  | Milestone                 | Deliverables                           | Status |
-| --- | ------------------------- | -------------------------------------- | ------ |
-| 8.1 | Monitoring                | Usage tracking, error logging          | ⏳     |
-| 8.2 | Backups                   | Sheet backups, Drive backups           | ⏳     |
-| 8.3 | Documentation Maintenance | Keep docs in sync with code            | ⏳     |
-| 8.4 | Feature Backlog           | Prioritized list of post-v1.0 features | ⏳     |
+| ID  | Milestone           | Deliverables                         | Status |
+| --- | ------------------- | ------------------------------------ | ------ |
+| 4.1 | Form Validation     | Client-side + server-side validation | ✅     |
+| 4.2 | File Upload         | Drive storage, size/type validation  | ✅     |
+| 4.3 | Tracking ID         | Generation, display, copy button     | ✅     |
+| 4.4 | SMS Notification    | Automated SMS on clearance status    | ✅     |
+| 4.5 | Duplicate Detection | B/L number checking                  | ✅     |
+| 4.6 | Error Handling      | Timeout messaging, retry logic       | ✅     |
+| 4.7 | Local Storage       | Remember me functionality            | ✅     |
+| 4.8 | Loading States      | Processing overlay, spinner, timer   | ✅     |
 
 ---
 
-## 5. Future Features (Post v1.0)
+### Phase 5 — Performance, Accessibility & UX Polish ✅
+
+| ID   | Milestone              | Deliverables                              | Status |
+| ---- | ---------------------- | ----------------------------------------- | ------ |
+| 5.1  | Image Optimization     | WebP conversion, lazy loading, dimensions | ✅     |
+| 5.2  | Lighthouse Audit       | Mobile scores benchmarked                 | ✅     |
+| 5.3  | Font Loading           | Async Google Fonts, render-blocking fix   | ✅     |
+| 5.4  | JavaScript Performance | Forced reflow fix, console.log removed    | ✅     |
+| 5.5  | CSS Cleanup            | Syntax errors, duplicate rules removed    | ✅     |
+| 5.6  | Hero Redesign          | Cinematic overlay, typography, alignment  | ✅     |
+| 5.7  | Brand Messaging        | Headline, tagline, subsidiary copy        | ✅     |
+| 5.8  | Submission UX          | Subtext, timer, staged processing         | ✅     |
+| 5.9  | Accessibility          | Skip link, ARIA, focus management         | ✅     |
+| 5.10 | Favicon & Manifest     | SVG favicon, webmanifest                  | ✅     |
+
+---
+
+### Phase 6 — SEO & Content Enhancement 🚧
+
+| ID  | Milestone             | Deliverables                       | Status |
+| --- | --------------------- | ---------------------------------- | ------ |
+| 6.1 | Meta Tags             | Title, description, canonical      | ✅     |
+| 6.2 | Open Graph            | og:image, og:title, og:description | ✅     |
+| 6.3 | Twitter Cards         | summary_large_image                | ✅     |
+| 6.4 | Structured Data       | Schema.org Organization            | ✅     |
+| 6.5 | Sitemap               | sitemap.xml                        | ✅     |
+| 6.6 | Robots.txt            | Crawl directives                   | ✅     |
+| 6.7 | Google Search Console | Site verification, indexing        | 🚧     |
+| 6.8 | Bing Webmaster        | Site verification, indexing        | 🚧     |
+| 6.9 | OG Image Optimization | 2.2 MB → ~200 KB                   | 🚧     |
+
+---
+
+### Phase 7 — Final Visual Polish ⬜
+
+| ID  | Milestone          | Deliverables                     | Status |
+| --- | ------------------ | -------------------------------- | ------ |
+| 7.1 | Logo Assets        | SVG logo, favicon set, app icons | ⬜     |
+| 7.2 | Imagery Review     | Higher-quality logistics photos  | ⬜     |
+| 7.3 | Icon Consistency   | Unified icon set across pages    | ⬜     |
+| 7.4 | Hover Animations   | Refine timing and effects        | ⬜     |
+| 7.5 | Spacing Review     | Final padding/margin audit       | ⬜     |
+| 7.6 | Shadow Consistency | Unified shadow scale             | ⬜     |
+
+---
+
+### Phase 8 — Operational Testing ⬜
+
+| ID  | Milestone      | Deliverables                         | Status |
+| --- | -------------- | ------------------------------------ | ------ |
+| 8.1 | Cross-Browser  | Chrome, Edge, Firefox, Safari        | ⬜     |
+| 8.2 | Cross-Device   | Android, iPhone, tablets             | ⬜     |
+| 8.3 | Form Workflow  | Submission, SMS, duplicate detection | ⬜     |
+| 8.4 | File Upload    | All types, size limits, Drive links  | ⬜     |
+| 8.5 | Error Handling | Timeout, network loss, server errors | ⬜     |
+| 8.6 | Slow Network   | Throttled performance testing        | ⬜     |
+
+---
+
+### Phase 9 — Production Launch ⬜
+
+| ID  | Milestone           | Deliverables                    | Status |
+| --- | ------------------- | ------------------------------- | ------ |
+| 9.1 | Custom Domain       | quickfreightsglobal.com         | ⬜     |
+| 9.2 | Analytics           | Google Analytics setup          | ⬜     |
+| 9.3 | Search Console      | Final verification              | ⬜     |
+| 9.4 | Security Review     | API keys, permissions, secrets  | ⬜     |
+| 9.5 | Performance Audit   | Final Lighthouse pass           | ⬜     |
+| 9.6 | Backup              | Full repository and data backup | ⬜     |
+| 9.7 | Launch Checklist    | All systems go                  | ⬜     |
+| 9.8 | Public Announcement | Go live                         | ⬜     |
+
+---
+
+## 6. Future Features (Post v1.0)
 
 These features are planned but not yet scheduled:
 
-| Feature                          | Priority | Dependencies               |
-| -------------------------------- | -------- | -------------------------- |
-| Customer accounts and login      | Medium   | Database migration         |
-| Admin dashboard with analytics   | Medium   | Sufficient shipment data   |
-| Multi-user admin roles           | Medium   | Authentication system      |
-| Email notifications              | Low      | Email provider integration |
-| Payment integration              | Low      | Business requirements      |
-| Mobile app                       | Low      | API stabilization          |
-| API for third-party integrations | Low      | Authentication system      |
+| Feature                             | Priority | Dependencies               |
+| ----------------------------------- | -------- | -------------------------- |
+| Customer accounts and login         | Medium   | Database migration         |
+| Admin dashboard with analytics      | Medium   | Sufficient shipment data   |
+| Multi-user admin roles              | Medium   | Authentication system      |
+| Email notifications                 | Low      | Email provider integration |
+| Payment integration                 | Low      | Business requirements      |
+| Mobile app                          | Low      | API stabilization          |
+| API for third-party integrations    | Low      | Authentication system      |
+| Attachment naming fix (Apps Script) | High     | Debug container number     |
 
 ---
 
-## 6. Risk Factors Affecting Timeline
+## 7. Risk Factors Affecting Timeline
 
 | Risk                                     | Impact                        | Mitigation                                                                 |
 | ---------------------------------------- | ----------------------------- | -------------------------------------------------------------------------- |
@@ -207,12 +263,14 @@ These features are planned but not yet scheduled:
 | Google quota limits                      | May pause data collection     | Monitor usage; archive old data                                            |
 | Single developer availability            | All progress stops            | Documentation-first approach preserves knowledge                           |
 | Nigerian internet reliability            | Delays deployment and testing | GitHub Pages provides reliable hosting; local development possible offline |
+| GitHub Pages cache TTL (10 min)          | Repeat visitors redownload    | Accept as known limitation; Cloudflare CDN post-launch                     |
 
 ---
 
-## 7. Version History
+## 8. Version History
 
-| Version | Date       | Changes                                                                                                                           |
-| ------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| 1.0.0   | 2026-06-29 | Initial Project Roadmap                                                                                                           |
-| 1.1.0   | 2026-06-29 | Added Project Journey milestone, restored Domain Setup and Feature Backlog, added Risk Factors section, standardized status icons |
+| Version | Date       | Changes                                                                                    |
+| ------- | ---------- | ------------------------------------------------------------------------------------------ |
+| 1.0.0   | 2026-06-29 | Initial Project Roadmap                                                                    |
+| 1.1.0   | 2026-06-29 | Added Project Journey milestone, Domain Setup, Feature Backlog, Risk Factors, status icons |
+| 2.0.0   | 2026-07-03 | Complete restructure — Phases 0-5 complete, 6-9 detailed, milestones achieved section      |
