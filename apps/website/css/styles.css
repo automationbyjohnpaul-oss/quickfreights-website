@@ -11,10 +11,10 @@
   --navy-dark: #060f20;
   --gold: #daa520;
   --gold-light: #f0d060;
-  --gold-dark: #7a5c0f;
+  --gold-dark: #B8860B;
   --white: #ffffff;
   --light-grey: #f5f6f8;
-  --grey: #374151;
+  --grey: #4B5563;
   --dark-text: #1f2937;
   --border: #e5e7eb;
   --success: #10b981;
@@ -1524,3 +1524,4 @@ textarea:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+

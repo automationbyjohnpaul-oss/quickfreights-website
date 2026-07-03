@@ -36,7 +36,7 @@ It is intended for:
 
 ## Current Platform Status
 
-**Current Platform Release:** v5.5
+**Current Platform Release:** v5.6
 
 **Overall Progress:**
 
@@ -55,6 +55,29 @@ It is intended for:
 ---
 
 ## Release History
+
+---
+
+### v5.6 — Documentation Synchronization & Design Tokens
+
+**Date:** 2026-07-03
+**Phase:** 5 Complete / 6 Begin
+
+**Changes:**
+
+- Source of Truth restructured: slogan added, design tokens aligned
+- Roadmap updated: Phase 6 in progress, Phase 7-8 tasks refined
+- Release Notes polished with platform status section
+- CSS design tokens corrected (`--grey: #4B5563`, `--gold-dark: #B8860B`)
+- AI review artifact removed from documentation
+- Corporate slogan "Moving Cargo. Building Trust." formalized
+
+**Files Changed:**
+
+- `docs/04_Source_of_Truth.md`
+- `docs/07_Project_Roadmap.md`
+- `docs/08_Release_Notes.md`
+- `apps/website/css/styles.css`
 
 ---
 
@@ -301,7 +324,7 @@ It is intended for:
 | Component | Meaning                                                         | Example |
 | --------- | --------------------------------------------------------------- | ------- |
 | Major     | Completion of a project phase or significant platform milestone | v5.0    |
-| Minor     | Enhancements, optimizations, or refinements within that phase   | v5.5    |
+| Minor     | Enhancements, optimizations, or refinements within that phase   | v5.6    |
 
 ---
 

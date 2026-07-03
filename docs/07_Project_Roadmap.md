@@ -1,7 +1,7 @@
 # 07 — Project Roadmap
 
 **Title:** QuickFreights Platform — Project Roadmap
-**Version:** 2.0.0
+**Version:** 2.1.0
 **Status:** Approved
 **Owner:** Quick Freights Global Limited
 **Last Updated:** 2026-07-03
@@ -54,40 +54,41 @@ Features are prioritized by:
 
 ## 3. Phase Overview
 
-| Phase | Name                                   | Status      |
-| ----- | -------------------------------------- | ----------- |
-| 0     | Foundation                             | ✅ Complete |
-| 1     | Planning & Requirements                | ✅ Complete |
-| 2     | Architecture & Backend                 | ✅ Complete |
-| 3     | Frontend Development                   | ✅ Complete |
-| 4     | Integration & Testing                  | ✅ Complete |
-| 5     | Performance, Accessibility & UX Polish | ✅ Complete |
-| 6     | SEO & Content Enhancement              | 🚧 Next     |
-| 7     | Final Visual Polish                    | ⬜ Pending  |
-| 8     | Operational Testing                    | ⬜ Pending  |
-| 9     | Production Launch                      | ⬜ Pending  |
+| Phase | Name                                   | Status         |
+| ----- | -------------------------------------- | -------------- |
+| 0     | Foundation                             | ✅ Complete    |
+| 1     | Planning & Requirements                | ✅ Complete    |
+| 2     | Architecture & Backend                 | ✅ Complete    |
+| 3     | Frontend Development                   | ✅ Complete    |
+| 4     | Integration & Testing                  | ✅ Complete    |
+| 5     | Performance, Accessibility & UX Polish | ✅ Complete    |
+| 6     | SEO & Content Enhancement              | 🚧 In Progress |
+| 7     | Final Visual Polish                    | ⬜ Pending     |
+| 8     | Operational Testing                    | ⬜ Pending     |
+| 9     | Production Launch                      | ⬜ Pending     |
 
 ---
 
 ## 4. Major Milestones Achieved
 
-| Milestone                                    | Phase |
-| -------------------------------------------- | ----- |
-| Responsive website complete (5 pages)        | 3     |
-| Bill of Lading submission workflow complete  | 4     |
-| Google Sheets integration complete           | 4     |
-| SMS notifications complete                   | 4     |
-| Tracking ID generation complete              | 4     |
-| File upload to Google Drive complete         | 4     |
-| Duplicate B/L detection complete             | 4     |
-| Lighthouse performance optimization complete | 5     |
-| Accessibility audit complete                 | 5     |
-| Image optimization (WebP, lazy loading)      | 5     |
-| Submission UX improvements (overlay, timer)  | 5     |
-| Hero redesign with cinematic overlay         | 5     |
-| Brand messaging finalized and frozen         | 5     |
-| CSS architecture cleaned and validated       | 5     |
-| JavaScript performance fixes (reflow, fonts) | 5     |
+| Milestone                                     | Phase |
+| --------------------------------------------- | ----- |
+| Responsive website complete (5 pages)         | 3     |
+| Bill of Lading submission workflow complete   | 4     |
+| Google Sheets integration complete            | 4     |
+| SMS notifications complete                    | 4     |
+| Tracking ID generation complete               | 4     |
+| File upload to Google Drive complete          | 4     |
+| Duplicate B/L detection complete              | 4     |
+| Lighthouse performance optimization complete  | 5     |
+| Accessibility audit complete                  | 5     |
+| Image optimization (WebP, lazy loading)       | 5     |
+| Submission UX improvements (overlay, timer)   | 5     |
+| Hero redesign with cinematic overlay          | 5     |
+| Brand messaging finalized and frozen          | 5     |
+| CSS architecture cleaned and validated        | 5     |
+| JavaScript performance fixes (reflow, fonts)  | 5     |
+| Documentation synchronized and tokens aligned | 5     |
 
 ---
 
@@ -166,18 +167,19 @@ Features are prioritized by:
 
 ### Phase 5 — Performance, Accessibility & UX Polish ✅
 
-| ID   | Milestone              | Deliverables                              | Status |
-| ---- | ---------------------- | ----------------------------------------- | ------ |
-| 5.1  | Image Optimization     | WebP conversion, lazy loading, dimensions | ✅     |
-| 5.2  | Lighthouse Audit       | Mobile scores benchmarked                 | ✅     |
-| 5.3  | Font Loading           | Async Google Fonts, render-blocking fix   | ✅     |
-| 5.4  | JavaScript Performance | Forced reflow fix, console.log removed    | ✅     |
-| 5.5  | CSS Cleanup            | Syntax errors, duplicate rules removed    | ✅     |
-| 5.6  | Hero Redesign          | Cinematic overlay, typography, alignment  | ✅     |
-| 5.7  | Brand Messaging        | Headline, tagline, subsidiary copy        | ✅     |
-| 5.8  | Submission UX          | Subtext, timer, staged processing         | ✅     |
-| 5.9  | Accessibility          | Skip link, ARIA, focus management         | ✅     |
-| 5.10 | Favicon & Manifest     | SVG favicon, webmanifest                  | ✅     |
+| ID   | Milestone              | Deliverables                                 | Status |
+| ---- | ---------------------- | -------------------------------------------- | ------ |
+| 5.1  | Image Optimization     | WebP conversion, lazy loading, dimensions    | ✅     |
+| 5.2  | Lighthouse Audit       | Mobile scores benchmarked                    | ✅     |
+| 5.3  | Font Loading           | Async Google Fonts, render-blocking fix      | ✅     |
+| 5.4  | JavaScript Performance | Forced reflow fix, console.log removed       | ✅     |
+| 5.5  | CSS Cleanup            | Syntax errors, duplicate rules removed       | ✅     |
+| 5.6  | Hero Redesign          | Cinematic overlay, typography, alignment     | ✅     |
+| 5.7  | Brand Messaging        | Headline, tagline, subsidiary copy           | ✅     |
+| 5.8  | Submission UX          | Subtext, timer, staged processing            | ✅     |
+| 5.9  | Accessibility          | Skip link, ARIA, focus management            | ✅     |
+| 5.10 | Favicon & Manifest     | SVG favicon, webmanifest                     | ✅     |
+| 5.11 | Design Tokens          | Color variables aligned with Source of Truth | ✅     |
 
 ---
 
@@ -199,27 +201,29 @@ Features are prioritized by:
 
 ### Phase 7 — Final Visual Polish ⬜
 
-| ID  | Milestone          | Deliverables                     | Status |
-| --- | ------------------ | -------------------------------- | ------ |
-| 7.1 | Logo Assets        | SVG logo, favicon set, app icons | ⬜     |
-| 7.2 | Imagery Review     | Higher-quality logistics photos  | ⬜     |
-| 7.3 | Icon Consistency   | Unified icon set across pages    | ⬜     |
-| 7.4 | Hover Animations   | Refine timing and effects        | ⬜     |
-| 7.5 | Spacing Review     | Final padding/margin audit       | ⬜     |
-| 7.6 | Shadow Consistency | Unified shadow scale             | ⬜     |
+| ID  | Milestone                 | Deliverables                       | Status |
+| --- | ------------------------- | ---------------------------------- | ------ |
+| 7.1 | Hero Split Layout         | Desktop: text left, image right    | ⬜     |
+| 7.2 | Service Card Image Polish | Consistent aspect ratios, overlays | ⬜     |
+| 7.3 | Homepage Visual Refine    | Spacing, shadows, overall cohesion | ⬜     |
+| 7.4 | Animation Polish          | Hover states, transitions, timing  | ⬜     |
+| 7.5 | Logo Assets               | SVG logo, favicon set, app icons   | ⬜     |
+| 7.6 | Imagery Review            | Higher-quality logistics photos    | ⬜     |
+| 7.7 | Icon Consistency          | Unified icon set across pages      | ⬜     |
 
 ---
 
 ### Phase 8 — Operational Testing ⬜
 
-| ID  | Milestone      | Deliverables                         | Status |
-| --- | -------------- | ------------------------------------ | ------ |
-| 8.1 | Cross-Browser  | Chrome, Edge, Firefox, Safari        | ⬜     |
-| 8.2 | Cross-Device   | Android, iPhone, tablets             | ⬜     |
-| 8.3 | Form Workflow  | Submission, SMS, duplicate detection | ⬜     |
-| 8.4 | File Upload    | All types, size limits, Drive links  | ⬜     |
-| 8.5 | Error Handling | Timeout, network loss, server errors | ⬜     |
-| 8.6 | Slow Network   | Throttled performance testing        | ⬜     |
+| ID  | Milestone         | Deliverables                         | Status |
+| --- | ----------------- | ------------------------------------ | ------ |
+| 8.1 | Attachment Naming | Verify uploaded filenames correct    | ⬜     |
+| 8.2 | Cross-Browser     | Chrome, Edge, Firefox, Safari        | ⬜     |
+| 8.3 | Cross-Device      | Android, iPhone, tablets             | ⬜     |
+| 8.4 | Form Workflow     | Submission, SMS, duplicate detection | ⬜     |
+| 8.5 | File Upload       | All types, size limits, Drive links  | ⬜     |
+| 8.6 | Error Handling    | Timeout, network loss, server errors | ⬜     |
+| 8.7 | Slow Network      | Throttled performance testing        | ⬜     |
 
 ---
 
@@ -242,16 +246,15 @@ Features are prioritized by:
 
 These features are planned but not yet scheduled:
 
-| Feature                             | Priority | Dependencies               |
-| ----------------------------------- | -------- | -------------------------- |
-| Customer accounts and login         | Medium   | Database migration         |
-| Admin dashboard with analytics      | Medium   | Sufficient shipment data   |
-| Multi-user admin roles              | Medium   | Authentication system      |
-| Email notifications                 | Low      | Email provider integration |
-| Payment integration                 | Low      | Business requirements      |
-| Mobile app                          | Low      | API stabilization          |
-| API for third-party integrations    | Low      | Authentication system      |
-| Attachment naming fix (Apps Script) | High     | Debug container number     |
+| Feature                          | Priority | Dependencies               |
+| -------------------------------- | -------- | -------------------------- |
+| Customer accounts and login      | Medium   | Database migration         |
+| Admin dashboard with analytics   | Medium   | Sufficient shipment data   |
+| Multi-user admin roles           | Medium   | Authentication system      |
+| Email notifications              | Low      | Email provider integration |
+| Payment integration              | Low      | Business requirements      |
+| Mobile app                       | Low      | API stabilization          |
+| API for third-party integrations | Low      | Authentication system      |
 
 ---
 
@@ -274,3 +277,4 @@ These features are planned but not yet scheduled:
 | 1.0.0   | 2026-06-29 | Initial Project Roadmap                                                                    |
 | 1.1.0   | 2026-06-29 | Added Project Journey milestone, Domain Setup, Feature Backlog, Risk Factors, status icons |
 | 2.0.0   | 2026-07-03 | Complete restructure — Phases 0-5 complete, 6-9 detailed, milestones achieved section      |
+| 2.1.0   | 2026-07-03 | Phase 6 in progress, Phase 7-8 tasks refined, attachment naming added                      |

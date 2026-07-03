@@ -1,7 +1,7 @@
 # 04 — Source of Truth
 
 **Title:** QuickFreights Platform — Source of Truth
-**Version:** 1.2.0
+**Version:** 1.3.0
 **Status:** Approved
 **Owner:** Quick Freights Global Limited
 **Last Updated:** 2026-07-03
@@ -72,13 +72,16 @@ Every new shared value must belong to one of these categories.
 
 ## 1. Company Identity
 
-| Property           | Value                                        |
-| ------------------ | -------------------------------------------- |
-| **Company Name**   | Quick Freights Global Limited                |
-| **Parent Company** | Bondex Bridge Multinational Terminal Limited |
-| **RC Number**      | 8106184                                      |
-| **Tagline**        | Very Fast Delivery                           |
-| **Official Email** | reception.quickfreightglobal@gmail.com       |
+| Property               | Value                                                        |
+| ---------------------- | ------------------------------------------------------------ |
+| **Company Name**       | Quick Freights Global Limited                                |
+| **Marketing Headline** | CLEARING THE WAY FOR YOUR BUSINESS                           |
+| **Corporate Slogan**   | Moving Cargo. Building Trust.                                |
+| **Subsidiary Of**      | A Subsidiary of Bondex Bridge Multinational Terminal Limited |
+| **Parent Company**     | Bondex Bridge Multinational Terminal Limited                 |
+| **RC Number**          | 8106184                                                      |
+| **Tagline**            | Very Fast Delivery                                           |
+| **Official Email**     | reception.quickfreightglobal@gmail.com                       |
 
 ---
 
@@ -132,7 +135,7 @@ Every new shared value must belong to one of these categories.
 | **Gold Dark**  | `#B8860B` | `--gold-dark`  | Button hover states                   |
 | **White**      | `#FFFFFF` | `--white`      | Main background                       |
 | **Light Grey** | `#F5F6F8` | `--light-grey` | Section backgrounds                   |
-| **Grey**       | `#6B7280` | `--grey`       | Body text                             |
+| **Grey**       | `#4B5563` | `--grey`       | Body text                             |
 | **Success**    | `#10B981` | `--success`    | Success messages                      |
 | **Error**      | `#EF4444` | `--error`      | Error messages, required indicators   |
 
@@ -284,3 +287,33 @@ All API responses from the Application Layer SHALL use this format:
   "error": null
 }
 ```
+
+16. Frozen Brand Decisions
+    The following decisions are considered finalized and frozen. Future
+    revisions should only occur if they materially improve branding or usability.
+
+Decision Status Detail
+Company name presentation Frozen "Quick Freights" / "Global Limited" two-line lockup
+Hero hierarchy Frozen Welcome → Company → Subsidiary → Headline → Subtitle
+Hero headline copy Frozen "CLEARING THE WAY FOR YOUR BUSINESS"
+Hero layout Frozen Left-aligned, cinematic 90deg overlay
+Typography hierarchy Frozen Inter font, defined clamp() scale
+Primary color palette Frozen Navy #0A1F3F, Gold #DAA520
+Premium logistics direction Frozen Executive-grade, minimal, trust-focused
+Navigation structure Frozen 5 pages: Home, About, Services, Contact, Submit B/L
+CTA wording Frozen "Submit Bill of Lading"
+Brand promise Frozen "Your Cargo, Our Priority"
+Core values Frozen Speed. Transparency. Integrity.
+Corporate Slogan Frozen "Moving Cargo. Building Trust."
+Hero copy and hierarchy are considered frozen. Any proposed changes
+to the hero section must demonstrate a clear, material improvement to
+branding or usability before being considered.
+
+Version History
+Version Date Changes
+1.0.0 2026-06-29 Initial Source of Truth
+1.1.0 2026-06-29 Added Sections 11-15
+1.1.1 2026-06-29 Updated SMS Template
+1.1.2 2026-06-29 Updated Port Harcourt phone to 09168611825
+1.2.0 2026-07-03 Added Section 16 — Frozen Brand Decisions
+1.3.0 2026-07-03 Restructured Company Identity, added slogan, aligned design tokens
