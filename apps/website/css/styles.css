@@ -40,16 +40,16 @@
   --header-height: 70px;
   --overlay-dark: linear-gradient(
     90deg,
-    rgba(10, 31, 63, 0.92) 0%,
-    rgba(10, 31, 63, 0.82) 28%,
-    rgba(10, 31, 63, 0.58) 52%,
-    rgba(10, 31, 63, 0.22) 72%,
+    rgba(10, 31, 63, 0.97) 0%,
+    rgba(10, 31, 63, 0.92) 35%,
+    rgba(10, 31, 63, 0.7) 55%,
+    rgba(10, 31, 63, 0.25) 75%,
     rgba(10, 31, 63, 0) 100%
   );
   --overlay-medium: linear-gradient(
     160deg,
-    rgba(10, 31, 63, 0.88) 0%,
-    rgba(13, 43, 84, 0.84) 100%
+    rgba(10, 31, 63, 0.94) 0%,
+    rgba(13, 43, 84, 0.9) 100%
   );
 }
 
@@ -386,7 +386,7 @@ ul {
 /* ── HERO — SPLIT LAYOUT ── */
 .hero {
   display: flex;
-  min-height: 600px;
+  min-height: min(580px, 85vh);
   background: var(--navy);
 }
 
@@ -394,7 +394,7 @@ ul {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 80px 0 60px;
+  padding: 60px 0 48px;
   background: var(--navy);
 }
 
@@ -411,10 +411,13 @@ ul {
 }
 
 @media (min-width: 768px) {
+  .hero {
+    min-height: min(640px, 88vh);
+  }
   .hero-left {
     width: 52%;
     flex-shrink: 0;
-    padding: 80px 0;
+    padding: 72px 0;
   }
   .hero-right {
     display: block;
@@ -424,12 +427,15 @@ ul {
 }
 
 @media (min-width: 1200px) {
+  .hero {
+    min-height: min(680px, 90vh);
+  }
   .hero-left {
     width: 55%;
   }
 }
 
-/* ── HERO TYPOGRAPHY (Phase 7) ── */
+/* ── HERO TYPOGRAPHY ── */
 .hero-content {
   position: relative;
   z-index: 1;
@@ -761,8 +767,8 @@ ul {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(6, 15, 32, 0.45) 0%,
-    rgba(6, 15, 32, 0.7) 100%
+    rgba(6, 15, 32, 0.55) 0%,
+    rgba(6, 15, 32, 0.82) 100%
   );
   display: flex;
   align-items: center;
