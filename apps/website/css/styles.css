@@ -1,6 +1,6 @@
-/* ================================================================
-   QUICK FREIGHTS GLOBAL LIMITED — STYLESHEET v5.1
-   Navy #0A1F3F · Gold #DAA520
+﻿/* ================================================================
+   QUICK FREIGHTS GLOBAL LIMITED â€” STYLESHEET v5.1
+   Navy #0A1F3F Â· Gold #DAA520
    RC: 8106184 | A Bondex Bridge Multinational Terminal Ltd Company
    Mobile-First | Production-Optimised
    Values sourced from 04_Source_of_Truth.md
@@ -132,7 +132,7 @@ ul {
   border: 0;
 }
 
-/* ── BUTTONS ── */
+/* â”€â”€ BUTTONS â”€â”€ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -202,7 +202,7 @@ ul {
   box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.35);
 }
 
-/* ── HEADER ── */
+/* â”€â”€ HEADER â”€â”€ */
 .site-header {
   background: var(--navy);
   position: sticky;
@@ -258,7 +258,7 @@ ul {
   margin-top: 1px;
 }
 
-/* ── MOBILE MENU ── */
+/* â”€â”€ MOBILE MENU â”€â”€ */
 .mobile-menu-toggle {
   display: flex;
   flex-direction: column;
@@ -383,22 +383,32 @@ ul {
 /* ── HERO — SPLIT LAYOUT ── */
 .hero {
   display: flex;
-  min-height: min(580px, 85vh);
+  min-height: min(560px, 85vh);
   background: var(--navy);
+  overflow: hidden;
 }
-
 .hero-left {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 60px 0 48px;
+  padding: 56px 0 44px;
   background: var(--navy);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
-
+.hero-left::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100%;
+  pointer-events: none;
+}
 .hero-right {
   display: none;
 }
-
 .hero-right img {
   width: 100%;
   height: 100%;
@@ -406,33 +416,49 @@ ul {
   object-position: right center;
   display: block;
 }
-
 @media (min-width: 768px) {
   .hero {
-    min-height: min(640px, 88vh);
+    min-height: min(600px, 86vh);
+    align-items: stretch;
   }
   .hero-left {
     width: 52%;
-    flex-shrink: 0;
-    padding: 72px 0;
+    padding: 64px 0;
+  }
+  .hero-left::after {
+    right: -80px;
+    width: 160px;
+    background: linear-gradient(to right, var(--navy) 0%, transparent 100%);
+    z-index: 2;
   }
   .hero-right {
-    display: block;
+    display: flex;
     flex: 1;
     overflow: hidden;
+    position: relative;
+  }
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    display: block;
+    flex: 1;
   }
 }
-
 @media (min-width: 1200px) {
   .hero {
-    min-height: min(680px, 90vh);
+    min-height: min(640px, 87vh);
   }
   .hero-left {
-    width: 55%;
+    width: 54%;
+  }
+  .hero-left::after {
+    right: -100px;
+    width: 200px;
   }
 }
-
-/* ── HERO TYPOGRAPHY ── */
+/* â”€â”€ HERO TYPOGRAPHY â”€â”€ */
 .hero-content {
   position: relative;
   z-index: 1;
@@ -560,7 +586,7 @@ ul {
   }
 }
 
-/* ── SECTION HELPERS ── */
+/* â”€â”€ SECTION HELPERS â”€â”€ */
 .section-header {
   text-align: center;
   margin-bottom: 36px;
@@ -590,7 +616,7 @@ ul {
   margin: 0 auto;
 }
 
-/* ── EXPERTISE CARDS (restructured) ── */
+/* â”€â”€ EXPERTISE CARDS (restructured) â”€â”€ */
 .expertise-section {
   padding: var(--space-xl) 0;
   background: var(--white);
@@ -620,7 +646,7 @@ ul {
   }
 }
 
-/* ── IMAGE ZONE ── */
+/* â”€â”€ IMAGE ZONE â”€â”€ */
 .expertise-img-wrapper {
   position: relative;
   width: 100%;
@@ -646,7 +672,7 @@ ul {
   }
 }
 
-/* ── ICON OVERLAY ── */
+/* â”€â”€ ICON OVERLAY â”€â”€ */
 .expertise-icon-overlay {
   position: absolute;
   bottom: -24px;
@@ -669,7 +695,7 @@ ul {
   color: var(--gold);
 }
 
-/* ── CONTENT ZONE ── */
+/* â”€â”€ CONTENT ZONE â”€â”€ */
 .expertise-content {
   padding: 40px var(--space-md) var(--space-md);
   display: flex;
@@ -706,7 +732,7 @@ ul {
   }
 }
 
-/* ── WHY US ── */
+/* â”€â”€ WHY US â”€â”€ */
 .why-section {
   padding: var(--space-xl) 0;
   background: var(--light-grey);
@@ -747,7 +773,7 @@ ul {
   }
 }
 
-/* ── IMAGE BANNER ── */
+/* â”€â”€ IMAGE BANNER â”€â”€ */
 .image-banner {
   position: relative;
   width: 100%;
@@ -796,7 +822,7 @@ ul {
   }
 }
 
-/* ── CTA BANNER ── */
+/* â”€â”€ CTA BANNER â”€â”€ */
 .cta-banner {
   background-color: var(--navy);
   background-image: var(--overlay-dark), url("../images/cta.webp");
@@ -834,7 +860,7 @@ ul {
   }
 }
 
-/* ── PAGE HEADER ── */
+/* â”€â”€ PAGE HEADER â”€â”€ */
 .page-header {
   background-color: var(--navy);
   background-image: var(--overlay-medium), url("../images/page-header.webp");
@@ -869,7 +895,7 @@ ul {
   }
 }
 
-/* ── ABOUT PAGE ── */
+/* â”€â”€ ABOUT PAGE â”€â”€ */
 .about-story {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -983,7 +1009,7 @@ ul {
   }
 }
 
-/* ── SERVICES PAGE ── */
+/* â”€â”€ SERVICES PAGE â”€â”€ */
 .services-detailed {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -1044,7 +1070,7 @@ ul {
   }
 }
 
-/* ── CONTACT PAGE ── */
+/* â”€â”€ CONTACT PAGE â”€â”€ */
 .contact-section {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -1118,7 +1144,7 @@ ul {
   }
 }
 
-/* ── HUB CARDS ── */
+/* â”€â”€ HUB CARDS â”€â”€ */
 .hubs-section {
   padding: 0 0 var(--space-xl);
   background: var(--white);
@@ -1174,7 +1200,7 @@ ul {
   }
 }
 
-/* ── FORM SECTION ── */
+/* â”€â”€ FORM SECTION â”€â”€ */
 .form-section {
   padding: 36px 0;
   background: var(--light-grey);
@@ -1286,7 +1312,7 @@ ul {
   }
 }
 
-/* ── FILE UPLOAD ── */
+/* â”€â”€ FILE UPLOAD â”€â”€ */
 .file-upload-wrapper {
   position: relative;
   width: 100%;
@@ -1330,7 +1356,7 @@ ul {
   flex-shrink: 0;
 }
 
-/* ── FOOTER ── */
+/* â”€â”€ FOOTER â”€â”€ */
 .site-footer {
   background: var(--navy-dark);
   color: rgba(255, 255, 255, 0.62);
@@ -1416,7 +1442,7 @@ ul {
   }
 }
 
-/* ── FOOTER BRAND ── */
+/* â”€â”€ FOOTER BRAND â”€â”€ */
 .footer-brand .logo {
   margin-bottom: 12px;
 }
@@ -1424,7 +1450,7 @@ ul {
   color: var(--white);
 }
 
-/* ── REMEMBER ME CHECKBOX ── */
+/* â”€â”€ REMEMBER ME CHECKBOX â”€â”€ */
 .checkbox-label {
   display: flex !important;
   align-items: center;
@@ -1441,7 +1467,7 @@ ul {
   cursor: pointer;
 }
 
-/* ── TRACKING ID COPY ── */
+/* â”€â”€ TRACKING ID COPY â”€â”€ */
 .tracking-id-row {
   display: flex;
   align-items: center;
@@ -1500,7 +1526,7 @@ ul {
   }
 }
 
-/* ── PROCESSING OVERLAY ── */
+/* â”€â”€ PROCESSING OVERLAY â”€â”€ */
 .processing-overlay {
   position: fixed;
   inset: 0;
@@ -1564,7 +1590,7 @@ ul {
   margin-top: 12px;
 }
 
-/* ── PRINT ── */
+/* â”€â”€ PRINT â”€â”€ */
 @media print {
   .site-header,
   .site-footer,
@@ -1584,7 +1610,7 @@ ul {
   }
 }
 
-/* ── ACCESSIBILITY ── */
+/* â”€â”€ ACCESSIBILITY â”€â”€ */
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
@@ -1592,7 +1618,7 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* ── REDUCED MOTION ── */
+/* â”€â”€ REDUCED MOTION â”€â”€ */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -1602,3 +1628,4 @@ textarea:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
