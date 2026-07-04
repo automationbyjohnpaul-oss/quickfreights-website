@@ -38,18 +38,18 @@
     color 0.28s ease, background-color 0.28s ease, border-color 0.28s ease,
     transform 0.28s ease, box-shadow 0.28s ease;
   --header-height: 70px;
-  --overlay-dark: linear-gradient(
+   --overlay-dark: linear-gradient(
     90deg,
     rgba(10, 31, 63, 0.97) 0%,
     rgba(10, 31, 63, 0.92) 35%,
-    rgba(10, 31, 63, 0.7) 55%,
+    rgba(10, 31, 63, 0.70) 55%,
     rgba(10, 31, 63, 0.25) 75%,
-    rgba(10, 31, 63, 0) 100%
+    rgba(10, 31, 63, 0.00) 100%
   );
   --overlay-medium: linear-gradient(
     160deg,
     rgba(10, 31, 63, 0.94) 0%,
-    rgba(13, 43, 84, 0.9) 100%
+    rgba(13, 43, 84, 0.90) 100%
   );
 }
 
@@ -765,10 +765,11 @@ ul {
 .image-banner-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
+   background: linear-gradient(
     180deg,
     rgba(6, 15, 32, 0.55) 0%,
     rgba(6, 15, 32, 0.82) 100%
+  );
   );
   display: flex;
   align-items: center;
