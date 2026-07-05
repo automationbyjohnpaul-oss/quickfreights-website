@@ -561,9 +561,10 @@ ul {
     background: linear-gradient(
       to right,
       #0a1f3f 0%,
-      rgba(10, 31, 63, 0.6) 40%,
-      rgba(10, 31, 63, 0.1) 70%,
-      transparent 100%
+      #0a1f3f 15%,
+      rgba(10, 31, 63, 0.85) 35%,
+      rgba(10, 31, 63, 0.4) 60%,
+      rgba(10, 31, 63, 0) 100%
     );
     pointer-events: none;
     z-index: 2;
