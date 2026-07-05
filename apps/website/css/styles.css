@@ -1,4 +1,4 @@
-﻿/* ================================================================
+/* ================================================================
    QUICK FREIGHTS GLOBAL LIMITED â€” STYLESHEET v5.1
    Navy #0A1F3F Â· Gold #DAA520
    RC: 8106184 | A Bondex Bridge Multinational Terminal Ltd Company
@@ -88,7 +88,7 @@ ul {
   list-style: none;
 }
 
-  max-width: 1400px;
+  max-width: 1366px;
 
 
   margin: 0 auto;
@@ -1612,7 +1612,7 @@ ul {
   }
  .container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1366px;
   margin: 0 auto;
   padding: 0 var(--space-sm);
 }
