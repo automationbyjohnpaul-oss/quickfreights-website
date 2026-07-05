@@ -383,7 +383,7 @@ ul {
 /* ── HERO — SPLIT LAYOUT ── */
 .hero {
   display: flex;
-  min-height: min(560px, 85vh);
+  min-height: calc(100vh - var(--header-height));
   background: var(--navy);
   overflow: hidden;
 }
@@ -411,6 +411,17 @@ ul {
 }
 .hero-right {
   display: none;
+.hero-right::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 140px;
+  height: 100%;
+  background: linear-gradient(to right, #0a1f3f 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
 }
 .hero-right img {
   width: 100%;
@@ -530,7 +541,7 @@ ul {
 }
 @media (min-width: 768px) {
   .hero {
-    min-height: min(600px, 86vh);
+    min-height: calc(100vh - var(--header-height));
     align-items: stretch;
   }
   .hero-left {
@@ -552,7 +563,7 @@ ul {
 }
 @media (min-width: 1200px) {
   .hero {
-    min-height: min(640px, 87vh);
+    min-height: calc(100vh - var(--header-height));
   }
   .hero-left {
     width: 54%;
