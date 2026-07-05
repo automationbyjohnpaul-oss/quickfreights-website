@@ -392,7 +392,7 @@ ul {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 56px 0 44px;
+  padding: 56px var(--space-sm) 44px;
   background: var(--navy);
   flex-shrink: 0;
   position: relative;
@@ -528,6 +528,10 @@ ul {
   .hero-cta-group .btn {
     width: auto;
   }
+  .hero-left {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
 }
 @media (min-width: 768px) {
   .hero {
@@ -536,7 +540,7 @@ ul {
   }
   .hero-left {
     width: 52%;
-    padding: 64px 0;
+    padding: 64px var(--space-md);
   }
   .hero-left::after {
     display: none;
@@ -572,6 +576,12 @@ ul {
     object-position: right center;
     display: block;
     flex: 1;
+  }
+}
+@media (min-width: 992px) {
+  .hero-left {
+    padding-left: calc((100vw - 1200px) / 2 + 32px);
+    padding-right: calc((100vw - 1200px) / 2 + 32px);
   }
 }
 @media (min-width: 1200px) {
