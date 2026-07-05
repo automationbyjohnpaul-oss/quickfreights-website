@@ -1610,10 +1610,12 @@ ul {
     background: #fff;
     color: #000;
   }
-  .container {
-    max-width: 100%;
-    padding: 0;
-  }
+ .container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+}
 }
 
 /* ── ACCESSIBILITY ── */
