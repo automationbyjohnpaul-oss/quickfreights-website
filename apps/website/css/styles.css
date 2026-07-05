@@ -380,7 +380,7 @@ ul {
   }
 }
 
-'/* ── HERO — SPLIT LAYOUT ── */
+/* ── HERO — SPLIT LAYOUT ── */
 .hero {
   display: flex;
   min-height: min(560px, 85vh);
