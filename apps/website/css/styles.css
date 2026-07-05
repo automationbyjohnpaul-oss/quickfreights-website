@@ -416,8 +416,8 @@ ul {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
-  width: 140px;
+  left: -60px;
+  width: 260px;
   height: 100%;
   background: linear-gradient(to right, #0a1f3f 0%, transparent 100%);
   pointer-events: none;
