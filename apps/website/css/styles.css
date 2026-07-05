@@ -412,16 +412,17 @@ ul {
 .hero-right {
   display: none;
 }
-.hero-right::before {
+.hero-left::after {
   content: "";
   position: absolute;
   top: 0;
-  left: -60px;
+  right: -80px;
   width: 260px;
   height: 100%;
   background: linear-gradient(to right, #0a1f3f 0%, transparent 100%);
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
+  display: block;
 }
 .hero-right img {
   width: 100%;
