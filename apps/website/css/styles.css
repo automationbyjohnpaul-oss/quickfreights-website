@@ -218,10 +218,6 @@ ul {
   align-items: center;
   justify-content: space-between;
   height: 100%;
-  padding: 0 var(--space-sm);
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
 }
 .logo-link {
   display: flex;
@@ -525,10 +521,7 @@ ul {
   letter-spacing: 0.8px;
   margin-top: 4px;
 }
-@media (min-width: 576px) {
-  .hero-cta-group {
-    flex-direction: row;
-  }
+
   .hero-cta-group .btn {
     width: auto;
   }
@@ -725,11 +718,6 @@ ul {
 @media (min-width: 576px) {
   .expertise-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 992px) {
-  .expertise-grid {
-    grid-template-columns: repeat(4, 1fr);
   }
 }
 
