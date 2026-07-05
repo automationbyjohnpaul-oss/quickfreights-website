@@ -411,6 +411,7 @@ ul {
 }
 .hero-right {
   display: none;
+}
 .hero-right::before {
   content: "";
   position: absolute;
@@ -421,7 +422,6 @@ ul {
   background: linear-gradient(to right, #0a1f3f 0%, transparent 100%);
   pointer-events: none;
   z-index: 2;
-}
 }
 .hero-right img {
   width: 100%;
