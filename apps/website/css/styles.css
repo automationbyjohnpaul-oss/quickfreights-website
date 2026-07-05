@@ -380,7 +380,7 @@ ul {
   }
 }
 
-/* ── HERO — SPLIT LAYOUT ── */
+//* ── HERO — SPLIT LAYOUT ── */
 .hero {
   display: flex;
   min-height: calc(100vh - var(--header-height));
@@ -388,21 +388,7 @@ ul {
   overflow: hidden;
   position: relative;
 }
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 45%;
-  width: 15%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    rgba(10, 31, 63, 0.85) 0%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 10;
-}
+/* NOTE: .hero::after moved to desktop media query below */
 .hero-left {
   width: 100%;
   display: flex;
@@ -418,27 +404,15 @@ ul {
   position: absolute;
   top: 0;
   right: -80px;
-  width: 160px;
-  height: 100%;
-  background: linear-gradient(to right, #0a1f3f 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 2;
-  display: none;
-}
-.hero-right {
-  display: none;
-}
-.hero-left::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -80px;
   width: 260px;
   height: 100%;
   background: linear-gradient(to right, #0a1f3f 0%, transparent 100%);
   pointer-events: none;
   z-index: 3;
-  display: block;
+  display: none; /* Hidden on mobile, shown on desktop */
+}
+.hero-right {
+  display: none;
 }
 .hero-right img {
   width: 100%;
@@ -561,12 +535,27 @@ ul {
     min-height: calc(100vh - var(--header-height));
     align-items: stretch;
   }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 38%;
+    width: 28%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      rgba(10, 31, 63, 0.92) 0%,
+      rgba(10, 31, 63, 0.0) 100%
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
   .hero-left {
     width: 52%;
     padding: 64px 0;
   }
   .hero-left::after {
-    display: block;
+    display: block; /* Show the fade gradient on desktop */
   }
   .hero-right {
     display: flex;
@@ -589,7 +578,7 @@ ul {
     right: -100px;
     width: 200px;
   }
-}'
+}
 
 /* â”€â”€ SECTION HELPERS â”€â”€ */
 .section-header {
