@@ -219,16 +219,9 @@ ul {
   justify-content: space-between;
   height: 100%;
   padding: 0 var(--space-sm);
-}
-@media (min-width: 576px) {
-  .header-inner {
-    padding: 0 var(--space-md);
-  }
-}
-@media (min-width: 992px) {
-  .header-inner {
-    padding: 0 32px;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 .logo-link {
   display: flex;
@@ -562,14 +555,14 @@ ul {
     content: "";
     position: absolute;
     top: 0;
-    left: 0;
-    width: 55%;
+    left: -80px;
+    width: calc(55% + 80px);
     height: 100%;
     background: linear-gradient(
       to right,
       #0a1f3f 0%,
-      rgba(10, 31, 63, 0.7) 30%,
-      rgba(10, 31, 63, 0.2) 65%,
+      rgba(10, 31, 63, 0.6) 40%,
+      rgba(10, 31, 63, 0.1) 70%,
       transparent 100%
     );
     pointer-events: none;
