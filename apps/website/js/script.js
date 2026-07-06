@@ -1,7 +1,7 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4.1
+// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4.2
 // Configuration from body data-api | Real API responses | Staged progress UX
-// FIXED: QF_COMMUNICATION phone/email references
+// FIXED: Removed initFloatingWidget() — floating-widget.js handles everything
 // ================================================================
 var QF_CONFIG = {
   maxFileSize: 5 * 1024 * 1024,
@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
   initFormHandler();
   initFileUpload();
   initFormMemory();
-  initFloatingWidget();
 });
 
 // ── SUBMISSION METHOD CHOICE ──
@@ -86,29 +85,6 @@ function initSubmissionChoice() {
     backBtn.addEventListener("click", function () {
       showChoice();
     });
-  }
-}
-
-// ── FLOATING CONTACT WIDGET ──
-function initFloatingWidget() {
-  var whatsappLink = document.getElementById("floatingWhatsApp");
-  var callLink = document.getElementById("floatingCall");
-  var emailLink = document.getElementById("floatingEmail");
-
-  if (whatsappLink) {
-    whatsappLink.href = QF_COMMUNICATION.getWhatsAppUrl(
-      QF_COMMUNICATION.templates.whatsappSubmission(),
-    );
-    whatsappLink.target = "_blank";
-    whatsappLink.rel = "noopener noreferrer";
-  }
-
-  if (callLink) {
-    callLink.href = "tel:" + QF_COMMUNICATION.phone;
-  }
-
-  if (emailLink) {
-    emailLink.href = "mailto:" + QF_COMMUNICATION.email;
   }
 }
 
@@ -357,7 +333,6 @@ function showProcessingOverlay() {
     subtext.textContent =
       "Please keep this page open while we securely process your submission.";
   }
-  // Clear the initial reassurance after 8 seconds (stages provide enough context by then)
   setTimeout(function () {
     if (subtext && subtext.textContent.indexOf("keep this page open") > -1) {
       subtext.textContent = "";
@@ -368,21 +343,18 @@ function showProcessingOverlay() {
     var mins = String(Math.floor(processingSeconds / 60)).padStart(2, "0");
     var secs = String(processingSeconds % 60).padStart(2, "0");
     timer.textContent = mins + ":" + secs;
-    // Cycle through stages based on elapsed time
     for (var i = 0; i < processingStages.length; i++) {
       if (processingSeconds <= processingStages[i].max) {
         status.textContent = processingStages[i].message;
         break;
       }
     }
-    // After 15 seconds, provide network/attachment context
     if (processingSeconds === 15 && subtext) {
       subtext.textContent =
         "Large attachments or slower internet connections may take a little longer.";
     }
   }, 1000);
 }
-// Called just before showing success — truthful "Almost done" message
 function signalProcessingComplete() {
   var status = document.getElementById("processingStatus");
   if (status) {
@@ -446,7 +418,6 @@ async function handleFormSubmit(event) {
     attachmentName: fileName,
     attachmentData: fileData,
   };
-  // DIAGNOSTIC: Log the entire payload before sending
   var apiUrl = QF_CONFIG.apiUrl;
   if (!apiUrl) {
     console.error("API URL not configured.");
@@ -470,9 +441,7 @@ async function handleFormSubmit(event) {
     if (!data.success) {
       throw new Error(data.error || "Submission failed. Please try again.");
     }
-    // TRUTHFUL: Backend responded successfully — now show "Almost done"
     signalProcessingComplete();
-    // Brief pause so users can see the completion message
     await new Promise(function (resolve) {
       setTimeout(resolve, 800);
     });
@@ -480,13 +449,11 @@ async function handleFormSubmit(event) {
     successMsg.style.display = "block";
     errorMsg.style.display = "none";
     document.getElementById("trackingIdDisplay").textContent = data.trackingId;
-    // Display phone in local Nigerian format
     var displayPhone = formData.phoneNumber;
     if (displayPhone.startsWith("234") && displayPhone.length === 13) {
       displayPhone = "0" + displayPhone.substring(3);
     }
     document.getElementById("confirmPhone").textContent = displayPhone;
-    // Save customer details if opted in
     saveCustomerMemory(formData.customerName, formData.phoneNumber);
     successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
   } catch (error) {
@@ -534,9 +501,7 @@ function saveCustomerMemory(name, phone) {
         phoneNumber: phone,
       }),
     );
-  } catch (e) {
-    // localStorage not available — silently fail
-  }
+  } catch (e) {}
 }
 function loadCustomerMemory() {
   try {
@@ -549,9 +514,7 @@ function loadCustomerMemory() {
     if (nameEl && customer.customerName) nameEl.value = customer.customerName;
     if (phoneEl && customer.phoneNumber) phoneEl.value = customer.phoneNumber;
     if (rememberEl) rememberEl.checked = true;
-  } catch (e) {
-    // localStorage not available — silently fail
-  }
+  } catch (e) {}
 }
 function initFormMemory() {
   loadCustomerMemory();
@@ -600,7 +563,6 @@ function resetForm() {
   if (fileError) {
     fileError.textContent = "";
   }
-  // Clear copy feedback
   var copyFeedback = document.getElementById("copyFeedback");
   if (copyFeedback) {
     copyFeedback.textContent = "";

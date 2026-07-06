@@ -1,7 +1,7 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — FLOATING CONTACT WIDGET v1.0.2
+// QUICK FREIGHTS GLOBAL LIMITED — FLOATING CONTACT WIDGET v1.0.3
 // Generated via JS — single source, no HTML duplication
-// FIXED: Premium WhatsApp icon with gold ring (#D4AF37)
+// UPDATED: "Email Us" → "Email Support"
 // ================================================================
 
 (function () {
@@ -54,7 +54,7 @@
         </a>
         <a href="${QF_COMMUNICATION.getEmailUrl(QF_COMMUNICATION.subjects.enquiry)}" class="floating-item" role="menuitem" aria-label="Send email">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <span>Email Us</span>
+          <span>Email Support</span>
         </a>
       </div>
     </div>
