@@ -47,12 +47,34 @@
     <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
     <title>Contact Us | Quick Freights Global Limited</title>
     <link rel="stylesheet" href="css/styles.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      />
+    </noscript>
+
+    <link
+      rel="preload"
+      as="image"
+      href="images/page-header.webp"
+      fetchpriority="high"
+    />
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -71,9 +93,7 @@
       }
     </script>
   </head>
-  <body
-    data-api="https://script.google.com/macros/s/AKfycbxIc6aKphJc1YusqUjxy-22-tmIk03bR8DqJLh4rSq8vxiu_li-oC2_uYrACuqS21R0/exec"
-  >
+  <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <header class="site-header" role="banner">
@@ -119,7 +139,7 @@
               >
             </li>
             <li>
-              <a href="track.html" class="nav-link cta-nav">Start Shipment</a>
+              <a href="track.html" class="nav-link cta-nav">Cargo Portal</a>
             </li>
           </ul>
         </nav>
@@ -292,10 +312,8 @@
 
       <section class="cta-banner" aria-labelledby="cta-heading">
         <div class="container cta-banner-content">
-          <h2 id="cta-heading">
-            BOOK WITH US FOR A SMOOTH AND QUICK LOGISTICS EXPERIENCE
-          </h2>
-          <a href="track.html" class="btn btn-primary">Start Shipment</a>
+          <h2 id="cta-heading">READY TO MOVE YOUR CARGO?</h2>
+          <a href="track.html" class="btn btn-primary">Open Cargo Portal</a>
         </div>
       </section>
     </main>
@@ -318,21 +336,21 @@
               <span class="logo-sub">GLOBAL LIMITED</span>
             </div>
           </div>
-          <p>A Subsidiary of Bondex Bridge Multinational Terminal Limited.</p>
+          <p>A subsidiary of Bondex Bridge Multinational Terminal Limited</p>
           <p class="rc-note">RC: 8106184 · CAC Registered</p>
         </div>
         <div class="footer-links">
-          <h3>Quick Links</h3>
+          <h4>Quick Links</h4>
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="track.html">Start Shipment</a></li>
+            <li><a href="track.html">Cargo Portal</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h3>Our Services</h3>
+          <h4>Our Services</h4>
           <ul>
             <li><a href="services.html">Port Clearance</a></li>
             <li><a href="services.html">Freight Forwarding</a></li>
@@ -341,7 +359,7 @@
           </ul>
         </div>
         <div class="footer-contact">
-          <h3>Onitsha Office</h3>
+          <h4>Onitsha Office</h4>
           <p>
             3rd Floor, Right Wing, D1 Block<br />Eagle Plaza, 56 Bida Road<br />Fege,
             Onitsha, Anambra State

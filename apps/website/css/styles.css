@@ -1636,6 +1636,9 @@ ul {
   color: var(--gold);
 }
 
+.floating-item:first-child svg {
+  color: #25d366;
+}
 @media (max-width: 576px) {
   .floating-widget {
     bottom: calc(24px + env(safe-area-inset-bottom, 0px));

@@ -1,12 +1,13 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — FLOATING CONTACT WIDGET v1.0.0
+// QUICK FREIGHTS GLOBAL LIMITED — FLOATING CONTACT WIDGET v1.0.2
 // Generated via JS — single source, no HTML duplication
+// FIXED: Premium WhatsApp icon with gold ring (#D4AF37)
 // ================================================================
 
 (function () {
   if (!window.QF_COMMUNICATION) return;
 
-  var isTrackPage = window.location.pathname.indexOf('track.html') > -1;
+  var isTrackPage = window.location.pathname.indexOf("track.html") > -1;
   var waTemplate = isTrackPage
     ? QF_COMMUNICATION.templates.whatsappSubmission()
     : QF_COMMUNICATION.templates.whatsappGeneral();
@@ -19,8 +20,28 @@
         </svg>
       </button>
       <div class="floating-menu" id="floatingMenu" role="menu">
-        <a href="${QF_COMMUNICATION.getWhatsAppUrl(waTemplate)}" class="floating-item" role="menuitem" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <a href="${QF_COMMUNICATION.getWhatsAppUrl(waTemplate)}"
+           class="floating-item"
+           role="menuitem"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Chat on WhatsApp">
+          <svg width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Gold outer ring -->
+            <circle
+              cx="16"
+              cy="16"
+              r="15"
+              fill="#25D366"
+              stroke="#D4AF37"
+              stroke-width="2.5"
+            />
+            <!-- WhatsApp logo -->
+            <path
+              fill="#FFFFFF"
+              d="M16 7.2c-4.85 0-8.8 3.95-8.8 8.8 0 1.55.41 3.06 1.18 4.39L7.2 24.8l4.52-1.18A8.76 8.76 0 0 0 16 24.8c4.85 0 8.8-3.95 8.8-8.8S20.85 7.2 16 7.2zm0 15.9a7.08 7.08 0 0 1-3.6-.99l-.26-.15-2.68.7.72-2.61-.17-.27a7.07 7.07 0 1 1 5.99 3.32zm3.9-5.3c-.21-.11-1.24-.61-1.43-.68-.19-.07-.33-.11-.47.11s-.54.68-.66.82c-.12.14-.24.16-.45.05-.21-.11-.88-.32-1.68-1.01-.62-.55-1.04-1.22-1.16-1.43-.12-.21-.01-.33.09-.44.09-.09.21-.24.31-.36.1-.12.14-.21.21-.35.07-.14.04-.26-.02-.36-.05-.11-.47-1.14-.64-1.56-.17-.41-.35-.36-.47-.37h-.4c-.14 0-.36.05-.55.26-.19.21-.73.71-.73 1.74s.75 2.03.86 2.17c.11.14 1.47 2.24 3.56 3.14.5.22.9.35 1.2.45.5.16.95.14 1.31.08.4-.06 1.24-.51 1.41-1 .17-.49.17-.92.12-1.01-.05-.09-.19-.14-.4-.25z"
+            />
+          </svg>
           <span>WhatsApp</span>
         </a>
         <a href="track.html" class="floating-item" role="menuitem" aria-label="Track your shipment">
@@ -39,19 +60,19 @@
     </div>
   `;
 
-  document.body.insertAdjacentHTML('beforeend', html);
+  document.body.insertAdjacentHTML("beforeend", html);
 
   // ── WIDGET BEHAVIOUR ──
-  var widget = document.getElementById('floatingWidget');
-  var toggle = document.getElementById('floatingToggle');
-  var menu = document.getElementById('floatingMenu');
-  var items = menu.querySelectorAll('.floating-item');
+  var widget = document.getElementById("floatingWidget");
+  var toggle = document.getElementById("floatingToggle");
+  var menu = document.getElementById("floatingMenu");
+  var items = menu.querySelectorAll(".floating-item");
 
   if (!widget || !toggle || !menu) return;
 
   function openMenu() {
-    widget.classList.add('is-open');
-    toggle.setAttribute('aria-expanded', 'true');
+    widget.classList.add("is-open");
+    toggle.setAttribute("aria-expanded", "true");
     // Focus first menu item
     setTimeout(function () {
       items[0].focus();
@@ -59,27 +80,29 @@
   }
 
   function closeMenu() {
-    widget.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
+    widget.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
     toggle.focus();
   }
 
-  toggle.addEventListener('click', function (e) {
+  toggle.addEventListener("click", function (e) {
     e.stopPropagation();
-    widget.classList.contains('is-open') ? closeMenu() : openMenu();
+    widget.classList.contains("is-open") ? closeMenu() : openMenu();
   });
 
-  document.addEventListener('click', function () {
-    if (widget.classList.contains('is-open')) closeMenu();
+  document.addEventListener("click", function () {
+    if (widget.classList.contains("is-open")) closeMenu();
   });
 
-  menu.addEventListener('click', function (e) {
+  menu.addEventListener("click", function (e) {
     e.stopPropagation();
-    setTimeout(function () { closeMenu(); }, 150);
+    setTimeout(function () {
+      closeMenu();
+    }, 150);
   });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && widget.classList.contains('is-open')) {
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && widget.classList.contains("is-open")) {
       closeMenu();
     }
   });

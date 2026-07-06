@@ -66,12 +66,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       as="style"
-      onload="
-        this.onload = null;
-        this.rel = 'stylesheet';
-      "
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      media="print"
+      onload="this.media = 'all'"
     />
     <noscript>
       <link
@@ -144,7 +146,7 @@
             <li><a href="services.html" class="nav-link">Services</a></li>
             <li><a href="contact.html" class="nav-link">Contact</a></li>
             <li>
-              <a href="track.html" class="nav-link cta-nav">Start Shipment</a>
+              <a href="track.html" class="nav-link cta-nav">Cargo Portal</a>
             </li>
           </ul>
         </nav>
@@ -178,22 +180,24 @@
                   <a href="services.html" class="btn btn-primary"
                     >Our Services</a
                   >
-                  <a href="track.html" class="btn btn-outline"
-                    >Start Shipment</a
-                  >
+                  <a href="track.html" class="btn btn-outline">Cargo Portal</a>
                 </div>
                 <div class="hero-stats">
                   <div class="stat-item">
-                    <span class="stat-number">Port Harcourt</span>
-                    <span class="stat-label">Onne Port Hub</span>
+                    <span class="stat-number">RC: 8106184</span>
+                    <span class="stat-label">CAC Registered</span>
                   </div>
                   <div class="stat-item">
-                    <span class="stat-number">Onitsha</span>
-                    <span class="stat-label">Eastern Operations</span>
+                    <span class="stat-number">Licensed</span>
+                    <span class="stat-label">Customs Brokerage</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-number">Onne Port</span>
+                    <span class="stat-label">Operations</span>
                   </div>
                   <div class="stat-item">
                     <span class="stat-number">24/7</span>
-                    <span class="stat-label">Reliable Service</span>
+                    <span class="stat-label">Cargo Support</span>
                   </div>
                 </div>
               </div>
@@ -342,10 +346,10 @@
                 <img
                   src="images/customs-brokerage.webp"
                   alt="Customs Brokerage &amp; Clearance"
-                  width="800"
-                  height="500"
                   loading="lazy"
                   decoding="async"
+                  width="800"
+                  height="500"
                 />
                 <div class="expertise-icon-overlay" aria-hidden="true">
                   <svg width="22" height="22" viewBox="0 0 52 52" fill="none">
@@ -382,10 +386,10 @@
                 <img
                   src="images/international-freight.webp"
                   alt="International Freight Forwarding"
-                  width="800"
-                  height="500"
                   loading="lazy"
                   decoding="async"
+                  width="800"
+                  height="500"
                 />
                 <div class="expertise-icon-overlay" aria-hidden="true">
                   <svg width="22" height="22" viewBox="0 0 52 52" fill="none">
@@ -419,10 +423,10 @@
                 <img
                   src="images/integrated-logistics.webp"
                   alt="Integrated Logistics Solutions"
-                  width="800"
-                  height="500"
                   loading="lazy"
                   decoding="async"
+                  width="800"
+                  height="500"
                 />
                 <div class="expertise-icon-overlay" aria-hidden="true">
                   <svg width="22" height="22" viewBox="0 0 52 52" fill="none">
@@ -461,10 +465,10 @@
                 <img
                   src="images/warehousing-distribution.webp"
                   alt="Warehousing &amp; Distribution"
-                  width="800"
-                  height="500"
                   loading="lazy"
                   decoding="async"
+                  width="800"
+                  height="500"
                 />
                 <div class="expertise-icon-overlay" aria-hidden="true">
                   <svg width="22" height="22" viewBox="0 0 52 52" fill="none">
@@ -566,14 +570,12 @@
 
       <section class="cta-banner" aria-labelledby="cta-heading">
         <div class="container cta-banner-content">
-          <h2 id="cta-heading">
-            BOOK WITH US FOR A SMOOTH AND QUICK LOGISTICS EXPERIENCE
-          </h2>
+          <h2 id="cta-heading">READY TO MOVE YOUR CARGO?</h2>
           <p>
-            Ready to clear your cargo? Start your shipment online or send your
-            documents securely via WhatsApp.
+            Access the Cargo Portal to submit documents or chat with a
+            specialist.
           </p>
-          <a href="track.html" class="btn btn-primary">Start Shipment</a>
+          <a href="track.html" class="btn btn-primary">Open Cargo Portal</a>
         </div>
       </section>
     </main>
@@ -586,6 +588,8 @@
               <img
                 src="images/logo.png"
                 alt=""
+                loading="lazy"
+                decoding="async"
                 width="38"
                 height="38"
                 aria-hidden="true"
@@ -596,7 +600,7 @@
               <span class="logo-sub">GLOBAL LIMITED</span>
             </div>
           </div>
-          <p>A Subsidiary of Bondex Bridge Multinational Terminal Limited</p>
+          <p>A subsidiary of Bondex Bridge Multinational Terminal Limited</p>
           <p class="rc-note">RC: 8106184 · CAC Registered</p>
         </div>
         <div class="footer-links">
@@ -605,7 +609,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="track.html">Start Shipment</a></li>
+            <li><a href="track.html">Cargo Portal</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
@@ -646,59 +650,6 @@
         </div>
       </div>
     </footer>
-
-    <!-- Floating Contact Widget -->
-    <div
-      class="floating-widget"
-      id="floatingWidget"
-      role="complementary"
-      aria-label="Quick contact options"
-    >
-      <div class="floating-menu" id="floatingMenu">
-        <a href="#" class="floating-item" id="floatingWhatsApp">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-            />
-          </svg>
-          <span>WhatsApp</span>
-        </a>
-        <a href="#" class="floating-item" id="floatingCall">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1.003 1.003 0 011.01-.25c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.1.31.03.66-.25 1.01l-2.2 2.2z"
-            />
-          </svg>
-          <span>Call Us</span>
-        </a>
-        <a href="#" class="floating-item" id="floatingEmail">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
-            />
-          </svg>
-          <span>Email Us</span>
-        </a>
-      </div>
-      <button
-        class="floating-toggle"
-        id="floatingToggle"
-        aria-label="Open contact options"
-        aria-expanded="false"
-      >
-        <svg
-          class="floating-toggle-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="var(--gold)"
-          stroke-width="2.5"
-          stroke-linecap="round"
-        >
-          <line x1="12" y1="5" x2="12" y2="19" />
-          <line x1="5" y1="12" x2="19" y2="12" />
-        </svg>
-      </button>
-    </div>
 
     <script src="js/communication.config.js"></script>
     <script src="js/floating-widget.js"></script>
