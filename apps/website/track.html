@@ -8,17 +8,17 @@
     />
     <meta
       name="description"
-      content="Access the Cargo Portal to submit documents or chat with a cargo specialist."
+      content="Track your cargo shipment with Quick Freights Global Limited. Submit customs documents, monitor clearance status, and get real-time updates. RC: 8106184."
     />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0A1F3F" />
     <meta
       property="og:title"
-      content="Cargo Portal | Quick Freights Global Limited"
+      content="Cargo Tracking & Document Submission Portal — Quick Freights Global"
     />
     <meta
       property="og:description"
-      content="Access the Cargo Portal to submit documents or chat with a cargo specialist."
+      content="Track your cargo shipment, submit customs documents, and monitor clearance status in real-time. Secure portal for all your logistics needs."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -32,20 +32,25 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Cargo Portal | Quick Freights Global Limited"
+      content="Cargo Tracking & Document Submission Portal — Quick Freights Global"
     />
     <meta
       name="twitter:description"
-      content="Access the Cargo Portal to submit documents or chat with a cargo specialist."
+      content="Track your cargo shipment, submit customs documents, and monitor clearance status in real-time. Secure portal for all your logistics needs."
     />
     <meta
       name="twitter:image"
       content="https://quickfreightsglobal.com/images/og-image.jpg"
     />
     <link rel="canonical" href="https://quickfreightsglobal.com/track.html" />
-    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <title>Cargo Portal | Quick Freights Global Limited</title>
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+
+    <!-- OPTIMIZED TITLE WITH PRIMARY KEYWORDS -->
+    <title>
+      Cargo Tracking & Document Submission Portal — Quick Freights Global
+    </title>
+
     <link rel="stylesheet" href="css/styles.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -74,12 +79,30 @@
       href="images/page-header.webp"
       fetchpriority="high"
     />
+
+    <!-- SCHEMA.ORG MARKUP FOR SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Quick Freights Cargo Tracking Portal",
+        "url": "https://quickfreightsglobal.com/track.html",
+        "description": "Secure online portal for tracking cargo shipments, submitting customs documentation, and monitoring clearance status.",
+        "applicationCategory": "Logistics",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "provider": {
+          "@type": "Organization",
+          "name": "Quick Freights Global Limited"
+        }
+      }
+    </script>
   </head>
-  <body
-    data-api="https://script.google.com/macros/s/AKfycbxIc6aKphJc1YusqUjxy-22-tmIk03bR8DqJLh4rSq8vxiu_li-oC2_uYrACuqS21R0/exec"
-  >
+  <body>
+    <!-- SKIP LINK FOR ACCESSIBILITY -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
+    <!-- HEADER -->
     <header class="site-header" role="banner">
       <div class="container header-inner">
         <a
@@ -119,7 +142,10 @@
             <li><a href="services.html" class="nav-link">Services</a></li>
             <li><a href="contact.html" class="nav-link">Contact</a></li>
             <li>
-              <a href="track.html" class="nav-link cta-nav" aria-current="page"
+              <a
+                href="track.html"
+                class="nav-link cta-nav active"
+                aria-current="page"
                 >Cargo Portal</a
               >
             </li>
@@ -128,266 +154,373 @@
       </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main id="main-content">
+      <!-- PAGE HEADER -->
       <section class="page-header" aria-labelledby="track-heading">
         <div class="container">
           <span class="section-tag">Cargo Portal</span>
-          <h1 id="track-heading">Cargo Portal</h1>
-          <p>Submit documents or chat with a cargo specialist.</p>
+          <h1 id="track-heading">Track Your Cargo &amp; Submit Documents</h1>
+          <p>
+            Submit bill of lading documents, check clearance status, and stay
+            updated on your shipment — all in one place.
+          </p>
         </div>
       </section>
 
-      <!-- SUBMISSION METHOD CHOICE -->
-      <section
-        class="submission-choice"
-        id="submissionChoice"
-        aria-labelledby="choice-heading"
-      >
+      <!-- SUBMISSION CHOICE -->
+      <section class="submission-choice" aria-labelledby="choice-heading">
         <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Cargo Portal</span>
-            <h2 class="section-title" id="choice-heading">
-              Welcome to the Cargo Portal
-            </h2>
-          </div>
-          <div class="choice-grid">
-            <button
-              class="choice-card"
-              id="btnOnline"
-              data-method="online"
-              aria-label="Submit Online"
+          <h2 id="choice-heading" class="visually-hidden">
+            Choose Submission Type
+          </h2>
+          <div
+            class="choice-grid"
+            role="radiogroup"
+            aria-label="Submission type"
+          >
+            <div
+              class="choice-card is-active"
+              role="radio"
+              aria-checked="true"
+              tabindex="0"
+              data-choice="new"
             >
-              <span class="choice-icon">⚡</span>
-              <h3>Submit Online</h3>
-              <p>Automatic Tracking ID</p>
-            </button>
-            <span class="choice-divider">OR</span>
-            <button
+              <span class="choice-icon" aria-hidden="true">📄</span>
+              <h3>New Submission</h3>
+              <p>Submit a new bill of lading for clearance</p>
+            </div>
+            <span class="choice-divider" aria-hidden="true">or</span>
+            <div
               class="choice-card"
-              id="btnWhatsApp"
-              data-method="whatsapp"
-              aria-label="Submit via WhatsApp"
+              role="radio"
+              aria-checked="false"
+              tabindex="0"
+              data-choice="existing"
             >
-              <span class="choice-icon">👥</span>
-              <h3>Submit via WhatsApp</h3>
-              <p>We Handle the Rest</p>
-            </button>
+              <span class="choice-icon" aria-hidden="true">🔍</span>
+              <h3>Track Existing</h3>
+              <p>Check the status of your current submission</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- FORM SECTION (hidden initially) -->
-      <section
-        class="form-section is-hidden"
-        id="formSection"
-        aria-labelledby="form-heading"
-      >
-        <div class="container form-container">
-          <h2 id="form-heading" class="visually-hidden">
-            Cargo Portal — Document Submission
-          </h2>
+      <!-- FORM SECTION -->
+      <section class="form-section" aria-labelledby="form-heading">
+        <div class="container">
+          <div class="form-container" id="formContainer">
+            <h2 id="form-heading" class="visually-hidden">Submission Form</h2>
 
-          <!-- SUCCESS MESSAGE -->
-          <div
-            id="successMessage"
-            class="success-message"
-            style="display: none"
-          >
-            <div class="success-icon">✅</div>
-            <h2>Submission Successful!</h2>
-            <p>Your documents have been submitted successfully.</p>
-            <div class="tracking-id-row">
-              <span class="tracking-id-value" id="trackingIdDisplay"
-                >QFL-XXXXX</span
-              >
-              <button
-                class="copy-btn"
-                onclick="copyTrackingId()"
-                aria-label="Copy tracking ID"
-              >
-                📋 Copy ID
-              </button>
-            </div>
-            <span id="copyFeedback" class="copy-feedback"></span>
-            <p>
-              <strong>We will send SMS updates to:</strong>
-              <span id="confirmPhone">080XXXXXXXX</span>
-            </p>
-            <p class="note">
-              Our team will begin processing your shipment shortly.
-            </p>
-            <button class="btn btn-primary" onclick="resetForm()">
-              Submit Another
-            </button>
-          </div>
+            <!-- NEW SUBMISSION FORM -->
+            <form
+              id="blForm"
+              class="bl-form"
+              novalidate
+              autocomplete="on"
+              aria-describedby="form-description"
+            >
+              <p id="form-description" class="visually-hidden">
+                Complete all required fields to submit your bill of lading for
+                clearance processing.
+              </p>
 
-          <!-- ERROR MESSAGE -->
-          <div id="errorMessage" class="error-message" style="display: none">
-            <div class="error-icon">❌</div>
-            <h2>Submission Failed</h2>
-            <p id="errorText">Please try again or contact support.</p>
-            <button class="btn btn-primary" onclick="resetForm()">
-              Try Again
-            </button>
-          </div>
-
-          <!-- FORM -->
-          <form id="blForm" class="bl-form" novalidate>
-            <div class="form-group">
-              <label for="customerName"
-                >Full Name <span class="required">*</span></label
-              >
-              <input
-                type="text"
-                id="customerName"
-                name="customerName"
-                required
-                autocomplete="name"
-              />
-              <span class="field-error" id="nameError"></span>
-            </div>
-            <div class="form-group">
-              <label for="customerEmail"
-                >Email Address <span class="required">*</span></label
-              >
-              <input
-                type="email"
-                id="customerEmail"
-                name="customerEmail"
-                required
-                autocomplete="email"
-              />
-              <span class="field-error" id="emailError"></span>
-            </div>
-            <div class="form-group">
-              <label for="phoneNumber"
-                >Phone Number <span class="required">*</span></label
-              >
-              <input
-                type="tel"
-                id="phoneNumber"
-                name="phoneNumber"
-                required
-                autocomplete="tel"
-              />
-              <span class="field-error" id="phoneError"></span>
-            </div>
-            <div class="form-group">
-              <label for="blNumber"
-                >Bill of Lading Number <span class="required">*</span></label
-              >
-              <input type="text" id="blNumber" name="blNumber" required />
-              <span class="field-error" id="blError"></span>
-            </div>
-            <div class="form-group">
-              <label for="containerNumber"
-                >Container Number <span class="required">*</span></label
-              >
-              <input
-                type="text"
-                id="containerNumber"
-                name="containerNumber"
-                required
-                placeholder="e.g. MSCU1234567"
-              />
-              <span class="field-error" id="containerError"></span>
-            </div>
-            <div class="form-group">
-              <label for="cargoDescription"
-                >Cargo Description <span class="required">*</span></label
-              >
-              <textarea
-                id="cargoDescription"
-                name="cargoDescription"
-                rows="3"
-                required
-              ></textarea>
-              <span class="field-error" id="cargoError"></span>
-            </div>
-            <div class="form-group">
-              <label for="attachment"
-                >Upload Bill of Lading (PDF, JPG, PNG)
-                <span class="required">*</span></label
-              >
-              <div class="file-upload-wrapper" id="fileUploadWrapper">
+              <!-- REFERENCE NUMBER -->
+              <div class="form-group">
+                <label for="blReference">
+                  Reference / BL Number
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
                 <input
-                  type="file"
-                  id="attachment"
-                  name="attachment"
-                  class="file-input"
-                  accept=".pdf,.jpg,.jpeg,.png"
+                  type="text"
+                  id="blReference"
+                  name="blReference"
+                  placeholder="e.g. QF-2024-001234"
                   required
+                  aria-required="true"
+                  autocomplete="off"
+                  maxlength="50"
                 />
-                <label for="attachment" class="file-upload-label">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
+                <span
+                  class="field-error"
+                  id="blReference-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- SHIPPER NAME -->
+              <div class="form-group">
+                <label for="shipperName">
+                  Shipper / Consignor Name
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="shipperName"
+                  name="shipperName"
+                  placeholder="Full name of shipper or consignor"
+                  required
+                  aria-required="true"
+                  autocomplete="name"
+                />
+                <span
+                  class="field-error"
+                  id="shipperName-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- CONSIGNEE NAME -->
+              <div class="form-group">
+                <label for="consigneeName">
+                  Consignee Name
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="consigneeName"
+                  name="consigneeName"
+                  placeholder="Full name of consignee"
+                  required
+                  aria-required="true"
+                  autocomplete="name"
+                />
+                <span
+                  class="field-error"
+                  id="consigneeName-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- CONSIGNEE PHONE -->
+              <div class="form-group">
+                <label for="consigneePhone">
+                  Consignee Phone Number
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="consigneePhone"
+                  name="consigneePhone"
+                  placeholder="e.g. 08012345678"
+                  required
+                  aria-required="true"
+                  autocomplete="tel"
+                />
+                <span
+                  class="field-error"
+                  id="consigneePhone-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- CONSIGNEE EMAIL -->
+              <div class="form-group">
+                <label for="consigneeEmail">
+                  Consignee Email
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="consigneeEmail"
+                  name="consigneeEmail"
+                  placeholder="email@example.com"
+                  required
+                  aria-required="true"
+                  autocomplete="email"
+                />
+                <span
+                  class="field-error"
+                  id="consigneeEmail-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- CARGO DESCRIPTION -->
+              <div class="form-group">
+                <label for="cargoDescription">
+                  Cargo Description
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <textarea
+                  id="cargoDescription"
+                  name="cargoDescription"
+                  placeholder="Brief description of goods (e.g., 10 containers of electronics)"
+                  required
+                  aria-required="true"
+                ></textarea>
+                <span
+                  class="field-error"
+                  id="cargoDescription-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- PORT OF DISCHARGE -->
+              <div class="form-group">
+                <label for="portOfDischarge">
+                  Port of Discharge
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="portOfDischarge"
+                  name="portOfDischarge"
+                  placeholder="e.g. Onne Port, Tincan Port, Apapa Port"
+                  required
+                  aria-required="true"
+                />
+                <span
+                  class="field-error"
+                  id="portOfDischarge-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- EXPECTED ARRIVAL -->
+              <div class="form-group">
+                <label for="expectedArrival">
+                  Expected Arrival Date
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="date"
+                  id="expectedArrival"
+                  name="expectedArrival"
+                  required
+                  aria-required="true"
+                />
+                <span
+                  class="field-error"
+                  id="expectedArrival-error"
+                  role="alert"
+                ></span>
+              </div>
+
+              <!-- FILE UPLOAD -->
+              <div class="form-group">
+                <label for="blFile">
+                  Upload Bill of Lading
+                  <span class="required" aria-hidden="true">*</span>
+                </label>
+                <div class="file-upload-wrapper" id="fileWrapper">
+                  <input
+                    type="file"
+                    id="blFile"
+                    name="blFile"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                    required
+                    aria-required="true"
+                    aria-describedby="file-help"
+                  />
+                  <div class="file-upload-label" id="fileLabel">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="17 8 12 3 7 8" />
+                      <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    <span id="fileLabelText"
+                      >Choose file or drag &amp; drop</span
+                    >
+                  </div>
+                  <small id="file-help"
+                    >Accepted: PDF, JPG, PNG, DOC (Max 10MB)</small
                   >
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                    <polyline points="17 8 12 3 7 8" />
-                    <line x1="12" y1="3" x2="12" y2="15" />
-                  </svg>
-                  <span id="fileLabel">Click to upload or drag &amp; drop</span>
+                </div>
+                <span class="field-error" id="blFile-error" role="alert"></span>
+              </div>
+
+              <!-- REMEMBER ME -->
+              <div class="form-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="rememberMe" name="rememberMe" />
+                  <span>Remember me on this device for faster submissions</span>
                 </label>
               </div>
-              <span id="fileInfo" style="font-size: 0.78rem; color: var(--grey)"
-                >PDF, JPG, PNG, or DOC (max 5MB)</span
-              >
-              <span class="field-error" id="fileError"></span>
+
+              <!-- SUBMIT BUTTON -->
+              <div>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-full"
+                  id="submitBtn"
+                >
+                  <span id="submitText">Submit Bill of Lading</span>
+                  <span
+                    id="submitSpinner"
+                    class="spinner-small"
+                    style="display: none"
+                  ></span>
+                </button>
+                <small class="note">
+                  🔒 Your documents are encrypted and securely transmitted.
+                </small>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRUST BAR -->
+      <section class="trust-bar" aria-label="Company credentials">
+        <div class="container">
+          <div class="trust-grid">
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <div>
+                <strong>Secure Portal</strong>
+                <span>256-bit encryption</span>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="rememberMe" name="rememberMe" />
-                Remember my details for next time
-              </label>
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <div>
+                <strong>24/7 Access</strong>
+                <span>Submit anytime</span>
+              </div>
             </div>
-            <button
-              type="submit"
-              id="submitBtn"
-              class="btn btn-primary btn-full"
-            >
-              Submit Documents
-            </button>
-          </form>
-          <p style="text-align: center; margin-top: 20px">
-            <button
-              type="button"
-              id="backToChoice"
-              class="btn btn-outline-dark"
-            >
-              ← Choose Different Method
-            </button>
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <div>
+                <strong>Fast Processing</strong>
+                <span>Priority clearance</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <span class="trust-check">✓</span>
+              <div>
+                <strong>Real-time Updates</strong>
+                <span>Track your cargo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA BANNER -->
+      <section class="cta-banner" aria-labelledby="track-cta-heading">
+        <div class="container cta-banner-content">
+          <h2 id="track-cta-heading">Need Help With Your Submission?</h2>
+          <p>
+            Contact our support team for assistance with document submission or
+            cargo tracking.
           </p>
+          <a href="contact.html" class="btn btn-primary">Contact Support</a>
         </div>
       </section>
     </main>
 
-    <!-- PROCESSING OVERLAY -->
-    <div
-      id="processingOverlay"
-      class="processing-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="processingHeading"
-    >
-      <div class="processing-card">
-        <div class="spinner" aria-hidden="true"></div>
-        <h2 id="processingHeading">Processing Your Submission</h2>
-        <p id="processingStatus" class="processing-status">
-          Validating your information...
-        </p>
-        <p id="processingSubtext" class="processing-subtext">
-          Please keep this page open while we securely process your submission.
-        </p>
-        <div id="elapsedTime" class="processing-timer">00:00</div>
-        <p class="processing-note">Do not refresh or close this page.</p>
-      </div>
-    </div>
-
+    <!-- FOOTER -->
     <footer class="site-footer" role="contentinfo">
       <div class="container footer-grid">
         <div class="footer-brand">
@@ -396,10 +529,8 @@
               <img
                 src="images/logo.png"
                 alt=""
-                loading="lazy"
-                decoding="async"
-                width="38"
-                height="38"
+                width="40"
+                height="40"
                 aria-hidden="true"
               />
             </div>
@@ -424,10 +555,10 @@
         <div class="footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="services.html">Customs Clearance</a></li>
+            <li><a href="services.html">Port Clearance</a></li>
             <li><a href="services.html">Freight Forwarding</a></li>
-            <li><a href="services.html">Logistics Solutions</a></li>
-            <li><a href="services.html">Warehousing</a></li>
+            <li><a href="services.html">End-to-End Logistics</a></li>
+            <li><a href="services.html">Customs Documentation</a></li>
           </ul>
         </div>
         <div class="footer-contact">
@@ -452,13 +583,13 @@
         <div class="container">
           <p>
             &copy; <span id="copyrightYear"></span> Quick Freights Global
-            Limited. All rights reserved. | A Bondex Bridge Multinational
-            Terminal Limited Company | RC: 8106184
+            Limited. All rights reserved. | RC: 8106184
           </p>
         </div>
       </div>
     </footer>
 
+    <!-- SCRIPTS -->
     <script src="js/communication.config.js"></script>
     <script src="js/floating-widget.js"></script>
     <script defer src="js/script.js"></script>
