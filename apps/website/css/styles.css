@@ -627,6 +627,64 @@ ul {
   }
 }
 
+/* ── HOW IT WORKS ── */
+.how-it-works {
+  padding: var(--space-xl) 0;
+  background: var(--white);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+.step-card {
+  text-align: center;
+  padding: var(--space-md) var(--space-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition);
+}
+
+.step-card:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-md);
+}
+
+.step-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: var(--space-xs);
+}
+
+.step-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.step-card p {
+  font-size: 0.88rem;
+  color: var(--grey);
+  line-height: 1.6;
+}
+
+@media (min-width: 576px) {
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* ── SUBMISSION CHOICE ── */
 .is-hidden {
   display: none;
