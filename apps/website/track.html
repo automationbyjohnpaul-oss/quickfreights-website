@@ -8,17 +8,17 @@
     />
     <meta
       name="description"
-      content="Submit your Bill of Lading to Quick Freights Global Limited. Attach documents and receive your tracking ID instantly. RC: 8106184."
+      content="Start your shipment with Quick Freights Global Limited. Submit documents online or via WhatsApp and receive your tracking ID. RC: 8106184."
     />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0A1F3F" />
     <meta
       property="og:title"
-      content="Submit Bill of Lading | Quick Freights Global Limited"
+      content="Start Your Shipment | Quick Freights Global Limited"
     />
     <meta
       property="og:description"
-      content="Submit your Bill of Lading online. Receive a tracking ID instantly and get SMS notifications when your cargo is cleared."
+      content="Start your shipment online. Receive a tracking ID instantly and get notified when your cargo is cleared."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -32,11 +32,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Submit Bill of Lading | Quick Freights Global Limited"
+      content="Start Your Shipment | Quick Freights Global Limited"
     />
     <meta
       name="twitter:description"
-      content="Submit your Bill of Lading online. Receive a tracking ID instantly and get SMS notifications when your cargo is cleared."
+      content="Start your shipment online. Receive a tracking ID instantly and get notified when your cargo is cleared."
     />
     <meta
       name="twitter:image"
@@ -45,31 +45,25 @@
     <link rel="canonical" href="https://quickfreightsglobal.com/track.html" />
     <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <title>Submit Bill of Lading | Quick Freights Global Limited</title>
+    <title>Start Your Shipment | Quick Freights Global Limited</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
     />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Quick Freights Global Limited",
-        "url": "https://quickfreightsglobal.com",
-        "telephone": "+2348063388230",
-        "email": "reception.quickfreightglobal@gmail.com",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "3rd Floor, Right Wing, D1 Block, Eagle Plaza, 56 Bida Road",
-          "addressLocality": "Onitsha",
-          "addressRegion": "Anambra State",
-          "addressCountry": "NG"
-        }
-      }
-    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      />
+    </noscript>
   </head>
   <body
     data-api="https://script.google.com/macros/s/AKfycbxIc6aKphJc1YusqUjxy-22-tmIk03bR8DqJLh4rSq8vxiu_li-oC2_uYrACuqS21R0/exec"
@@ -115,11 +109,8 @@
             <li><a href="services.html" class="nav-link">Services</a></li>
             <li><a href="contact.html" class="nav-link">Contact</a></li>
             <li>
-              <a
-                href="track.html"
-                class="nav-link cta-nav active"
-                aria-current="page"
-                >Submit B/L</a
+              <a href="track.html" class="nav-link cta-nav" aria-current="page"
+                >Start Shipment</a
               >
             </li>
           </ul>
@@ -130,20 +121,105 @@
     <main id="main-content">
       <section class="page-header" aria-labelledby="track-heading">
         <div class="container">
-          <span class="section-tag">Get Started</span>
-          <h1 id="track-heading">Submit Your Bill of Lading</h1>
-          <p>
-            Fill out the form and attach your documents. You'll receive a
-            tracking ID instantly, and an SMS when your cargo is cleared.
-          </p>
+          <span class="section-tag">Shipping Portal</span>
+          <h1 id="track-heading">Start Shipment</h1>
+          <p>Fast, secure, and reliable document submission for your cargo.</p>
         </div>
       </section>
 
-      <section class="form-section" aria-labelledby="form-heading">
+      <!-- SUBMISSION METHOD CHOICE -->
+      <section
+        class="submission-choice"
+        id="submissionChoice"
+        aria-labelledby="choice-heading"
+      >
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Start Shipment</span>
+            <h2 class="section-title" id="choice-heading">
+              Choose Your Submission Method
+            </h2>
+          </div>
+          <div class="choice-grid">
+            <button
+              class="choice-card"
+              id="btnOnline"
+              data-method="online"
+              aria-label="Submit Online"
+            >
+              <span class="choice-icon">⚡</span>
+              <h3>Submit Online</h3>
+              <p>Automatic Tracking ID</p>
+            </button>
+            <span class="choice-divider">OR</span>
+            <button
+              class="choice-card"
+              id="btnWhatsApp"
+              data-method="whatsapp"
+              aria-label="Submit via WhatsApp"
+            >
+              <span class="choice-icon">👥</span>
+              <h3>Submit via WhatsApp</h3>
+              <p>We Handle the Rest</p>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORM SECTION (hidden initially) -->
+      <section
+        class="form-section is-hidden"
+        id="formSection"
+        aria-labelledby="form-heading"
+      >
         <div class="container form-container">
-          <h2 id="form-heading" class="visually-hidden">
-            Bill of Lading Submission Form
-          </h2>
+          <h2 id="form-heading" class="visually-hidden">Start Shipment Form</h2>
+
+          <!-- SUCCESS MESSAGE -->
+          <div
+            id="successMessage"
+            class="success-message"
+            style="display: none"
+          >
+            <div class="success-icon">✅</div>
+            <h2>Submission Successful!</h2>
+            <p>Your shipment has been started.</p>
+            <div class="tracking-id-row">
+              <span class="tracking-id-value" id="trackingIdDisplay"
+                >QFL-XXXXX</span
+              >
+              <button
+                class="copy-btn"
+                onclick="copyTrackingId()"
+                aria-label="Copy tracking ID"
+              >
+                📋 Copy ID
+              </button>
+            </div>
+            <span id="copyFeedback" class="copy-feedback"></span>
+            <p>
+              <strong>We will send SMS updates to:</strong>
+              <span id="confirmPhone">080XXXXXXXX</span>
+            </p>
+            <p class="note">
+              Our team will begin processing your shipment shortly.
+            </p>
+            <button class="btn btn-primary" onclick="resetForm()">
+              Submit Another
+            </button>
+          </div>
+
+          <!-- ERROR MESSAGE -->
+          <div id="errorMessage" class="error-message" style="display: none">
+            <div class="error-icon">❌</div>
+            <h2>Submission Failed</h2>
+            <p id="errorText">Please try again or contact support.</p>
+            <button class="btn btn-primary" onclick="resetForm()">
+              Try Again
+            </button>
+          </div>
+
+          <!-- FORM -->
           <form id="blForm" class="bl-form" novalidate>
             <div class="form-group">
               <label for="customerName"
@@ -153,11 +229,23 @@
                 type="text"
                 id="customerName"
                 name="customerName"
-                placeholder="Enter your full name"
                 required
                 autocomplete="name"
               />
-              <small class="field-error" id="nameError" role="alert"></small>
+              <span class="field-error" id="nameError"></span>
+            </div>
+            <div class="form-group">
+              <label for="customerEmail"
+                >Email Address <span class="required">*</span></label
+              >
+              <input
+                type="email"
+                id="customerEmail"
+                name="customerEmail"
+                required
+                autocomplete="email"
+              />
+              <span class="field-error" id="emailError"></span>
             </div>
             <div class="form-group">
               <label for="phoneNumber"
@@ -167,42 +255,30 @@
                 type="tel"
                 id="phoneNumber"
                 name="phoneNumber"
-                placeholder="e.g., 080XXXXXXXX"
                 required
                 autocomplete="tel"
               />
-              <small>We'll send an SMS when your cargo is cleared.</small>
-              <small class="field-error" id="phoneError" role="alert"></small>
-            </div>
-            <div class="form-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="rememberMe" />
-                <span>Remember my details on this device</span>
-              </label>
+              <span class="field-error" id="phoneError"></span>
             </div>
             <div class="form-group">
               <label for="blNumber"
                 >Bill of Lading Number <span class="required">*</span></label
               >
-              <input
-                type="text"
-                id="blNumber"
-                name="blNumber"
-                placeholder="Enter B/L number"
-                required
-                autocomplete="off"
-              />
-              <small class="field-error" id="blError" role="alert"></small>
+              <input type="text" id="blNumber" name="blNumber" required />
+              <span class="field-error" id="blError"></span>
             </div>
             <div class="form-group">
-              <label for="containerNumber">Container Number</label>
+              <label for="containerNumber"
+                >Container Number <span class="required">*</span></label
+              >
               <input
                 type="text"
                 id="containerNumber"
                 name="containerNumber"
-                placeholder="Enter container number (optional)"
-                autocomplete="off"
+                required
+                placeholder="e.g. MSCU1234567"
               />
+              <span class="field-error" id="containerError"></span>
             </div>
             <div class="form-group">
               <label for="cargoDescription"
@@ -212,152 +288,93 @@
                 id="cargoDescription"
                 name="cargoDescription"
                 rows="3"
-                placeholder="Briefly describe your cargo"
                 required
               ></textarea>
-              <small class="field-error" id="cargoError" role="alert"></small>
+              <span class="field-error" id="cargoError"></span>
             </div>
             <div class="form-group">
-              <label for="attachment">Attach Bill of Lading / Documents</label>
-              <div class="file-upload-wrapper">
+              <label for="attachment"
+                >Upload Bill of Lading (PDF, JPG, PNG)
+                <span class="required">*</span></label
+              >
+              <div class="file-upload-wrapper" id="fileUploadWrapper">
                 <input
                   type="file"
                   id="attachment"
                   name="attachment"
-                  accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
                   class="file-input"
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  required
                 />
-                <div class="file-upload-label" id="fileLabel">
+                <label for="attachment" class="file-upload-label">
                   <svg
                     width="20"
                     height="20"
-                    viewBox="0 0 20 20"
+                    viewBox="0 0 24 24"
                     fill="none"
-                    aria-hidden="true"
+                    stroke="currentColor"
+                    stroke-width="2"
                   >
-                    <path
-                      d="M10 2 L10 14 M5 8 L10 3 L15 8"
-                      stroke="#6B7280"
-                      stroke-width="1.8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M2 16 L18 16"
-                      stroke="#6B7280"
-                      stroke-width="1.8"
-                      stroke-linecap="round"
-                    />
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
                   </svg>
-                  <span>Click to upload or drag & drop</span>
-                </div>
-                <small id="fileInfo">PDF, JPG, PNG, or DOC (max 5MB)</small>
-                <small class="field-error" id="fileError" role="alert"></small>
+                  <span id="fileLabel">Click to upload or drag &amp; drop</span>
+                </label>
               </div>
+              <span id="fileInfo" style="font-size: 0.78rem; color: var(--grey)"
+                >PDF, JPG, PNG, or DOC (max 5MB)</span
+              >
+              <span class="field-error" id="fileError"></span>
+            </div>
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="rememberMe" name="rememberMe" />
+                Remember my details for next time
+              </label>
             </div>
             <button
               type="submit"
-              class="btn btn-primary btn-full"
               id="submitBtn"
+              class="btn btn-primary btn-full"
             >
-              Submit Bill of Lading
+              Submit Shipment Details
             </button>
           </form>
-
-          <div
-            id="successMessage"
-            class="success-message"
-            style="display: none"
-            aria-live="polite"
-          >
-            <div class="success-icon" aria-hidden="true">
-              <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                <circle
-                  cx="32"
-                  cy="32"
-                  r="30"
-                  stroke="#DAA520"
-                  stroke-width="3"
-                />
-                <path
-                  d="M20 32 L28 40 L44 24"
-                  stroke="#DAA520"
-                  stroke-width="3"
-                  fill="none"
-                />
-              </svg>
-            </div>
-            <h2>Submission Successful!</h2>
-            <p>Your Tracking ID is:</p>
-
-            <div class="tracking-id-row">
-              <code class="tracking-id-value" id="trackingIdDisplay"
-                >QF-2026-001</code
-              >
-              <button
-                type="button"
-                class="copy-btn"
-                onclick="copyTrackingId()"
-                aria-label="Copy tracking ID"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <rect
-                    x="4"
-                    y="4"
-                    width="10"
-                    height="10"
-                    rx="2"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  />
-                  <path
-                    d="M2 12V3a1 1 0 011-1h8"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                  />
-                </svg>
-                Copy
-              </button>
-            </div>
-
-            <span
-              class="copy-feedback"
-              id="copyFeedback"
-              aria-live="polite"
-            ></span>
-
-            <p>
-              You will receive an SMS at
-              <strong id="confirmPhone"></strong> when your cargo is cleared.
-            </p>
-            <p class="note">
-              Please save your Tracking ID for future reference.
-            </p>
-            <button class="btn btn-outline-dark" onclick="resetForm()">
-              Submit Another B/L
+          <p style="text-align: center; margin-top: 20px">
+            <button
+              type="button"
+              id="backToChoice"
+              class="btn btn-outline-dark"
+            >
+              ← Choose Different Method
             </button>
-          </div>
-
-          <div
-            id="errorMessage"
-            class="error-message"
-            style="display: none"
-            aria-live="polite"
-          >
-            <p id="errorText">Something went wrong. Please try again.</p>
-            <button class="btn btn-outline-dark" onclick="resetForm()">
-              Try Again
-            </button>
-          </div>
+          </p>
         </div>
       </section>
     </main>
+
+    <!-- PROCESSING OVERLAY -->
+    <div
+      id="processingOverlay"
+      class="processing-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="processingHeading"
+    >
+      <div class="processing-card">
+        <div class="spinner" aria-hidden="true"></div>
+        <h2 id="processingHeading">Processing Your Submission</h2>
+        <p id="processingStatus" class="processing-status">
+          Validating your information...
+        </p>
+        <p id="processingSubtext" class="processing-subtext">
+          Please keep this page open while we securely process your submission.
+        </p>
+        <div id="elapsedTime" class="processing-timer">00:00</div>
+        <p class="processing-note">Do not refresh or close this page.</p>
+      </div>
+    </div>
 
     <footer class="site-footer" role="contentinfo">
       <div class="container footer-grid">
@@ -367,8 +384,8 @@
               <img
                 src="images/logo.png"
                 alt=""
-                width="40"
-                height="40"
+                width="38"
+                height="38"
                 aria-hidden="true"
               />
             </div>
@@ -377,39 +394,38 @@
               <span class="logo-sub">GLOBAL LIMITED</span>
             </div>
           </div>
-          <p>A Subsidiary of Bondex Bridge Multinational Terminal Limited.</p>
+          <p>A Bondex Bridge Multinational Terminal Company</p>
           <p class="rc-note">RC: 8106184 · CAC Registered</p>
         </div>
         <div class="footer-links">
-          <h3>Quick Links</h3>
+          <h4>Quick Links</h4>
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="track.html">Submit B/L</a></li>
+            <li><a href="track.html">Start Shipment</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div class="footer-links">
-          <h3>Our Services</h3>
+          <h4>Our Services</h4>
           <ul>
-            <li><a href="services.html">Port Clearance</a></li>
+            <li><a href="services.html">Customs Clearance</a></li>
             <li><a href="services.html">Freight Forwarding</a></li>
-            <li><a href="services.html">End-to-End Logistics</a></li>
-            <li><a href="services.html">Customs Documentation</a></li>
+            <li><a href="services.html">Logistics Solutions</a></li>
+            <li><a href="services.html">Warehousing</a></li>
           </ul>
         </div>
         <div class="footer-contact">
-          <h3>Onitsha Office</h3>
+          <h4>Onitsha Office</h4>
           <p>
             3rd Floor, Right Wing, D1 Block<br />Eagle Plaza, 56 Bida Road<br />Fege,
             Onitsha, Anambra State
           </p>
           <p>
-            <a href="tel:+2348063388230">08063388230</a><br /><a
-              href="tel:+2348037883339"
-              >08037883339</a
-            ><br /><a href="tel:+2348036660493">08036660493</a>
+            <a href="tel:+2348063388230">08063388230</a><br />
+            <a href="tel:+2348037883339">08037883339</a><br />
+            <a href="tel:+2348036660493">08036660493</a>
           </p>
           <p>
             <a href="mailto:reception.quickfreightglobal@gmail.com"
@@ -422,33 +438,15 @@
         <div class="container">
           <p>
             &copy; <span id="copyrightYear"></span> Quick Freights Global
-            Limited. All rights reserved. | RC: 8106184
+            Limited. All rights reserved. | A Bondex Bridge Multinational
+            Terminal Limited Company | RC: 8106184
           </p>
         </div>
       </div>
     </footer>
 
+    <script src="js/communication.config.js"></script>
+    <script src="js/floating-widget.js"></script>
     <script defer src="js/script.js"></script>
-
-    <div id="processingOverlay" class="processing-overlay" aria-hidden="true">
-      <div class="processing-card">
-        <div class="spinner"></div>
-
-        <h2>Submitting your Bill of Lading</h2>
-
-        <p id="processingStatus">Validating your information...</p>
-
-        <p id="processingSubtext" class="processing-subtext"></p>
-
-        <div class="processing-timer">
-          Elapsed time:
-          <strong id="elapsedTime">00:00</strong>
-        </div>
-
-        <p class="processing-note">Please don't close or refresh this page.</p>
-      </div>
-    </div>
   </body>
 </html>
-
-

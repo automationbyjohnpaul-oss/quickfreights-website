@@ -1,8 +1,9 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4
+// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4.1
 // Configuration from body data-api | Real API responses | Staged progress UX
+// FIXED: QF_COMMUNICATION phone/email references
 // ================================================================
-var CONFIG = {
+var QF_CONFIG = {
   maxFileSize: 5 * 1024 * 1024,
   allowedMimeTypes: [
     "application/pdf",
@@ -16,15 +17,101 @@ var isSubmitting = false;
 document.addEventListener("DOMContentLoaded", function () {
   // Read API URL from body data attribute
   var apiUrl = document.body.getAttribute("data-api");
-  if (apiUrl) CONFIG.apiUrl = apiUrl;
+  if (apiUrl) QF_CONFIG.apiUrl = apiUrl;
   // Dynamic copyright year
   var yearEl = document.getElementById("copyrightYear");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   initMobileMenu();
+  initSubmissionChoice();
   initFormHandler();
   initFileUpload();
   initFormMemory();
+  initFloatingWidget();
 });
+
+// ── SUBMISSION METHOD CHOICE ──
+function initSubmissionChoice() {
+  var choiceSection = document.getElementById("submissionChoice");
+  var formSection = document.getElementById("formSection");
+  var btnOnline = document.getElementById("btnOnline");
+  var btnWhatsApp = document.getElementById("btnWhatsApp");
+  var backBtn = document.getElementById("backToChoice");
+
+  if (!choiceSection || !formSection) return;
+
+  function showForm() {
+    choiceSection.classList.add("is-hidden");
+    formSection.classList.remove("is-hidden");
+    formSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function showChoice() {
+    formSection.classList.add("is-hidden");
+    choiceSection.classList.remove("is-hidden");
+    if (btnOnline) btnOnline.classList.remove("is-active");
+    if (btnWhatsApp) btnWhatsApp.classList.remove("is-active");
+    choiceSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  if (btnOnline) {
+    btnOnline.addEventListener("click", function () {
+      btnOnline.classList.add("is-active");
+      if (btnWhatsApp) btnWhatsApp.classList.remove("is-active");
+      btnOnline.disabled = true;
+      showForm();
+      setTimeout(function () {
+        btnOnline.disabled = false;
+      }, 1500);
+    });
+  }
+
+  if (btnWhatsApp) {
+    btnWhatsApp.addEventListener("click", function () {
+      btnWhatsApp.classList.add("is-active");
+      btnOnline.classList.remove("is-active");
+      btnWhatsApp.disabled = true;
+
+      var waUrl = QF_COMMUNICATION.getWhatsAppUrl(
+        QF_COMMUNICATION.templates.whatsappSubmission(),
+      );
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+
+      setTimeout(function () {
+        btnWhatsApp.disabled = false;
+      }, 2000);
+    });
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener("click", function () {
+      showChoice();
+    });
+  }
+}
+
+// ── FLOATING CONTACT WIDGET ──
+function initFloatingWidget() {
+  var whatsappLink = document.getElementById("floatingWhatsApp");
+  var callLink = document.getElementById("floatingCall");
+  var emailLink = document.getElementById("floatingEmail");
+
+  if (whatsappLink) {
+    whatsappLink.href = QF_COMMUNICATION.getWhatsAppUrl(
+      QF_COMMUNICATION.templates.whatsappSubmission(),
+    );
+    whatsappLink.target = "_blank";
+    whatsappLink.rel = "noopener noreferrer";
+  }
+
+  if (callLink) {
+    callLink.href = "tel:" + QF_COMMUNICATION.phone;
+  }
+
+  if (emailLink) {
+    emailLink.href = "mailto:" + QF_COMMUNICATION.email;
+  }
+}
+
 // ================================================================
 // MOBILE MENU WITH FOCUS TRAP
 // ================================================================
@@ -50,15 +137,15 @@ function initMobileMenu() {
     overlay.setAttribute("aria-hidden", "false");
     document.body.classList.add("menu-open");
     navList.addEventListener(
-        "transitionend",
-        function handler() {
-            var firstLink = navList.querySelector("a");
-            if (firstLink) {
-                firstLink.focus();
-            }
-            navList.removeEventListener("transitionend", handler);
-        },
-        { once: true }
+      "transitionend",
+      function handler() {
+        var firstLink = navList.querySelector("a");
+        if (firstLink) {
+          firstLink.focus();
+        }
+        navList.removeEventListener("transitionend", handler);
+      },
+      { once: true },
     );
   }
 
@@ -136,7 +223,7 @@ function initFileUpload() {
       return;
     }
     var sizeMB = (file.size / 1048576).toFixed(1);
-    if (file.size > CONFIG.maxFileSize) {
+    if (file.size > QF_CONFIG.maxFileSize) {
       fileLabel.classList.add("is-error");
       fileInfo.textContent = "File too large (" + sizeMB + "MB). Max 5MB.";
       fileInfo.style.color = "var(--error)";
@@ -144,7 +231,7 @@ function initFileUpload() {
       fileInput.value = "";
       return;
     }
-    if (CONFIG.allowedMimeTypes.indexOf(file.type) === -1) {
+    if (QF_CONFIG.allowedMimeTypes.indexOf(file.type) === -1) {
       fileLabel.classList.add("is-error");
       fileInfo.textContent =
         "Unsupported file type. Please upload PDF, JPG, PNG, or DOC.";
@@ -360,7 +447,7 @@ async function handleFormSubmit(event) {
     attachmentData: fileData,
   };
   // DIAGNOSTIC: Log the entire payload before sending
-  var apiUrl = CONFIG.apiUrl;
+  var apiUrl = QF_CONFIG.apiUrl;
   if (!apiUrl) {
     console.error("API URL not configured.");
     isSubmitting = false;
@@ -479,7 +566,7 @@ function resetForm() {
   var submitBtn = document.getElementById("submitBtn");
   if (blForm) {
     blForm.reset();
-    blForm.style.display = 'flex';
+    blForm.style.display = "flex";
   }
   if (successMsg) successMsg.style.display = "none";
   if (errorMsg) errorMsg.style.display = "none";

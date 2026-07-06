@@ -60,7 +60,6 @@
         background: #0a1f3f;
       }
     </style>
-    <style>html{background:#0A1F3F}</style>
     <link rel="stylesheet" href="css/styles.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -145,7 +144,7 @@
             <li><a href="services.html" class="nav-link">Services</a></li>
             <li><a href="contact.html" class="nav-link">Contact</a></li>
             <li>
-              <a href="track.html" class="nav-link cta-nav">Submit B/L</a>
+              <a href="track.html" class="nav-link cta-nav">Start Shipment</a>
             </li>
           </ul>
         </nav>
@@ -153,7 +152,7 @@
     </header>
 
     <main id="main-content">
-           <!-- HERO — SPLIT LAYOUT -->
+      <!-- HERO — SPLIT LAYOUT -->
       <section class="hero" aria-labelledby="hero-heading">
         <div class="hero-left">
           <div class="container">
@@ -165,15 +164,23 @@
                   <span class="hero-company-sub">Global Limited</span>
                 </h1>
                 <p class="hero-subsidiary">
-                                    A subsidiary of Bondex Bridge Multinational Terminal Ltd Company
+                  A subsidiary of Bondex Bridge Multinational Terminal Ltd
+                  Company
                 </p>
                 <p class="hero-headline">Moving Cargo | Building Trust</p>
                 <p class="hero-subtitle">
-                  Trusted customs brokerage, international freight forwarding, and  integrated  logistics solutions designed to move your cargo efficiently, securely, and professionally from origin to final destination.
+                  Trusted customs brokerage, international freight forwarding,
+                  and integrated logistics solutions designed to move your cargo
+                  efficiently, securely, and professionally from origin to final
+                  destination.
                 </p>
                 <div class="hero-cta-group">
-                  <a href="services.html" class="btn btn-primary">Our Services</a>
-                  <a href="track.html" class="btn btn-outline">Submit B/L</a>
+                  <a href="services.html" class="btn btn-primary"
+                    >Our Services</a
+                  >
+                  <a href="track.html" class="btn btn-outline"
+                    >Start Shipment</a
+                  >
                 </div>
                 <div class="hero-stats">
                   <div class="stat-item">
@@ -189,10 +196,14 @@
                     <span class="stat-label">Reliable Service</span>
                   </div>
                 </div>
-              </div><!-- .hero-copy -->
-            </div><!-- .hero-content -->
-          </div><!-- .container -->
-        </div><!-- .hero-left -->
+              </div>
+              <!-- .hero-copy -->
+            </div>
+            <!-- .hero-content -->
+          </div>
+          <!-- .container -->
+        </div>
+        <!-- .hero-left -->
         <div class="hero-right" aria-hidden="true">
           <img
             src="images/hero.webp"
@@ -202,6 +213,70 @@
             fetchpriority="high"
             decoding="async"
           />
+        </div>
+      </section>
+
+      <!-- TRUST BAR -->
+      <section class="trust-bar" aria-label="Trust indicators">
+        <div class="container">
+          <div class="trust-grid">
+            <div class="trust-item">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              <span>CAC Registered (RC: 8106184)</span>
+            </div>
+            <div class="trust-item">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              <span>Licensed Customs Brokerage</span>
+            </div>
+            <div class="trust-item">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              <span>Onne Port Operations</span>
+            </div>
+            <div class="trust-item">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+              >
+                <path d="M9 12l2 2 4-4" />
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              <span>24/7 Cargo Support</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -452,10 +527,10 @@
             BOOK WITH US FOR A SMOOTH AND QUICK LOGISTICS EXPERIENCE
           </h2>
           <p>
-            Ready to move your cargo? Submit your Bill of Lading now and let our
-            experts handle the rest.
+            Ready to clear your cargo? Start your shipment online or send your
+            documents securely via WhatsApp.
           </p>
-          <a href="track.html" class="btn btn-primary">Submit Bill of Lading</a>
+          <a href="track.html" class="btn btn-primary">Start Shipment</a>
         </div>
       </section>
     </main>
@@ -487,7 +562,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="track.html">Submit B/L</a></li>
+            <li><a href="track.html">Start Shipment</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
@@ -529,6 +604,8 @@
       </div>
     </footer>
 
+    <script src="js/communication.config.js"></script>
+    <script src="js/floating-widget.js"></script>
     <script defer src="js/script.js"></script>
   </body>
 </html>
