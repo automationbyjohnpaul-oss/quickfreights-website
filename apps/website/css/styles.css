@@ -1,9 +1,11 @@
 ﻿/* ================================================================
-   QUICK FREIGHTS GLOBAL LIMITED — STYLESHEET v5.8
+   QUICK FREIGHTS GLOBAL LIMITED — STYLESHEET v5.9
    Navy #0A1F3F · Gold #DAA520
    RC: 8106184 | A Bondex Bridge Multinational Terminal Ltd Company
    Mobile-First | Production-Optimised
    ALL SPACING & UI FIXED: Navbar height, hero max-height, button padding
+   TRUST BAR FIXED: Two-row layout with checkmark at top
+   HERO BUTTONS FIXED: Full width alignment with text
    ================================================================ */
 :root {
   --navy: #0a1f3f;
@@ -478,7 +480,6 @@ ul {
   width: 100%;
   max-width: 420px;
   margin-bottom: 0;
-  padding-right: 120px;
 }
 .hero-cta-group .btn {
   flex: 1 1 0;
@@ -500,7 +501,6 @@ ul {
 @media (max-width: 575px) {
   .hero-cta-group {
     flex-direction: column;
-    padding-right: 0;
   }
   .hero-cta-group .btn:first-child {
     border-radius: var(--radius) var(--radius) 0 0;
@@ -562,7 +562,7 @@ ul {
   }
 }
 
-/* ── COMPANY CREDENTIALS ── */
+/* ── COMPANY CREDENTIALS (FIXED) ── */
 .trust-bar {
   background: var(--navy-light);
   padding: var(--space-xs) 0;
@@ -578,32 +578,46 @@ ul {
 
 .trust-item {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 10px;
   padding: var(--space-xs) 0;
-  color: var(--white);
+}
+
+.trust-item div {
+  display: flex;
+  flex-direction: column;
 }
 
 .trust-check {
   color: var(--navy-light);
   background: var(--gold);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   flex-shrink: 0;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid var(--gold-light);
+  margin-top: 1px;
+}
+
+.trust-item strong {
+  display: block;
+  color: var(--white);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .trust-item span {
-  color: var(--white);
-  font-size: 0.85rem;
-  font-weight: 500;
-  line-height: 1.2;
+  display: block;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.3;
 }
 
 @media (min-width: 576px) {
