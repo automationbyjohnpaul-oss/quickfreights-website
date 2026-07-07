@@ -1,10 +1,47 @@
-﻿/* ================================================================
-   QUICK FREIGHTS GLOBAL LIMITED — STYLESHEET v6.0
-   Navy #0A1F3F · Gold #DAA520
-   RC: 8106184 | A Bondex Bridge Multinational Terminal Ltd Company
-   Mobile-First | Production-Optimised
-   Performance: Clean CSS, no duplicates, reduced file size
-   ================================================================ */
+﻿/*
+================================================
+QUICK FREIGHTS DESIGN SYSTEM — V6.0
+Company: Quick Freights Global Limited
+Colors: Navy #0A1F3F · Gold #DAA520
+RC: 8106184
+================================================
+
+TABLE OF CONTENTS
+─────────────────
+01  Variables & Design Tokens
+02  Reset & Base Elements
+03  Layout (Container, Skip Link)
+04  Buttons
+05  Header & Navigation
+06  Hero — Split Layout
+07  Trust Bar / Credentials
+08  How It Works
+09  Submission Choice
+10  Expertise Cards
+11  Why Us
+12  Image Banner
+13  CTA Banner
+14  Page Header
+15  About Page
+16  Services Page
+17  Contact Page
+18  Hub Cards
+19  Form Section
+20  File Upload
+21  Floating Contact Widget
+22  Form Validation States
+23  Processing Overlay
+24  Footer
+25  Remember Me & Tracking ID
+26  Print Styles
+27  Accessibility
+28  Reduced Motion
+================================================
+*/
+
+/* ==============================================
+   01  VARIABLES & DESIGN TOKENS
+   ============================================== */
 :root {
   --navy: #0a1f3f;
   --navy-light: #132d56;
@@ -30,6 +67,7 @@
   --space-md: 24px;
   --space-lg: 40px;
   --space-xl: 48px;
+  --space-2xl: 64px;
   --radius: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
@@ -49,6 +87,9 @@
   );
 }
 
+/* ==============================================
+   02  RESET & BASE ELEMENTS
+   ============================================== */
 *,
 *::before,
 *::after {
@@ -87,6 +128,9 @@ ul {
   list-style: none;
 }
 
+/* ==============================================
+   03  LAYOUT (Container, Skip Link)
+   ============================================== */
 .container {
   width: 100%;
   max-width: 1366px;
@@ -131,7 +175,9 @@ ul {
   border: 0;
 }
 
-/* ── BUTTONS ── */
+/* ==============================================
+   04  BUTTONS
+   ============================================== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -201,7 +247,9 @@ ul {
   box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.35);
 }
 
-/* ── HEADER ── */
+/* ==============================================
+   05  HEADER & NAVIGATION
+   ============================================== */
 .site-header {
   background: var(--navy);
   position: sticky;
@@ -258,7 +306,6 @@ ul {
   margin-top: 1px;
 }
 
-/* ── MOBILE MENU ── */
 .mobile-menu-toggle {
   display: flex;
   flex-direction: column;
@@ -380,7 +427,9 @@ ul {
   }
 }
 
-/* ── HERO ── */
+/* ==============================================
+   06  HERO — SPLIT LAYOUT
+   ============================================== */
 .hero {
   display: flex;
   min-height: auto;
@@ -560,7 +609,9 @@ ul {
   }
 }
 
-/* ── TRUST BAR ── */
+/* ==============================================
+   07  TRUST BAR / CREDENTIALS
+   ============================================== */
 .trust-bar {
   background: var(--navy-light);
   padding: var(--space-xs) 0;
@@ -618,7 +669,9 @@ ul {
   }
 }
 
-/* ── HOW IT WORKS ── */
+/* ==============================================
+   08  HOW IT WORKS
+   ============================================== */
 .how-it-works {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -668,7 +721,9 @@ ul {
   }
 }
 
-/* ── SUBMISSION CHOICE ── */
+/* ==============================================
+   09  SUBMISSION CHOICE
+   ============================================== */
 .is-hidden {
   display: none;
 }
@@ -751,7 +806,9 @@ ul {
   }
 }
 
-/* ── EXPERTISE CARDS ── */
+/* ==============================================
+   10  EXPERTISE CARDS
+   ============================================== */
 .expertise-section {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -854,7 +911,9 @@ ul {
   }
 }
 
-/* ── WHY US ── */
+/* ==============================================
+   11  WHY US
+   ============================================== */
 .why-section {
   padding: var(--space-lg) 0;
   background: var(--light-grey);
@@ -895,7 +954,9 @@ ul {
   }
 }
 
-/* ── IMAGE BANNER ── */
+/* ==============================================
+   12  IMAGE BANNER
+   ============================================== */
 .image-banner {
   position: relative;
   width: 100%;
@@ -943,7 +1004,9 @@ ul {
   }
 }
 
-/* ── CTA BANNER ── */
+/* ==============================================
+   13  CTA BANNER
+   ============================================== */
 .cta-banner {
   background-color: var(--navy);
   background-image: var(--overlay-dark), url("../images/cta.webp");
@@ -981,7 +1044,9 @@ ul {
   }
 }
 
-/* ── PAGE HEADER ── */
+/* ==============================================
+   14  PAGE HEADER
+   ============================================== */
 .page-header {
   background-color: var(--navy);
   background-image: var(--overlay-medium), url("../images/page-header.webp");
@@ -1016,7 +1081,9 @@ ul {
   }
 }
 
-/* ── ABOUT PAGE ── */
+/* ==============================================
+   15  ABOUT PAGE
+   ============================================== */
 .about-story {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -1130,7 +1197,9 @@ ul {
   }
 }
 
-/* ── SERVICES PAGE ── */
+/* ==============================================
+   16  SERVICES PAGE
+   ============================================== */
 .services-detailed {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -1191,7 +1260,9 @@ ul {
   }
 }
 
-/* ── CONTACT PAGE ── */
+/* ==============================================
+   17  CONTACT PAGE
+   ============================================== */
 .contact-section {
   padding: var(--space-lg) 0;
   background: var(--white);
@@ -1265,7 +1336,9 @@ ul {
   }
 }
 
-/* ── HUB CARDS ── */
+/* ==============================================
+   18  HUB CARDS
+   ============================================== */
 .hubs-section {
   padding: 0 0 var(--space-lg);
   background: var(--white);
@@ -1321,7 +1394,9 @@ ul {
   }
 }
 
-/* ── FORM SECTION ── */
+/* ==============================================
+   19  FORM SECTION
+   ============================================== */
 .form-section {
   padding: 36px 0;
   background: var(--light-grey);
@@ -1433,7 +1508,9 @@ ul {
   }
 }
 
-/* ── FILE UPLOAD ── */
+/* ==============================================
+   20  FILE UPLOAD
+   ============================================== */
 .file-upload-wrapper {
   position: relative;
   width: 100%;
@@ -1477,7 +1554,9 @@ ul {
   flex-shrink: 0;
 }
 
-/* ── FLOATING CONTACT WIDGET ── */
+/* ==============================================
+   21  FLOATING CONTACT WIDGET
+   ============================================== */
 .floating-widget {
   position: fixed;
   bottom: calc(24px + env(safe-area-inset-bottom, 0px));
@@ -1588,7 +1667,9 @@ ul {
   }
 }
 
-/* ── FORM VALIDATION ── */
+/* ==============================================
+   22  FORM VALIDATION STATES
+   ============================================== */
 .form-group input.is-error,
 .form-group textarea.is-error {
   border-color: var(--error);
@@ -1612,7 +1693,9 @@ ul {
   background: rgba(218, 165, 32, 0.08);
 }
 
-/* ── PROCESSING OVERLAY ── */
+/* ==============================================
+   23  PROCESSING OVERLAY
+   ============================================== */
 .processing-overlay {
   position: fixed;
   inset: 0;
@@ -1678,66 +1761,9 @@ ul {
   margin-top: var(--space-sm);
 }
 
-/* ── TRACKING ID COPY ── */
-.tracking-id-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 10px 0;
-}
-.tracking-id-value {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--navy);
-  background: rgba(218, 165, 32, 0.1);
-  padding: 14px 20px;
-  border-radius: var(--radius);
-  border: 2px dashed var(--gold);
-  letter-spacing: 1px;
-  word-break: break-all;
-}
-.copy-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 12px 18px;
-  background: var(--navy);
-  color: var(--white);
-  border: 2px solid var(--navy);
-  border-radius: var(--radius);
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: var(--transition);
-  min-height: 44px;
-}
-.copy-btn:hover {
-  background: var(--navy-light);
-}
-.copy-btn:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.35);
-}
-.copy-feedback {
-  display: block;
-  font-size: 0.82rem;
-  color: var(--success);
-  min-height: 20px;
-  margin-top: 4px;
-  font-weight: 500;
-}
-@media (max-width: 480px) {
-  .tracking-id-row {
-    flex-direction: column;
-  }
-  .tracking-id-value {
-    font-size: 1.3rem;
-  }
-}
-
-/* ── FOOTER ── */
+/* ==============================================
+   24  FOOTER
+   ============================================== */
 .site-footer {
   background: var(--navy-dark);
   color: rgba(255, 255, 255, 0.62);
@@ -1829,7 +1855,9 @@ ul {
   color: var(--white);
 }
 
-/* ── REMEMBER ME ── */
+/* ==============================================
+   25  REMEMBER ME & TRACKING ID
+   ============================================== */
 .checkbox-label {
   display: flex !important;
   align-items: center;
@@ -1846,7 +1874,67 @@ ul {
   cursor: pointer;
 }
 
-/* ── PRINT ── */
+.tracking-id-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+.tracking-id-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--navy);
+  background: rgba(218, 165, 32, 0.1);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  border: 2px dashed var(--gold);
+  letter-spacing: 1px;
+  word-break: break-all;
+}
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 18px;
+  background: var(--navy);
+  color: var(--white);
+  border: 2px solid var(--navy);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+  min-height: 44px;
+}
+.copy-btn:hover {
+  background: var(--navy-light);
+}
+.copy-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(218, 165, 32, 0.35);
+}
+.copy-feedback {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--success);
+  min-height: 20px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+@media (max-width: 480px) {
+  .tracking-id-row {
+    flex-direction: column;
+  }
+  .tracking-id-value {
+    font-size: 1.3rem;
+  }
+}
+
+/* ==============================================
+   26  PRINT STYLES
+   ============================================== */
 @media print {
   .site-header,
   .site-footer,
@@ -1867,7 +1955,9 @@ ul {
   }
 }
 
-/* ── ACCESSIBILITY ── */
+/* ==============================================
+   27  ACCESSIBILITY
+   ============================================== */
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
@@ -1875,7 +1965,9 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* ── REDUCED MOTION ── */
+/* ==============================================
+   28  REDUCED MOTION
+   ============================================== */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

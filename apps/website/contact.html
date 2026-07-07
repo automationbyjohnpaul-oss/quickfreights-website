@@ -25,7 +25,7 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:image"
-      content="https://quickfreightsglobal.com/images/og-image.jpg"
+      content="https://quickfreightsglobal.com/images/og-image.webp"
     />
     <meta
       property="og:url"
@@ -44,7 +44,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://quickfreightsglobal.com/images/og-image.jpg"
+      content="https://quickfreightsglobal.com/images/og-image.webp"
     />
 
     <link rel="canonical" href="https://quickfreightsglobal.com/contact.html" />
@@ -86,21 +86,96 @@
       fetchpriority="high"
     />
 
-    <!-- SCHEMA.ORG MARKUP FOR SEO -->
+    <!-- SCHEMA.ORG MARKUP — LocalBusiness -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
+        "@type": "LocalBusiness",
         "name": "Quick Freights Global Limited",
+        "description": "Licensed customs clearance and freight forwarding services at Onne Port, Nigeria. Fast cargo clearance, secure documentation, and 24/7 support.",
         "url": "https://quickfreightsglobal.com",
         "telephone": "+2348063388230",
         "email": "reception.quickfreightglobal@gmail.com",
+        "image": "https://quickfreightsglobal.com/images/og-image.webp",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "3rd Floor, Right Wing, D1 Block, Eagle Plaza, 56 Bida Road",
           "addressLocality": "Onitsha",
           "addressRegion": "Anambra State",
           "addressCountry": "NG"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "6.1428",
+          "longitude": "6.7992"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "08:00",
+            "closes": "18:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday"],
+            "opens": "09:00",
+            "closes": "14:00"
+          }
+        ],
+        "priceRange": "₦₦",
+        "areaServed": [
+          "Onne Port",
+          "Port Harcourt",
+          "Onitsha",
+          "Apapa",
+          "Tin Can Island",
+          "Lagos Ports",
+          "Nigeria"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Logistics Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Customs Clearance",
+                "description": "Professional customs brokerage and clearance services at Nigerian ports."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Freight Forwarding",
+                "description": "International air and sea freight forwarding solutions."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Integrated Logistics",
+                "description": "End-to-end logistics coordination and supply chain management."
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Warehousing & Distribution",
+                "description": "Secure cargo storage and efficient distribution services."
+              }
+            }
+          ]
         },
         "contactPoint": [
           {
@@ -121,7 +196,8 @@
             "contactType": "support",
             "availableLanguage": ["English"]
           }
-        ]
+        ],
+        "sameAs": ["https://wa.me/2348037883339"]
       }
     </script>
   </head>
