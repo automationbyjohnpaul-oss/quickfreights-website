@@ -302,3 +302,131 @@ Rejected decisions are recorded to prevent revisiting the same debates.
 | ------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | 1.0.0   | 2026-06-29 | Initial Decision Log with ADR-001 through ADR-010                                                                                   |
 | 1.1.0   | 2026-06-29 | Added alternatives considered, decision categories, review dates, related documents, ADR numbering rule, rejected proposals section |
+
+# Version 1.0 Launch Decisions
+
+## Decision: Primary Customer CTA Language
+
+**Date:** 2026-07-07
+
+**Previous:** Submit B/L
+
+**Changed to:** Cargo Portal
+
+**Reason:** Quick Freights Global Limited operates primarily as a clearing and forwarding agency. "Submit B/L" was too narrow and assumed the customer already understood freight terminology.
+
+"Cargo Portal" allows:
+- Customs clearance enquiries
+- Document submission
+- Freight forwarding requests
+- Future digital services
+
+**Impact:** Broader customer entry point and improved conversion potential.
+
+---
+
+## Decision: Homepage Trust Structure
+
+**Date:** 2026-07-07
+
+**Decision:** Removed duplicate statistics bar and replaced it with a proof-based credentials section.
+
+**Reason:** The previous stats repeated location/service information without increasing customer confidence.
+
+**New focus:**
+- Registration
+- Customs capability
+- Port presence
+- Availability
+
+**Impact:** Improved first-visit trust experience.
+
+---
+
+## Decision: Communication Single Source of Truth
+
+**Date:** 2026-07-07
+
+**Decision:** All customer contact details and templates are controlled through communication.config.js.
+
+**Reason:** Avoid inconsistent phone numbers, emails, and WhatsApp messages.
+
+**Impact:** Future domain changes, CRM integration, and automation can happen from one location.
+
+---
+
+## Decision: Version 1.0 Scope Freeze
+
+**Date:** 2026-07-07
+
+**Decision:** Freeze website features after production release.
+
+**Reason:** Future improvements should be based on customer data, analytics, and real business feedback.
+
+**Deferred to V2:**
+- Customer dashboard
+- Tracking portal
+- Document management
+- Testimonials
+- Case studies
+- Advanced automation
+
+---
+
+## Decision: Hero Height Optimization
+
+**Date:** 2026-07-07
+
+**Decision:** Reduced hero min-height from 100vh to 60vh (mobile) / 55vh (desktop).
+
+**Reason:** Trust Bar should be visible immediately. Creates better visual flow and content hierarchy.
+
+**Impact:** Users see credentials bar right away. Less scrolling, more engaging layout.
+
+---
+
+## Decision: Image Optimization to WebP
+
+**Date:** 2026-07-07
+
+**Decision:** Converted og-image.png to WebP and compressed all WebP images using Squoosh.
+
+**Reason:** Page load speed is critical for user experience and SEO.
+
+**Impact:** Reduced total image size by ~70%. Faster page loads, better Lighthouse scores.
+
+---
+
+## Decision: GitHub Actions for Automated Deployment
+
+**Date:** 2026-07-07
+
+**Decision:** Implemented GitHub Actions workflow with Pages deployment.
+
+**Reason:** Automated, reliable deployment. No manual steps after push. Maintains deployment history.
+
+**Impact:** Seamless CI/CD pipeline. Every push to main triggers a deploy.
+
+---
+
+## Decision: Premium Gold Circle Checkmarks
+
+**Date:** 2026-07-07
+
+**Decision:** Replaced simple SVG checkmarks with premium gold circle checkmarks (22px with gold-light border).
+
+**Reason:** Enhanced visual quality and brand consistency.
+
+**Impact:** Improved visual hierarchy and premium feel.
+
+---
+
+## Decision: Production Readiness & Scope Freeze
+
+**Date:** 2026-07-07
+
+**Decision:** Finalize V1.0.0 with current feature set. Do not add new features without analytics validation.
+
+**Reason:** Avoid scope creep. Let real user data guide V2 improvements.
+
+**Impact:** Clean baseline for measuring V2 success.
