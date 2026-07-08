@@ -6,9 +6,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"
     />
+    <!-- FIX 2: Removed "real-time updates" -->
     <meta
       name="description"
-      content="Track your cargo shipment with Quick Freights Global Limited. Submit customs documents, monitor clearance status, and get real-time updates. RC: 8106184."
+      content="Track your cargo shipment with Quick Freights Global Limited. Submit customs documents, monitor clearance status, and get prompt status updates. RC: 8106184."
     />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0A1F3F" />
@@ -16,33 +17,36 @@
       property="og:title"
       content="Cargo Tracking & Document Submission Portal — Quick Freights Global"
     />
+    <!-- FIX 2: Removed "real-time" -->
     <meta
       property="og:description"
-      content="Track your cargo shipment, submit customs documents, and monitor clearance status in real-time. Secure portal for all your logistics needs."
+      content="Track your cargo shipment, submit customs documents, and monitor clearance status. Secure portal for all your logistics needs."
     />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:image"
-      content="https://quickfreightsglobal.com/images/og-image.webp"
-    />
+    <!-- FIX 3: Use relative path -->
+    <meta property="og:image" content="images/og-image.png" />
+    <!-- FIX 3: Use live GitHub Pages URL -->
     <meta
       property="og:url"
-      content="https://quickfreightsglobal.com/track.html"
+      content="https://automationbyjohnpaul-oss.github.io/quickfreights-website/track.html"
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
       content="Cargo Tracking & Document Submission Portal — Quick Freights Global"
     />
+    <!-- FIX 2: Removed "real-time" -->
     <meta
       name="twitter:description"
-      content="Track your cargo shipment, submit customs documents, and monitor clearance status in real-time. Secure portal for all your logistics needs."
+      content="Track your cargo shipment, submit customs documents, and monitor clearance status. Secure portal for all your logistics needs."
     />
-    <meta
-      name="twitter:image"
-      content="https://quickfreightsglobal.com/images/og-image.webp"
+    <!-- FIX 3: Use relative path -->
+    <meta name="twitter:image" content="images/og-image.png" />
+    <!-- FIX 3: Use live GitHub Pages URL -->
+    <link
+      rel="canonical"
+      href="https://automationbyjohnpaul-oss.github.io/quickfreights-website/track.html"
     />
-    <link rel="canonical" href="https://quickfreightsglobal.com/track.html" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
 
@@ -85,7 +89,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Quick Freights Cargo Tracking Portal",
-        "url": "https://quickfreightsglobal.com/track.html",
+        "url": "https://automationbyjohnpaul-oss.github.io/quickfreights-website/track.html",
         "description": "Secure online portal for tracking cargo shipments, submitting customs documentation, and monitoring clearance status.",
         "applicationCategory": "Logistics",
         "operatingSystem": "All",
@@ -104,10 +108,10 @@
         "@type": "LocalBusiness",
         "name": "Quick Freights Global Limited",
         "description": "Licensed customs clearance and freight forwarding services at Onne Port, Nigeria. Fast cargo clearance, secure documentation, and 24/7 support.",
-        "url": "https://quickfreightsglobal.com",
+        "url": "https://automationbyjohnpaul-oss.github.io/quickfreights-website/",
         "telephone": "+2348063388230",
         "email": "reception.quickfreightglobal@gmail.com",
-        "image": "https://quickfreightsglobal.com/images/og-image.webp",
+        "image": "https://automationbyjohnpaul-oss.github.io/quickfreights-website/images/og-image.png",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "3rd Floor, Right Wing, D1 Block, Eagle Plaza, 56 Bida Road",
@@ -206,10 +210,9 @@
             <div class="logo-icon">
               <img
                 src="images/logo.png"
-                alt=""
+                alt="Quick Freights Global Limited"
                 width="40"
                 height="40"
-                aria-hidden="true"
               />
             </div>
             <div class="logo-text">
@@ -295,7 +298,6 @@
         </div>
       </section>
 
-      <!-- SECURITY NOTE - Fixed with SVG Lock Icon -->
       <div
         style="text-align: center; padding: 0 var(--space-sm); margin-top: -8px"
       >
@@ -335,7 +337,6 @@
         <div class="container">
           <div class="form-container" id="formContainer">
             <h2 id="form-heading" class="visually-hidden">Submission Form</h2>
-
             <form
               id="blForm"
               class="bl-form"
@@ -349,10 +350,10 @@
               </p>
 
               <div class="form-group">
-                <label for="blReference">
-                  Reference / BL Number
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="blReference"
+                  >Reference / BL Number
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <input
                   type="text"
                   id="blReference"
@@ -369,12 +370,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="shipperName">
-                  Shipper / Consignor Name
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="shipperName"
+                  >Shipper / Consignor Name
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <input
                   type="text"
                   id="shipperName"
@@ -390,12 +390,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="consigneeName">
-                  Consignee Name
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="consigneeName"
+                  >Consignee Name
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <input
                   type="text"
                   id="consigneeName"
@@ -411,12 +410,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="consigneePhone">
-                  Consignee Phone Number
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="consigneePhone"
+                  >Consignee Phone Number
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <input
                   type="tel"
                   id="consigneePhone"
@@ -432,12 +430,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="consigneeEmail">
-                  Consignee Email
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="consigneeEmail"
+                  >Consignee Email
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <input
                   type="email"
                   id="consigneeEmail"
@@ -453,12 +450,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="cargoDescription">
-                  Cargo Description
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="cargoDescription"
+                  >Cargo Description
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <textarea
                   id="cargoDescription"
                   name="cargoDescription"
@@ -472,12 +468,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="portOfDischarge">
-                  Port of Discharge
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="portOfDischarge"
+                  >Port of Discharge
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <input
                   type="text"
                   id="portOfDischarge"
@@ -492,12 +487,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="expectedArrival">
-                  Expected Arrival Date
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="expectedArrival"
+                  >Expected Arrival Date
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <input
                   type="date"
                   id="expectedArrival"
@@ -511,12 +505,11 @@
                   role="alert"
                 ></span>
               </div>
-
               <div class="form-group">
-                <label for="blFile">
-                  Upload Bill of Lading
-                  <span class="required" aria-hidden="true">*</span>
-                </label>
+                <label for="blFile"
+                  >Upload Bill of Lading
+                  <span class="required" aria-hidden="true">*</span></label
+                >
                 <div class="file-upload-wrapper" id="fileWrapper">
                   <input
                     type="file"
@@ -553,28 +546,26 @@
                 </div>
                 <span class="field-error" id="blFile-error" role="alert"></span>
               </div>
-
               <div class="form-group">
                 <label class="checkbox-label">
                   <input type="checkbox" id="rememberMe" name="rememberMe" />
                   <span>Remember me on this device for faster submissions</span>
                 </label>
               </div>
-
               <div>
                 <button
                   type="submit"
                   class="btn btn-primary btn-full"
                   id="submitBtn"
                 >
-                  <span id="submitText">Submit Bill of Lading</span>
+                  <!-- FIX 4: Updated button text -->
+                  <span id="submitText">Submit Documents</span>
                   <span
                     id="submitSpinner"
                     class="spinner-small"
                     style="display: none"
                   ></span>
                 </button>
-                <!-- NOTE - Fixed with SVG Lock Icon -->
                 <small
                   class="note"
                   style="
@@ -610,11 +601,12 @@
       <section class="trust-bar" aria-label="Company credentials">
         <div class="container">
           <div class="trust-grid">
+            <!-- FIX 1: "Secure Portal" → "Secure Submission" + "HTTPS Protected" -->
             <div class="trust-item">
               <span class="trust-check">✓</span>
               <div>
-                <strong>Secure Portal</strong>
-                <span>256-bit encryption</span>
+                <strong>Secure Submission</strong>
+                <span>HTTPS Protected</span>
               </div>
             </div>
             <div class="trust-item">
@@ -631,11 +623,12 @@
                 <span>Priority clearance</span>
               </div>
             </div>
+            <!-- FIX 1: "Real-time Updates" → "Expert Handling" + "Licensed brokers" -->
             <div class="trust-item">
               <span class="trust-check">✓</span>
               <div>
-                <strong>Real-time Updates</strong>
-                <span>Track your cargo</span>
+                <strong>Expert Handling</strong>
+                <span>Licensed brokers</span>
               </div>
             </div>
           </div>
@@ -661,10 +654,9 @@
             <div class="logo-icon">
               <img
                 src="images/logo.png"
-                alt=""
+                alt="Quick Freights Global Limited"
                 width="40"
                 height="40"
-                aria-hidden="true"
               />
             </div>
             <div class="logo-text">
