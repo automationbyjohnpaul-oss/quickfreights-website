@@ -1,7 +1,6 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4.2
-// Configuration from body data-api | Real API responses | Staged progress UX
-// FIXED: Removed initFloatingWidget() — floating-widget.js handles everything
+// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v5.4.3
+// FIXED: Field IDs aligned with track.html, removed console.log
 // ================================================================
 var QF_CONFIG = {
   maxFileSize: 5 * 1024 * 1024,
@@ -15,10 +14,8 @@ var QF_CONFIG = {
 };
 var isSubmitting = false;
 document.addEventListener("DOMContentLoaded", function () {
-  // Read API URL from body data attribute
   var apiUrl = document.body.getAttribute("data-api");
   if (apiUrl) QF_CONFIG.apiUrl = apiUrl;
-  // Dynamic copyright year
   var yearEl = document.getElementById("copyrightYear");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
   initMobileMenu();
@@ -116,15 +113,12 @@ function initMobileMenu() {
       "transitionend",
       function handler() {
         var firstLink = navList.querySelector("a");
-        if (firstLink) {
-          firstLink.focus();
-        }
+        if (firstLink) firstLink.focus();
         navList.removeEventListener("transitionend", handler);
       },
       { once: true },
     );
   }
-
   function closeMenu() {
     navList.classList.remove("active");
     overlay.classList.remove("active");
@@ -143,14 +137,12 @@ function initMobileMenu() {
     link.addEventListener("click", closeMenu);
   });
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && navList.classList.contains("active")) {
-      closeMenu();
-    }
+    if (e.key === "Escape" && navList.classList.contains("active")) closeMenu();
     if (e.key === "Tab" && navList.classList.contains("active")) {
       var focusable = getFocusableElements();
       if (focusable.length === 0) return;
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
+      var first = focusable[0],
+        last = focusable[focusable.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
@@ -178,23 +170,24 @@ function initMobileMenu() {
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.setAttribute("aria-label", "Open navigation menu");
 }
+
 // ================================================================
 // FILE UPLOAD UI
 // ================================================================
 function initFileUpload() {
-  var fileInput = document.getElementById("attachment");
+  var fileInput = document.getElementById("blFile");
   var fileLabel = document.getElementById("fileLabel");
-  var fileInfo = document.getElementById("fileInfo");
-  var fileError = document.getElementById("fileError");
+  var fileInfo = document.getElementById("file-help");
+  var fileError = document.getElementById("blFile-error");
   if (!fileInput || !fileLabel || !fileInfo) return;
   fileInput.addEventListener("change", function () {
     var file = fileInput.files[0];
     fileLabel.classList.remove("is-valid", "is-error");
     if (fileError) fileError.textContent = "";
     if (!file) {
-      fileLabel.querySelector("span").textContent =
-        "Click to upload or drag & drop";
-      fileInfo.textContent = "PDF, JPG, PNG, or DOC (max 5MB)";
+      document.getElementById("fileLabelText").textContent =
+        "Choose file or drag & drop";
+      fileInfo.textContent = "Accepted: PDF, JPG, PNG, DOC (Max 10MB)";
       fileInfo.style.color = "";
       return;
     }
@@ -217,7 +210,7 @@ function initFileUpload() {
       return;
     }
     fileLabel.classList.add("is-valid");
-    fileLabel.querySelector("span").textContent = file.name;
+    document.getElementById("fileLabelText").textContent = file.name;
     fileInfo.textContent = sizeMB + " MB · Ready";
     fileInfo.style.color = "var(--success)";
   });
@@ -232,7 +225,7 @@ function initFileUpload() {
     e.preventDefault();
     fileLabel.classList.remove("is-dragover");
     if (e.dataTransfer.files.length > 1) {
-      var fileError = document.getElementById("fileError");
+      var fileError = document.getElementById("blFile-error");
       if (fileError) fileError.textContent = "Only one attachment allowed.";
       return;
     }
@@ -240,6 +233,7 @@ function initFileUpload() {
     fileInput.dispatchEvent(new Event("change"));
   });
 }
+
 // ================================================================
 // PHONE NORMALIZATION
 // ================================================================
@@ -249,8 +243,9 @@ function normalizePhone(phone) {
   if (!cleaned.startsWith("234")) cleaned = "234" + cleaned;
   return cleaned;
 }
+
 // ================================================================
-// FORM VALIDATION
+// FORM VALIDATION (aligned with track.html field IDs)
 // ================================================================
 function validateForm() {
   var isValid = true;
@@ -258,48 +253,103 @@ function validateForm() {
     ".form-group input, .form-group textarea",
   );
   var errors = document.querySelectorAll(".field-error");
-  for (var i = 0; i < els.length; i++) {
-    els[i].classList.remove("is-error");
-  }
-  for (var j = 0; j < errors.length; j++) {
-    errors[j].textContent = "";
-  }
-  var nameInput = document.getElementById("customerName");
-  if (!nameInput.value.trim()) {
-    nameInput.classList.add("is-error");
-    var nameErr = document.getElementById("nameError");
-    if (nameErr) nameErr.textContent = "Please enter your full name.";
+  for (var i = 0; i < els.length; i++) els[i].classList.remove("is-error");
+  for (var j = 0; j < errors.length; j++) errors[j].textContent = "";
+
+  var blRef = document.getElementById("blReference");
+  if (blRef && !blRef.value.trim()) {
+    blRef.classList.add("is-error");
+    var blRefErr = document.getElementById("blReference-error");
+    if (blRefErr)
+      blRefErr.textContent = "Please enter your B/L reference number.";
     isValid = false;
   }
-  var phoneInput = document.getElementById("phoneNumber");
-  var phoneValue = phoneInput.value.trim().replace(/\s+/g, "");
-  var normalized = normalizePhone(phoneValue);
-  if (!phoneValue) {
-    phoneInput.classList.add("is-error");
-    var phoneErr = document.getElementById("phoneError");
-    if (phoneErr) phoneErr.textContent = "Please enter your phone number.";
-    isValid = false;
-  } else if (!/^234\d{10}$/.test(normalized)) {
-    phoneInput.classList.add("is-error");
-    var phoneErr2 = document.getElementById("phoneError");
-    if (phoneErr2)
-      phoneErr2.textContent = "Enter a valid Nigerian phone number.";
+
+  var shipperName = document.getElementById("shipperName");
+  if (shipperName && !shipperName.value.trim()) {
+    shipperName.classList.add("is-error");
+    var shipperErr = document.getElementById("shipperName-error");
+    if (shipperErr) shipperErr.textContent = "Please enter the shipper name.";
     isValid = false;
   }
-  var blInput = document.getElementById("blNumber");
-  if (!blInput.value.trim()) {
-    blInput.classList.add("is-error");
-    var blErr = document.getElementById("blError");
-    if (blErr) blErr.textContent = "Please enter your B/L number.";
+
+  var consigneeName = document.getElementById("consigneeName");
+  if (consigneeName && !consigneeName.value.trim()) {
+    consigneeName.classList.add("is-error");
+    var consigneeErr = document.getElementById("consigneeName-error");
+    if (consigneeErr)
+      consigneeErr.textContent = "Please enter the consignee name.";
     isValid = false;
   }
-  var cargoInput = document.getElementById("cargoDescription");
-  if (!cargoInput.value.trim()) {
-    cargoInput.classList.add("is-error");
-    var cargoErr = document.getElementById("cargoError");
+
+  var consigneePhone = document.getElementById("consigneePhone");
+  if (consigneePhone) {
+    var phoneValue = consigneePhone.value.trim().replace(/\s+/g, "");
+    var normalized = normalizePhone(phoneValue);
+    if (!phoneValue) {
+      consigneePhone.classList.add("is-error");
+      var phoneErr = document.getElementById("consigneePhone-error");
+      if (phoneErr)
+        phoneErr.textContent = "Please enter the consignee phone number.";
+      isValid = false;
+    } else if (!/^234\d{10}$/.test(normalized)) {
+      consigneePhone.classList.add("is-error");
+      var phoneErr2 = document.getElementById("consigneePhone-error");
+      if (phoneErr2)
+        phoneErr2.textContent = "Enter a valid Nigerian phone number.";
+      isValid = false;
+    }
+  }
+
+  var consigneeEmail = document.getElementById("consigneeEmail");
+  if (consigneeEmail && !consigneeEmail.value.trim()) {
+    consigneeEmail.classList.add("is-error");
+    var emailErr = document.getElementById("consigneeEmail-error");
+    if (emailErr) emailErr.textContent = "Please enter the consignee email.";
+    isValid = false;
+  } else if (
+    consigneeEmail &&
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(consigneeEmail.value.trim())
+  ) {
+    consigneeEmail.classList.add("is-error");
+    var emailErr2 = document.getElementById("consigneeEmail-error");
+    if (emailErr2)
+      emailErr2.textContent = "Please enter a valid email address.";
+    isValid = false;
+  }
+
+  var cargoDesc = document.getElementById("cargoDescription");
+  if (cargoDesc && !cargoDesc.value.trim()) {
+    cargoDesc.classList.add("is-error");
+    var cargoErr = document.getElementById("cargoDescription-error");
     if (cargoErr) cargoErr.textContent = "Please describe your cargo.";
     isValid = false;
   }
+
+  var portOfDischarge = document.getElementById("portOfDischarge");
+  if (portOfDischarge && !portOfDischarge.value.trim()) {
+    portOfDischarge.classList.add("is-error");
+    var portErr = document.getElementById("portOfDischarge-error");
+    if (portErr) portErr.textContent = "Please enter the port of discharge.";
+    isValid = false;
+  }
+
+  var expectedArrival = document.getElementById("expectedArrival");
+  if (expectedArrival && !expectedArrival.value) {
+    expectedArrival.classList.add("is-error");
+    var arrivalErr = document.getElementById("expectedArrival-error");
+    if (arrivalErr)
+      arrivalErr.textContent = "Please select the expected arrival date.";
+    isValid = false;
+  }
+
+  var blFile = document.getElementById("blFile");
+  if (blFile && !blFile.files[0]) {
+    var fileErr = document.getElementById("blFile-error");
+    if (fileErr) fileErr.textContent = "Please upload your Bill of Lading.";
+    isValid = false;
+  }
+
   if (!isValid) {
     var firstError = document.querySelector(".is-error");
     if (firstError) {
@@ -309,8 +359,9 @@ function validateForm() {
   }
   return isValid;
 }
+
 // ================================================================
-// PROCESSING OVERLAY — Staged progress with reassurance
+// PROCESSING OVERLAY
 // ================================================================
 var processingTimer = null;
 var processingSeconds = 0;
@@ -329,14 +380,12 @@ function showProcessingOverlay() {
   overlay.classList.add("active");
   status.textContent = processingStages[0].message;
   timer.textContent = "00:00";
-  if (subtext) {
+  if (subtext)
     subtext.textContent =
       "Please keep this page open while we securely process your submission.";
-  }
   setTimeout(function () {
-    if (subtext && subtext.textContent.indexOf("keep this page open") > -1) {
+    if (subtext && subtext.textContent.indexOf("keep this page open") > -1)
       subtext.textContent = "";
-    }
   }, 8000);
   processingTimer = setInterval(function () {
     processingSeconds++;
@@ -349,23 +398,20 @@ function showProcessingOverlay() {
         break;
       }
     }
-    if (processingSeconds === 15 && subtext) {
+    if (processingSeconds === 15 && subtext)
       subtext.textContent =
         "Large attachments or slower internet connections may take a little longer.";
-    }
   }, 1000);
 }
 function signalProcessingComplete() {
-  var status = document.getElementById("processingStatus");
-  if (status) {
-    status.textContent = "Almost done... Finalizing your submission.";
-  }
+  var s = document.getElementById("processingStatus");
+  if (s) s.textContent = "Almost done... Finalizing your submission.";
 }
 function hideProcessingOverlay() {
   clearInterval(processingTimer);
-  var overlay = document.getElementById("processingOverlay");
-  overlay.classList.remove("active");
+  document.getElementById("processingOverlay").classList.remove("active");
 }
+
 // ================================================================
 // FORM HANDLER
 // ================================================================
@@ -377,11 +423,12 @@ function initFormHandler() {
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener("input", function () {
       this.classList.remove("is-error");
-      var errEl = document.getElementById(this.id + "Error");
+      var errEl = document.getElementById(this.id + "-error");
       if (errEl) errEl.textContent = "";
     });
   }
 }
+
 async function handleFormSubmit(event) {
   event.preventDefault();
   if (isSubmitting) return;
@@ -395,7 +442,8 @@ async function handleFormSubmit(event) {
   submitBtn.disabled = true;
   submitBtn.textContent = "Submitting...";
   submitBtn.classList.add("is-loading");
-  var fileInput = document.getElementById("attachment");
+
+  var fileInput = document.getElementById("blFile");
   var fileData = null;
   var fileName = null;
   if (fileInput && fileInput.files[0]) {
@@ -407,17 +455,23 @@ async function handleFormSubmit(event) {
       console.error("File read error:", err);
     }
   }
+
+  var consigneePhoneVal = document
+    .getElementById("consigneePhone")
+    .value.trim();
   var formData = {
-    customerName: document.getElementById("customerName").value.trim(),
-    phoneNumber: normalizePhone(
-      document.getElementById("phoneNumber").value.trim(),
-    ),
-    blNumber: document.getElementById("blNumber").value.trim(),
-    containerNumber: document.getElementById("containerNumber").value.trim(),
+    blReference: document.getElementById("blReference").value.trim(),
+    shipperName: document.getElementById("shipperName").value.trim(),
+    consigneeName: document.getElementById("consigneeName").value.trim(),
+    consigneePhone: normalizePhone(consigneePhoneVal),
+    consigneeEmail: document.getElementById("consigneeEmail").value.trim(),
     cargoDescription: document.getElementById("cargoDescription").value.trim(),
+    portOfDischarge: document.getElementById("portOfDischarge").value.trim(),
+    expectedArrival: document.getElementById("expectedArrival").value,
     attachmentName: fileName,
     attachmentData: fileData,
   };
+
   var apiUrl = QF_CONFIG.apiUrl;
   if (!apiUrl) {
     console.error("API URL not configured.");
@@ -427,6 +481,7 @@ async function handleFormSubmit(event) {
     submitBtn.classList.remove("is-loading");
     return;
   }
+
   try {
     showProcessingOverlay();
     var response = await fetch(apiUrl, {
@@ -434,27 +489,23 @@ async function handleFormSubmit(event) {
       headers: { "Content-Type": "text/plain" },
       body: JSON.stringify(formData),
     });
-    if (!response.ok) {
-      throw new Error("Server error. Please try again.");
-    }
+    if (!response.ok) throw new Error("Server error. Please try again.");
     var data = await response.json();
-    if (!data.success) {
+    if (!data.success)
       throw new Error(data.error || "Submission failed. Please try again.");
-    }
     signalProcessingComplete();
-    await new Promise(function (resolve) {
-      setTimeout(resolve, 800);
+    await new Promise(function (r) {
+      setTimeout(r, 800);
     });
     blForm.style.display = "none";
     successMsg.style.display = "block";
     errorMsg.style.display = "none";
     document.getElementById("trackingIdDisplay").textContent = data.trackingId;
-    var displayPhone = formData.phoneNumber;
-    if (displayPhone.startsWith("234") && displayPhone.length === 13) {
+    var displayPhone = formData.consigneePhone;
+    if (displayPhone.startsWith("234") && displayPhone.length === 13)
       displayPhone = "0" + displayPhone.substring(3);
-    }
     document.getElementById("confirmPhone").textContent = displayPhone;
-    saveCustomerMemory(formData.customerName, formData.phoneNumber);
+    saveCustomerMemory(formData.consigneeName, formData.consigneePhone);
     successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
   } catch (error) {
     console.error("Submission error:", error);
@@ -471,9 +522,7 @@ async function handleFormSubmit(event) {
     isSubmitting = false;
   }
 }
-// ================================================================
-// FILE HELPERS
-// ================================================================
+
 function readFileAsBase64(file) {
   return new Promise(function (resolve, reject) {
     var reader = new FileReader();
@@ -486,8 +535,9 @@ function readFileAsBase64(file) {
     reader.readAsDataURL(file);
   });
 }
+
 // ================================================================
-// FORM MEMORY — Remembers customer name & phone only (opt-in)
+// FORM MEMORY
 // ================================================================
 var FORM_MEMORY_KEY = "quickfreights_customer";
 function saveCustomerMemory(name, phone) {
@@ -496,10 +546,7 @@ function saveCustomerMemory(name, phone) {
     if (!remember || !remember.checked) return;
     localStorage.setItem(
       FORM_MEMORY_KEY,
-      JSON.stringify({
-        customerName: name,
-        phoneNumber: phone,
-      }),
+      JSON.stringify({ consigneeName: name, consigneePhone: phone }),
     );
   } catch (e) {}
 }
@@ -508,17 +555,19 @@ function loadCustomerMemory() {
     var data = localStorage.getItem(FORM_MEMORY_KEY);
     if (!data) return;
     var customer = JSON.parse(data);
-    var nameEl = document.getElementById("customerName");
-    var phoneEl = document.getElementById("phoneNumber");
+    var nameEl = document.getElementById("consigneeName");
+    var phoneEl = document.getElementById("consigneePhone");
     var rememberEl = document.getElementById("rememberMe");
-    if (nameEl && customer.customerName) nameEl.value = customer.customerName;
-    if (phoneEl && customer.phoneNumber) phoneEl.value = customer.phoneNumber;
+    if (nameEl && customer.consigneeName) nameEl.value = customer.consigneeName;
+    if (phoneEl && customer.consigneePhone)
+      phoneEl.value = customer.consigneePhone;
     if (rememberEl) rememberEl.checked = true;
   } catch (e) {}
 }
 function initFormMemory() {
   loadCustomerMemory();
 }
+
 // ================================================================
 // FORM RESET
 // ================================================================
@@ -535,45 +584,38 @@ function resetForm() {
   if (errorMsg) errorMsg.style.display = "none";
   if (submitBtn) {
     submitBtn.disabled = false;
-    submitBtn.textContent = "Submit Bill of Lading";
+    document.getElementById("submitText").textContent = "Submit Bill of Lading";
     submitBtn.classList.remove("is-loading");
   }
   var els = document.querySelectorAll(
     ".form-group input, .form-group textarea",
   );
-  for (var i = 0; i < els.length; i++) {
-    els[i].classList.remove("is-error");
-  }
+  for (var i = 0; i < els.length; i++) els[i].classList.remove("is-error");
   var errors = document.querySelectorAll(".field-error");
-  for (var j = 0; j < errors.length; j++) {
-    errors[j].textContent = "";
-  }
+  for (var j = 0; j < errors.length; j++) errors[j].textContent = "";
   var fileLabel = document.getElementById("fileLabel");
-  var fileInfo = document.getElementById("fileInfo");
-  var fileError = document.getElementById("fileError");
+  var fileInfo = document.getElementById("file-help");
+  var fileError = document.getElementById("blFile-error");
   if (fileLabel) {
-    fileLabel.querySelector("span").textContent =
-      "Click to upload or drag & drop";
+    document.getElementById("fileLabelText").textContent =
+      "Choose file or drag & drop";
     fileLabel.classList.remove("is-valid", "is-error", "is-dragover");
   }
   if (fileInfo) {
-    fileInfo.textContent = "PDF, JPG, PNG, or DOC (max 5MB)";
+    fileInfo.textContent = "Accepted: PDF, JPG, PNG, DOC (Max 10MB)";
     fileInfo.style.color = "";
   }
-  if (fileError) {
-    fileError.textContent = "";
-  }
+  if (fileError) fileError.textContent = "";
   var copyFeedback = document.getElementById("copyFeedback");
-  if (copyFeedback) {
-    copyFeedback.textContent = "";
-  }
+  if (copyFeedback) copyFeedback.textContent = "";
   isSubmitting = false;
   if (blForm) blForm.scrollIntoView({ behavior: "smooth", block: "start" });
-  var nameInput = document.getElementById("customerName");
+  var nameInput = document.getElementById("consigneeName");
   if (nameInput) nameInput.focus();
 }
+
 // ================================================================
-// COPY TRACKING ID TO CLIPBOARD
+// COPY TRACKING ID
 // ================================================================
 function copyTrackingId() {
   var id = document.getElementById("trackingIdDisplay").textContent.trim();
