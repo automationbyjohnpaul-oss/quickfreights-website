@@ -1,109 +1,396 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — FLOATING CONTACT WIDGET v1.0.3
-// Generated via JS — single source, no HTML duplication
-// UPDATED: "Email Us" → "Email Support"
+// QUICK FREIGHTS GLOBAL LIMITED — QUICK ASSIST WIDGET v2.0
+// Premium floating customer assistant
+// Depends on: communication.config.js (must load first)
 // ================================================================
 
 (function () {
-  if (!window.QF_COMMUNICATION) return;
+  "use strict";
 
-  var isTrackPage = window.location.pathname.indexOf("track.html") > -1;
-  var waTemplate = isTrackPage
-    ? QF_COMMUNICATION.templates.whatsappSubmission()
-    : QF_COMMUNICATION.templates.whatsappGeneral();
+  // ── CONFIGURATION ──
+  var CONFIG = {
+    phone: "+2348037883339",
+    phoneRaw: "2348037883339",
+    email: "reception.quickfreightglobal@gmail.com",
+    portalUrl: "track.html",
+    pulseInterval: 8000,
+    animDuration: 280,
+  };
 
-  var html = `
-    <div class="floating-widget" id="floatingWidget" aria-label="Contact options">
-      <button class="floating-toggle" id="floatingToggle" aria-label="Open contact menu" aria-expanded="false" aria-controls="floatingMenu">
-        <svg class="floating-toggle-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-        </svg>
-      </button>
-      <div class="floating-menu" id="floatingMenu" role="menu">
-        <a href="${QF_COMMUNICATION.getWhatsAppUrl(waTemplate)}"
-           class="floating-item"
-           role="menuitem"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Chat on WhatsApp">
-          <svg width="30" height="30" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <!-- Gold outer ring -->
-            <circle
-              cx="16"
-              cy="16"
-              r="15"
-              fill="#25D366"
-              stroke="#D4AF37"
-              stroke-width="2.5"
-            />
-            <!-- WhatsApp logo -->
-            <path
-              fill="#FFFFFF"
-              d="M16 7.2c-4.85 0-8.8 3.95-8.8 8.8 0 1.55.41 3.06 1.18 4.39L7.2 24.8l4.52-1.18A8.76 8.76 0 0 0 16 24.8c4.85 0 8.8-3.95 8.8-8.8S20.85 7.2 16 7.2zm0 15.9a7.08 7.08 0 0 1-3.6-.99l-.26-.15-2.68.7.72-2.61-.17-.27a7.07 7.07 0 1 1 5.99 3.32zm3.9-5.3c-.21-.11-1.24-.61-1.43-.68-.19-.07-.33-.11-.47.11s-.54.68-.66.82c-.12.14-.24.16-.45.05-.21-.11-.88-.32-1.68-1.01-.62-.55-1.04-1.22-1.16-1.43-.12-.21-.01-.33.09-.44.09-.09.21-.24.31-.36.1-.12.14-.21.21-.35.07-.14.04-.26-.02-.36-.05-.11-.47-1.14-.64-1.56-.17-.41-.35-.36-.47-.37h-.4c-.14 0-.36.05-.55.26-.19.21-.73.71-.73 1.74s.75 2.03.86 2.17c.11.14 1.47 2.24 3.56 3.14.5.22.9.35 1.2.45.5.16.95.14 1.31.08.4-.06 1.24-.51 1.41-1 .17-.49.17-.92.12-1.01-.05-.09-.19-.14-.4-.25z"
-            />
-          </svg>
-          <span>WhatsApp</span>
-        </a>
-        <a href="track.html" class="floating-item" role="menuitem" aria-label="Track your shipment">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span>Track Shipment</span>
-        </a>
-        <a href="${QF_COMMUNICATION.getTelUrl()}" class="floating-item" role="menuitem" aria-label="Call office">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span>Call Office</span>
-        </a>
-        <a href="${QF_COMMUNICATION.getEmailUrl(QF_COMMUNICATION.subjects.enquiry)}" class="floating-item" role="menuitem" aria-label="Send email">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <span>Email Support</span>
-        </a>
-      </div>
-    </div>
-  `;
+  // ── WHATSAPP MESSAGE TEMPLATES ──
+  var WA_TEMPLATES = {
+    enquiry: encodeURIComponent(
+      "Hello Quick Freights Global Limited,\n\nI would like to learn about your clearing and forwarding services.",
+    ),
+    team: encodeURIComponent(
+      "Hello Quick Freights Global Limited,\n\nI would like to speak with your team about my cargo.",
+    ),
+    documents: encodeURIComponent(
+      "Hello Quick Freights Global Limited,\n\nI would like to submit my cargo documents for clearance processing.\n\nPlease find my documents attached.",
+    ),
+  };
 
-  document.body.insertAdjacentHTML("beforeend", html);
-
-  // ── WIDGET BEHAVIOUR ──
-  var widget = document.getElementById("floatingWidget");
-  var toggle = document.getElementById("floatingToggle");
-  var menu = document.getElementById("floatingMenu");
-  var items = menu.querySelectorAll(".floating-item");
-
-  if (!widget || !toggle || !menu) return;
-
-  function openMenu() {
-    widget.classList.add("is-open");
-    toggle.setAttribute("aria-expanded", "true");
-    // Focus first menu item
-    setTimeout(function () {
-      items[0].focus();
-    }, 100);
+  // ── DETECT PAGE CONTEXT ──
+  function isTrackPage() {
+    return window.location.pathname.indexOf("track") !== -1;
   }
 
-  function closeMenu() {
-    widget.classList.remove("is-open");
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.focus();
+  // ── BUILD WHATSAPP URL ──
+  function waUrl(template) {
+    var number =
+      typeof QF_COMMUNICATION !== "undefined" && QF_COMMUNICATION.whatsapp
+        ? QF_COMMUNICATION.whatsapp.replace(/\D/g, "")
+        : CONFIG.phoneRaw;
+    return "https://wa.me/" + number + "?text=" + template;
   }
 
-  toggle.addEventListener("click", function (e) {
-    e.stopPropagation();
-    widget.classList.contains("is-open") ? closeMenu() : openMenu();
-  });
+  // ── INJECT STYLES ──
+  function injectStyles() {
+    var style = document.createElement("style");
+    style.textContent = [
+      "/* ── QUICK ASSIST WIDGET ── */",
+      ".qa-wrapper{position:fixed;bottom:24px;right:24px;z-index:9998;font-family:var(--font,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif);}",
 
-  document.addEventListener("click", function () {
-    if (widget.classList.contains("is-open")) closeMenu();
-  });
+      /* Toggle button */
+      ".qa-toggle{display:flex;align-items:center;gap:8px;background:var(--navy,#0a1f3f);color:#fff;border:2px solid var(--gold,#daa520);border-radius:50px;padding:12px 20px;cursor:pointer;font-size:0.9rem;font-weight:700;box-shadow:0 4px 20px rgba(0,0,0,0.25);transition:all 0.28s ease;white-space:nowrap;letter-spacing:0.3px;}",
+      ".qa-toggle:hover{background:var(--navy-light,#132d56);box-shadow:0 4px 24px rgba(218,165,32,0.35);}",
+      ".qa-toggle svg{transition:transform 0.28s ease;flex-shrink:0;}",
+      ".qa-toggle.is-open svg{transform:rotate(45deg);}",
+      ".qa-toggle-label{transition:opacity 0.2s ease;}",
 
-  menu.addEventListener("click", function (e) {
-    e.stopPropagation();
-    setTimeout(function () {
-      closeMenu();
-    }, 150);
-  });
+      /* Pulse animation */
+      "@keyframes qa-pulse{0%,100%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 0 rgba(218,165,32,0.4);}50%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 8px rgba(218,165,32,0);}}",
+      ".qa-toggle.qa-pulse{animation:qa-pulse 1.5s ease-in-out;}",
 
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && widget.classList.contains("is-open")) {
-      closeMenu();
+      /* Panel */
+      ".qa-panel{position:absolute;bottom:calc(100% + 12px);right:0;width:300px;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.18),0 4px 12px rgba(0,0,0,0.08);overflow:hidden;transform:translateY(12px) scale(0.97);opacity:0;pointer-events:none;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1),opacity 0.28s ease;}",
+      ".qa-panel.is-open{transform:translateY(0) scale(1);opacity:1;pointer-events:all;}",
+
+      /* Panel header */
+      ".qa-header{background:var(--navy,#0a1f3f);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;}",
+      ".qa-header-left{display:flex;align-items:center;gap:10px;}",
+      ".qa-header-title{color:#fff;font-weight:700;font-size:0.95rem;letter-spacing:0.3px;}",
+      ".qa-header-sub{color:rgba(255,255,255,0.6);font-size:0.72rem;margin-top:1px;}",
+      ".qa-close{background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;padding:4px;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:color 0.2s ease;}",
+      ".qa-close:hover{color:#fff;}",
+
+      /* Sub-panel header with back button */
+      ".qa-sub-header{background:var(--navy,#0a1f3f);padding:14px 18px;display:flex;align-items:center;gap:10px;}",
+      ".qa-back{background:none;border:none;color:rgba(255,255,255,0.75);cursor:pointer;padding:4px 8px 4px 0;display:flex;align-items:center;gap:6px;font-size:0.82rem;font-weight:600;transition:color 0.2s ease;}",
+      ".qa-back:hover{color:var(--gold,#daa520);}",
+      ".qa-sub-title{color:#fff;font-weight:700;font-size:0.9rem;}",
+
+      /* Panel body */
+      ".qa-body{padding:8px 0;}",
+      ".qa-label{padding:10px 18px 4px;font-size:0.72rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;}",
+
+      /* Menu items */
+      ".qa-item{display:flex;align-items:center;gap:14px;padding:13px 18px;cursor:pointer;transition:background 0.18s ease;border:none;background:none;width:100%;text-align:left;}",
+      ".qa-item:hover{background:#f8f9fb;}",
+      ".qa-item:focus-visible{outline:2px solid var(--gold,#daa520);outline-offset:-2px;}",
+      ".qa-item-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;}",
+      ".qa-item-icon.green{background:#dcfce7;}.qa-item-icon.navy{background:#e8edf5;}.qa-item-icon.gold{background:#fef9e7;}.qa-item-icon.red{background:#fef2f2;}",
+      ".qa-item-text{flex:1;}",
+      ".qa-item-label{font-size:0.9rem;font-weight:600;color:#1f2937;line-height:1.2;}",
+      ".qa-item-desc{font-size:0.75rem;color:#6b7280;margin-top:2px;}",
+      ".qa-item-arrow{color:#d1d5db;flex-shrink:0;}",
+
+      /* Divider */
+      ".qa-divider{height:1px;background:#f3f4f6;margin:4px 0;}",
+
+      /* Slide views */
+      ".qa-views{position:relative;overflow:hidden;}",
+      ".qa-view{transition:transform 0.28s cubic-bezier(0.4,0,0.2,1),opacity 0.28s ease;}",
+      ".qa-view.is-hidden-left{position:absolute;top:0;left:0;right:0;transform:translateX(-100%);opacity:0;pointer-events:none;}",
+      ".qa-view.is-hidden-right{position:absolute;top:0;left:0;right:0;transform:translateX(100%);opacity:0;pointer-events:none;}",
+
+      /* Footer */
+      ".qa-footer{padding:10px 18px;text-align:center;border-top:1px solid #f3f4f6;}",
+      ".qa-footer p{font-size:0.68rem;color:#9ca3af;}",
+      ".qa-footer strong{color:var(--gold-dark,#b8860b);}",
+
+      /* Mobile */
+      "@media(max-width:480px){",
+      ".qa-wrapper{bottom:0;right:0;left:0;}",
+      ".qa-toggle{border-radius:0;border-left:none;border-right:none;border-bottom:none;width:100%;justify-content:center;padding:14px 20px;}",
+      ".qa-panel{position:fixed;bottom:53px;right:0;left:0;width:100%;border-radius:16px 16px 0 0;max-height:80vh;overflow-y:auto;}",
+      "}",
+    ].join("\n");
+    document.head.appendChild(style);
+  }
+
+  // ── BUILD WIDGET HTML ──
+  function buildWidget() {
+    var onTrack = isTrackPage();
+
+    // WhatsApp sub-items — reorder based on page context
+    var waItems = onTrack
+      ? [
+          {
+            key: "documents",
+            icon: "📄",
+            label: "Submit Documents",
+            desc: "Begin clearance process",
+            color: "gold",
+          },
+          {
+            key: "team",
+            icon: "👥",
+            label: "Talk to Our Team",
+            desc: "Discuss your cargo",
+            color: "navy",
+          },
+          {
+            key: "enquiry",
+            icon: "💬",
+            label: "General Enquiry",
+            desc: "Learn about our services",
+            color: "green",
+          },
+        ]
+      : [
+          {
+            key: "enquiry",
+            icon: "💬",
+            label: "General Enquiry",
+            desc: "Learn about our services",
+            color: "green",
+          },
+          {
+            key: "team",
+            icon: "👥",
+            label: "Talk to Our Team",
+            desc: "Discuss your cargo",
+            color: "navy",
+          },
+          {
+            key: "documents",
+            icon: "📄",
+            label: "Submit Documents",
+            desc: "Begin clearance process",
+            color: "gold",
+          },
+        ];
+
+    var waItemsHTML = waItems
+      .map(function (item) {
+        return (
+          '<button class="qa-item" data-wa="' +
+          item.key +
+          '" aria-label="' +
+          item.label +
+          '">' +
+          '<span class="qa-item-icon ' +
+          item.color +
+          '">' +
+          item.icon +
+          "</span>" +
+          '<span class="qa-item-text">' +
+          '<span class="qa-item-label">' +
+          item.label +
+          "</span>" +
+          '<span class="qa-item-desc">' +
+          item.desc +
+          "</span>" +
+          "</span>" +
+          '<svg class="qa-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>' +
+          "</button>"
+        );
+      })
+      .join("");
+
+    var html =
+      '<div class="qa-wrapper" id="qaWrapper" role="complementary" aria-label="Quick Assist">' +
+      // Toggle button
+      '<button class="qa-toggle" id="qaToggle" aria-expanded="false" aria-controls="qaPanel" aria-label="Open Quick Assist">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+      '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>' +
+      "</svg>" +
+      '<span class="qa-toggle-label">Quick Assist</span>' +
+      "</button>" +
+      // Panel
+      '<div class="qa-panel" id="qaPanel" role="dialog" aria-modal="false" aria-label="Quick Assist menu">' +
+      // Panel header
+      '<div class="qa-header">' +
+      '<div class="qa-header-left">' +
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold,#daa520)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
+      '<div><div class="qa-header-title">Quick Assist</div><div class="qa-header-sub">How can we help you?</div></div>' +
+      "</div>" +
+      '<button class="qa-close" id="qaClose" aria-label="Close Quick Assist">' +
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+      "</button>" +
+      "</div>" +
+      // Views container
+      '<div class="qa-views" id="qaViews">' +
+      // Main view
+      '<div class="qa-view" id="qaMainView">' +
+      '<div class="qa-body">' +
+      '<p class="qa-label">Contact Options</p>' +
+      // WhatsApp
+      '<button class="qa-item" id="qaWhatsAppBtn" aria-label="WhatsApp Us">' +
+      '<span class="qa-item-icon green">🟢</span>' +
+      '<span class="qa-item-text"><span class="qa-item-label">WhatsApp Us</span><span class="qa-item-desc">Chat with our team</span></span>' +
+      '<svg class="qa-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>' +
+      "</button>" +
+      // Clear My Cargo
+      '<button class="qa-item" id="qaPortalBtn" aria-label="Clear My Cargo">' +
+      '<span class="qa-item-icon gold">📄</span>' +
+      '<span class="qa-item-text"><span class="qa-item-label">Clear My Cargo</span><span class="qa-item-desc">Submit documents online</span></span>' +
+      '<svg class="qa-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>' +
+      "</button>" +
+      '<div class="qa-divider"></div>' +
+      '<p class="qa-label">Direct Contact</p>' +
+      // Call
+      '<a class="qa-item" href="tel:' +
+      CONFIG.phone +
+      '" aria-label="Call Office">' +
+      '<span class="qa-item-icon navy">📞</span>' +
+      '<span class="qa-item-text"><span class="qa-item-label">Call Office</span><span class="qa-item-desc">' +
+      CONFIG.phone +
+      "</span></span>" +
+      "</a>" +
+      // Email
+      '<a class="qa-item" href="mailto:' +
+      CONFIG.email +
+      '" aria-label="Email Support">' +
+      '<span class="qa-item-icon gold">✉</span>' +
+      '<span class="qa-item-text"><span class="qa-item-label">Email Support</span><span class="qa-item-desc">reception@quickfreights</span></span>' +
+      "</a>" +
+      "</div>" +
+      '<div class="qa-footer"><p>Powered by <strong>Quick Freights</strong> · RC: 8106184</p></div>' +
+      "</div>" +
+      // WhatsApp sub-view
+      '<div class="qa-view is-hidden-right" id="qaWaView">' +
+      '<div class="qa-sub-header">' +
+      '<button class="qa-back" id="qaBack" aria-label="Go back">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>' +
+      "Back" +
+      "</button>" +
+      '<span class="qa-sub-title">WhatsApp Us</span>' +
+      "</div>" +
+      '<div class="qa-body">' +
+      '<p class="qa-label">Choose your message</p>' +
+      waItemsHTML +
+      "</div>" +
+      "</div>" +
+      "</div>" + // end qa-views
+      "</div>" + // end qa-panel
+      "</div>"; // end qa-wrapper
+
+    document.body.insertAdjacentHTML("beforeend", html);
+  }
+
+  // ── CONTROLLER ──
+  function initWidget() {
+    var wrapper = document.getElementById("qaWrapper");
+    var toggle = document.getElementById("qaToggle");
+    var panel = document.getElementById("qaPanel");
+    var closeBtn = document.getElementById("qaClose");
+    var waBtn = document.getElementById("qaWhatsAppBtn");
+    var portalBtn = document.getElementById("qaPortalBtn");
+    var backBtn = document.getElementById("qaBack");
+    var mainView = document.getElementById("qaMainView");
+    var waView = document.getElementById("qaWaView");
+    var isOpen = false;
+    var pulseTimer = null;
+
+    // Open / close panel
+    function openPanel() {
+      isOpen = true;
+      panel.classList.add("is-open");
+      toggle.classList.add("is-open");
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.classList.remove("qa-pulse");
+      clearInterval(pulseTimer);
+      showMainView();
     }
-  });
+
+    function closePanel() {
+      isOpen = false;
+      panel.classList.remove("is-open");
+      toggle.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      startPulse();
+    }
+
+    function togglePanel() {
+      if (isOpen) closePanel();
+      else openPanel();
+    }
+
+    // View navigation
+    function showMainView() {
+      mainView.classList.remove("is-hidden-left");
+      mainView.classList.remove("is-hidden-right");
+      waView.classList.remove("is-hidden-left");
+      waView.classList.add("is-hidden-right");
+    }
+
+    function showWaView() {
+      mainView.classList.add("is-hidden-left");
+      mainView.classList.remove("is-hidden-right");
+      waView.classList.remove("is-hidden-right");
+      waView.classList.remove("is-hidden-left");
+    }
+
+    // Pulse
+    function startPulse() {
+      pulseTimer = setInterval(function () {
+        toggle.classList.add("qa-pulse");
+        setTimeout(function () {
+          toggle.classList.remove("qa-pulse");
+        }, 1500);
+      }, CONFIG.pulseInterval);
+    }
+
+    // Events
+    toggle.addEventListener("click", togglePanel);
+    closeBtn.addEventListener("click", closePanel);
+    waBtn.addEventListener("click", showWaView);
+    backBtn.addEventListener("click", showMainView);
+
+    // Portal button
+    portalBtn.addEventListener("click", function () {
+      closePanel();
+      window.location.href = CONFIG.portalUrl;
+    });
+
+    // WhatsApp sub-items
+    waView.querySelectorAll("[data-wa]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var key = btn.getAttribute("data-wa");
+        var url = waUrl(WA_TEMPLATES[key]);
+        window.open(url, "_blank", "noopener,noreferrer");
+        closePanel();
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener("click", function (e) {
+      if (isOpen && wrapper && !wrapper.contains(e.target)) {
+        closePanel();
+      }
+    });
+
+    // Keyboard
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isOpen) closePanel();
+    });
+
+    // Start pulse after 3 seconds
+    setTimeout(startPulse, 3000);
+  }
+
+  // ── INIT ──
+  function init() {
+    injectStyles();
+    buildWidget();
+    initWidget();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
