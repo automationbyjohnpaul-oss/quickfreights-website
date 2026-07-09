@@ -2,12 +2,12 @@
   "name": "Quick Freights Global Limited",
   "short_name": "Quick Freights",
   "description": "Premier clearing and forwarding agency in Nigeria. RC: 8106184.",
-  "start_url": "/",
+  "start_url": "/quickfreights-website/",
   "display": "standalone",
   "background_color": "#0A1F3F",
   "theme_color": "#0A1F3F",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "/quickfreights-website/",
   "icons": [
     {
       "src": "icons/favicon.svg",

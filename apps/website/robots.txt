@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://quickfreightsglobal.com/sitemap.xml
+Sitemap: https://automationbyjohnpaul-oss.github.io/quickfreights-website/sitemap.xml
