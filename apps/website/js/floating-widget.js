@@ -1,6 +1,7 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — QUICK ASSIST WIDGET v2.0
+// QUICK FREIGHTS GLOBAL LIMITED — QUICK ASSIST WIDGET v2.0.1
 // Premium floating customer assistant
+// UPDATED: Stronger pulse animation (more visible, still premium)
 // Depends on: communication.config.js (must load first)
 // ================================================================
 
@@ -58,8 +59,8 @@
       ".qa-toggle.is-open svg{transform:rotate(45deg);}",
       ".qa-toggle-label{transition:opacity 0.2s ease;}",
 
-      /* Pulse animation */
-      "@keyframes qa-pulse{0%,100%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 0 rgba(218,165,32,0.4);}50%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 8px rgba(218,165,32,0);}}",
+      /* Pulse animation — stronger but still premium */
+      "@keyframes qa-pulse{0%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 0 rgba(218,165,32,0.7);}70%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 14px rgba(218,165,32,0);}100%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 0 rgba(218,165,32,0);}}",
       ".qa-toggle.qa-pulse{animation:qa-pulse 1.5s ease-in-out;}",
 
       /* Panel */
@@ -123,7 +124,6 @@
   function buildWidget() {
     var onTrack = isTrackPage();
 
-    // WhatsApp sub-items — reorder based on page context
     var waItems = onTrack
       ? [
           {
@@ -201,16 +201,13 @@
 
     var html =
       '<div class="qa-wrapper" id="qaWrapper" role="complementary" aria-label="Quick Assist">' +
-      // Toggle button
       '<button class="qa-toggle" id="qaToggle" aria-expanded="false" aria-controls="qaPanel" aria-label="Open Quick Assist">' +
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
       '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>' +
       "</svg>" +
       '<span class="qa-toggle-label">Quick Assist</span>' +
       "</button>" +
-      // Panel
       '<div class="qa-panel" id="qaPanel" role="dialog" aria-modal="false" aria-label="Quick Assist menu">' +
-      // Panel header
       '<div class="qa-header">' +
       '<div class="qa-header-left">' +
       '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold,#daa520)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
@@ -220,19 +217,15 @@
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
       "</button>" +
       "</div>" +
-      // Views container
       '<div class="qa-views" id="qaViews">' +
-      // Main view
       '<div class="qa-view" id="qaMainView">' +
       '<div class="qa-body">' +
       '<p class="qa-label">Contact Options</p>' +
-      // WhatsApp
       '<button class="qa-item" id="qaWhatsAppBtn" aria-label="WhatsApp Us">' +
       '<span class="qa-item-icon green">🟢</span>' +
       '<span class="qa-item-text"><span class="qa-item-label">WhatsApp Us</span><span class="qa-item-desc">Chat with our team</span></span>' +
       '<svg class="qa-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>' +
       "</button>" +
-      // Clear My Cargo
       '<button class="qa-item" id="qaPortalBtn" aria-label="Clear My Cargo">' +
       '<span class="qa-item-icon gold">📄</span>' +
       '<span class="qa-item-text"><span class="qa-item-label">Clear My Cargo</span><span class="qa-item-desc">Submit documents online</span></span>' +
@@ -240,7 +233,6 @@
       "</button>" +
       '<div class="qa-divider"></div>' +
       '<p class="qa-label">Direct Contact</p>' +
-      // Call
       '<a class="qa-item" href="tel:' +
       CONFIG.phone +
       '" aria-label="Call Office">' +
@@ -249,7 +241,6 @@
       CONFIG.phone +
       "</span></span>" +
       "</a>" +
-      // Email
       '<a class="qa-item" href="mailto:' +
       CONFIG.email +
       '" aria-label="Email Support">' +
@@ -259,7 +250,6 @@
       "</div>" +
       '<div class="qa-footer"><p>Powered by <strong>Quick Freights</strong> · RC: 8106184</p></div>' +
       "</div>" +
-      // WhatsApp sub-view
       '<div class="qa-view is-hidden-right" id="qaWaView">' +
       '<div class="qa-sub-header">' +
       '<button class="qa-back" id="qaBack" aria-label="Go back">' +
@@ -273,9 +263,9 @@
       waItemsHTML +
       "</div>" +
       "</div>" +
-      "</div>" + // end qa-views
-      "</div>" + // end qa-panel
-      "</div>"; // end qa-wrapper
+      "</div>" +
+      "</div>" +
+      "</div>";
 
     document.body.insertAdjacentHTML("beforeend", html);
   }
@@ -294,7 +284,6 @@
     var isOpen = false;
     var pulseTimer = null;
 
-    // Open / close panel
     function openPanel() {
       isOpen = true;
       panel.classList.add("is-open");
@@ -318,7 +307,6 @@
       else openPanel();
     }
 
-    // View navigation
     function showMainView() {
       mainView.classList.remove("is-hidden-left");
       mainView.classList.remove("is-hidden-right");
@@ -333,7 +321,6 @@
       waView.classList.remove("is-hidden-left");
     }
 
-    // Pulse
     function startPulse() {
       pulseTimer = setInterval(function () {
         toggle.classList.add("qa-pulse");
@@ -343,19 +330,15 @@
       }, CONFIG.pulseInterval);
     }
 
-    // Events
     toggle.addEventListener("click", togglePanel);
     closeBtn.addEventListener("click", closePanel);
     waBtn.addEventListener("click", showWaView);
     backBtn.addEventListener("click", showMainView);
-
-    // Portal button
     portalBtn.addEventListener("click", function () {
       closePanel();
       window.location.href = CONFIG.portalUrl;
     });
 
-    // WhatsApp sub-items
     waView.querySelectorAll("[data-wa]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         var key = btn.getAttribute("data-wa");
@@ -365,23 +348,16 @@
       });
     });
 
-    // Close on outside click
     document.addEventListener("click", function (e) {
-      if (isOpen && wrapper && !wrapper.contains(e.target)) {
-        closePanel();
-      }
+      if (isOpen && wrapper && !wrapper.contains(e.target)) closePanel();
     });
-
-    // Keyboard
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && isOpen) closePanel();
     });
 
-    // Start pulse after 3 seconds
     setTimeout(startPulse, 3000);
   }
 
-  // ── INIT ──
   function init() {
     injectStyles();
     buildWidget();
