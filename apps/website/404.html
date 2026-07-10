@@ -2,37 +2,204 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
-    <title>Page Not Found | Quick Freights Global Limited</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"
     />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#0A1F3F" />
+    <title>Page Not Found | Quick Freights Global Limited</title>
+    <style>
+      html {
+        background: #0a1f3f;
+      }
+    </style>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    /></noscript>
+    <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
   </head>
   <body>
-    <main style="text-align: center; padding: 80px 20px">
-      <h1 style="font-size: 3rem; color: var(--navy)">404</h1>
-      <p style="font-size: 1.2rem; color: var(--grey); margin: 20px 0">
-        The page you're looking for doesn't exist.
-      </p>
-      <a href="index.html" class="btn btn-primary">Go Home</a>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+      <div class="container header-inner">
+        <a
+          href="index.html"
+          class="logo-link"
+          aria-label="Quick Freights Global Limited Home"
+        >
+          <div class="logo">
+            <div class="logo-icon">
+              <img
+                src="images/logo.png"
+                alt=""
+                width="40"
+                height="40"
+                aria-hidden="true"
+              />
+            </div>
+            <div class="logo-text">
+              <span class="logo-name">QUICK FREIGHTS</span>
+              <span class="logo-sub">GLOBAL LIMITED</span>
+              <span class="logo-rc">RC: 8106184</span>
+            </div>
+          </div>
+        </a>
+        <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+          <button
+            class="mobile-menu-toggle"
+            id="menuToggle"
+            aria-label="Toggle menu"
+            aria-expanded="false"
+          >
+            <span></span><span></span><span></span>
+          </button>
+          <ul class="nav-list" id="navList">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+            <li><a href="services.html" class="nav-link">Services</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+            <li>
+              <a href="track.html" class="nav-link cta-nav">Cargo Portal</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="page-header" aria-labelledby="error-heading">
+        <div class="container">
+          <span class="section-tag">404 Error</span>
+          <h1 id="error-heading">Page Not Found</h1>
+          <p>The page you are looking for does not exist or has been moved.</p>
+        </div>
+      </section>
+
+      <section
+        style="padding: 60px 0; background: var(--white); text-align: center"
+      >
+        <div class="container">
+          <p style="font-size: 5rem; margin-bottom: 16px">🔍</p>
+          <h2
+            style="color: var(--navy); font-size: 1.4rem; margin-bottom: 12px"
+          >
+            Lost at sea?
+          </h2>
+          <p
+            style="
+              color: var(--grey);
+              margin-bottom: 32px;
+              max-width: 400px;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            Let us help you navigate back. Try one of the links below or use
+            Quick Assist to contact our team.
+          </p>
+          <div
+            style="
+              display: flex;
+              gap: 16px;
+              justify-content: center;
+              flex-wrap: wrap;
+            "
+          >
+            <a href="index.html" class="btn btn-primary">Go Home</a>
+            <a href="track.html" class="btn btn-outline-dark">Cargo Portal</a>
+            <a href="contact.html" class="btn btn-outline-dark">Contact Us</a>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <div class="logo-icon">
+              <img
+                src="images/logo.png"
+                alt=""
+                width="40"
+                height="40"
+                aria-hidden="true"
+                loading="lazy"
+              />
+            </div>
+            <div class="logo-text">
+              <span class="logo-name">QUICK FREIGHTS</span>
+              <span class="logo-sub">GLOBAL LIMITED</span>
+            </div>
+          </div>
+          <p>A subsidiary of Bondex Bridge Multinational Terminal Limited</p>
+          <p class="rc-note">RC: 8106184 · CAC Registered</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="track.html">Cargo Portal</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="services.html">Port Clearance</a></li>
+            <li><a href="services.html">Freight Forwarding</a></li>
+            <li><a href="services.html">End-to-End Logistics</a></li>
+            <li><a href="services.html">Customs Documentation</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Onitsha Office</h4>
+          <p>
+            3rd Floor, Right Wing, D1 Block<br />Eagle Plaza, 56 Bida Road<br />Fege,
+            Onitsha, Anambra State
+          </p>
+          <p>
+            <a href="tel:+2348063388230">08063388230</a><br />
+            <a href="tel:+2348037883339">08037883339</a><br />
+            <a href="tel:+2348036660493">08036660493</a>
+          </p>
+          <p>
+            <a href="mailto:reception.quickfreightglobal@gmail.com"
+              >reception.quickfreightglobal@gmail.com</a
+            >
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <p>
+            &copy; <span id="copyrightYear"></span> Quick Freights Global
+            Limited. All rights reserved. | RC: 8106184
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/communication.config.js"></script>
+    <script src="js/floating-widget.js"></script>
+    <script defer src="js/script.js"></script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
