@@ -2,6 +2,7 @@
 // QUICK FREIGHTS GLOBAL LIMITED — QUICK ASSIST WIDGET v2.0.1
 // Premium floating customer assistant
 // UPDATED: Stronger pulse animation (more visible, still premium)
+// UPDATED: Fixed spacing between label and description
 // Depends on: communication.config.js (must load first)
 // ================================================================
 
@@ -85,16 +86,16 @@
       ".qa-body{padding:8px 0;}",
       ".qa-label{padding:10px 18px 4px;font-size:0.72rem;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;}",
 
-      /* Menu items */
-      ".qa-item{display:flex;align-items:center;gap:14px;padding:13px 18px;cursor:pointer;transition:background 0.18s ease;border:none;background:none;width:100%;text-align:left;}",
+      /* Menu items - FIXED SPACING */
+      ".qa-item{display:flex;align-items:flex-start;gap:14px;padding:13px 18px;cursor:pointer;transition:background 0.18s ease;border:none;background:none;width:100%;text-align:left;}",
       ".qa-item:hover{background:#f8f9fb;}",
       ".qa-item:focus-visible{outline:2px solid var(--gold,#daa520);outline-offset:-2px;}",
-      ".qa-item-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;}",
+      ".qa-item-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;margin-top:0;}",
       ".qa-item-icon.green{background:#dcfce7;}.qa-item-icon.navy{background:#e8edf5;}.qa-item-icon.gold{background:#fef9e7;}.qa-item-icon.red{background:#fef2f2;}",
-      ".qa-item-text{flex:1;}",
-      ".qa-item-label{font-size:0.9rem;font-weight:600;color:#1f2937;line-height:1.2;}",
-      ".qa-item-desc{font-size:0.75rem;color:#6b7280;margin-top:2px;}",
-      ".qa-item-arrow{color:#d1d5db;flex-shrink:0;}",
+      ".qa-item-text{flex:1;display:flex;flex-direction:column;gap:2px;}",
+      ".qa-item-label{font-size:0.9rem;font-weight:600;color:#1f2937;line-height:1.3;display:block;}",
+      ".qa-item-desc{font-size:0.75rem;color:#6b7280;line-height:1.4;display:block;margin-top:0;}",
+      ".qa-item-arrow{color:#d1d5db;flex-shrink:0;align-self:center;}",
 
       /* Divider */
       ".qa-divider{height:1px;background:#f3f4f6;margin:4px 0;}",
