@@ -52,42 +52,32 @@ window.QF_COMMUNICATION = {
     // CUSTOMER INITIATED (Customer → Quick Freights)
     // ====================================================
 
-    /** WhatsApp — Document Submission (🔒 Frozen) */
+    /** WhatsApp — Document Submission (Simplified) */
     whatsappSubmission() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
-        "I would like to submit my shipping documents for processing.\n\n" +
-        "*Name:*\n" +
-        "*Company (Optional):*\n" +
-        "*Alternate Contact for SMS Updates (if different from this number):*\n\n" +
-        "*Attached Documents (Bill of Lading is required):*\n" +
-        "☐ Bill of Lading (B/L)\n" +
-        "☐ Commercial Invoice\n" +
-        "☐ Packing List\n" +
-        "☐ PAAR\n" +
-        "☐ Form M\n" +
-        "☐ SONCAP / NAFDAC\n" +
-        "☐ Other:\n\n" +
-        "My shipping documents are attached.\n" +
-        "Kindly process my submission and send me my Tracking ID.\n\n" +
-        "Thank you."
+        "I would like to submit my cargo documents for clearance processing.\n\n" +
+        "Please find my documents attached."
       );
     },
 
-    /** General Enquiry (🔒 Frozen) */
+    /** General Enquiry (Simplified) */
     whatsappGeneral() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
-        "I would like to make an enquiry regarding your services.\n\n" +
-        "*Name:*\n" +
-        "*Company (Optional):*\n" +
-        "*Phone Number:*\n\n" +
-        "My enquiry is:\n\n" +
-        "Thank you."
+        "I would like to learn about your clearing and forwarding services."
       );
     },
 
-    /** Shipment Tracking Support (🔒 Frozen) */
+    /** WhatsApp — Talk to Our Team (NEW) */
+    whatsappTeam() {
+      return (
+        "Hello Quick Freights Global Limited,\n\n" +
+        "I would like to speak with your team about my cargo."
+      );
+    },
+
+    /** Shipment Tracking Support (Simplified) */
     whatsappTracking() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -97,23 +87,19 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Freight Quote Request (🔒 Frozen) */
+    /** Freight Quote Request (Simplified) */
     whatsappQuote() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
         "I would like to request a freight quotation.\n\n" +
-        "*Name:*\n" +
-        "*Company (Optional):*\n" +
-        "*Phone Number:*\n\n" +
-        "*Cargo Type:*\n\n" +
-        "*Origin:*\n\n" +
+        "*Cargo Type:*\n" +
+        "*Origin:*\n" +
         "*Destination:*\n\n" +
-        "*Approximate Weight/Volume (Optional):*\n\n" +
         "Thank you."
       );
     },
 
-    /** Customs Clearance Enquiry (🔒 Frozen) */
+    /** Customs Clearance Enquiry (Simplified) */
     whatsappCustoms() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -123,7 +109,7 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Warehousing Enquiry (🔒 Frozen) */
+    /** Warehousing Enquiry (Simplified) */
     whatsappWarehousing() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -132,7 +118,7 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Business Partnership (🔒 Frozen) */
+    /** Business Partnership (Simplified) */
     whatsappPartnership() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -142,7 +128,7 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Corporate Account Opening (🔒 Frozen) */
+    /** Corporate Account Opening (Simplified) */
     whatsappAccount() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -152,7 +138,7 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Complaint (🔒 Frozen) */
+    /** Complaint (Simplified) */
     whatsappComplaint() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -163,7 +149,7 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Compliment / Feedback (🔒 Frozen) */
+    /** Compliment / Feedback (Simplified) */
     whatsappFeedback() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
