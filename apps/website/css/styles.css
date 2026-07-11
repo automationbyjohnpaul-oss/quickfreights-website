@@ -27,15 +27,17 @@ TABLE OF CONTENTS
 17  Contact Page
 18  Hub Cards
 19  Form Section
-20  File Upload
-21  Floating Contact Widget
-22  Form Validation States
-23  Processing Overlay
-24  Footer
-25  Remember Me & Tracking ID
-26  Print Styles
-27  Accessibility
-28  Reduced Motion
+20  Form Field Icons
+21  Security Note
+22  File Upload
+23  Floating Contact Widget
+24  Form Validation States
+25  Processing Overlay
+26  Footer
+27  Remember Me & Tracking ID
+28  Print Styles
+29  Accessibility
+30  Reduced Motion
 ================================================
 */
 
@@ -736,7 +738,7 @@ ul {
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
-  max-width: 640px;
+  max-width: 960px;
   margin: 0 auto;
 }
 .choice-card {
@@ -773,6 +775,10 @@ ul {
   font-size: 2.5rem;
   margin-bottom: var(--space-xs);
 }
+.choice-icon svg {
+  width: 32px;
+  height: 32px;
+}
 .choice-card h3 {
   font-size: 1.2rem;
   font-weight: 700;
@@ -791,19 +797,102 @@ ul {
   letter-spacing: 1px;
   padding: 0 var(--space-sm);
 }
-@media (min-width: 576px) {
+
+/* ==============================================
+   FIX: Three cards in a horizontal row
+   ============================================== */
+@media (min-width: 768px) {
   .choice-grid {
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
+    align-items: stretch;
+    gap: 0;
   }
   .choice-card {
     flex: 1;
-    max-width: 260px;
+    max-width: 280px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    padding: var(--space-lg) var(--space-md);
+  }
+  .choice-card:first-child {
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+  }
+  .choice-card:last-child {
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   }
   .choice-divider {
     flex: 0 0 auto;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--grey);
   }
+}
+
+@media (min-width: 992px) {
+  .choice-card {
+    max-width: 300px;
+    min-height: 240px;
+    padding: 32px var(--space-lg);
+  }
+  .choice-card h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 767px) {
+  .choice-grid {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .choice-card {
+    max-width: 400px;
+    border-radius: var(--radius-lg);
+  }
+  .choice-divider {
+    padding: 4px 0;
+  }
+}
+
+/* Premium card styles */
+.choice-card-premium {
+  border-color: var(--gold) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(218, 165, 32, 0.05),
+    rgba(218, 165, 32, 0.1)
+  ) !important;
+  position: relative;
+}
+.choice-card-premium:hover {
+  border-color: var(--gold-dark) !important;
+  box-shadow: 0 4px 20px rgba(218, 165, 32, 0.2) !important;
+}
+.choice-card-premium.is-active {
+  border-color: var(--gold) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(218, 165, 32, 0.1),
+    rgba(218, 165, 32, 0.2)
+  ) !important;
+}
+.choice-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--gold-dark);
+  background: rgba(218, 165, 32, 0.12);
+  padding: 4px 12px;
+  border-radius: 50px;
+  margin-top: 8px;
 }
 
 /* ==============================================
@@ -1509,7 +1598,45 @@ ul {
 }
 
 /* ==============================================
-   20  FILE UPLOAD
+   20  FORM FIELD ICONS
+   ============================================== */
+.form-group.has-icon {
+  position: relative;
+}
+.form-group.has-icon .field-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+}
+.form-group.has-icon input,
+.form-group.has-icon textarea {
+  padding-left: 40px;
+}
+
+/* ==============================================
+   21  SECURITY NOTE
+   ============================================== */
+.security-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--grey);
+  max-width: 580px;
+  margin: 0 auto;
+  padding: 0 var(--space-sm);
+  margin-top: -8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+/* ==============================================
+   22  FILE UPLOAD
    ============================================== */
 .file-upload-wrapper {
   position: relative;
@@ -1555,7 +1682,7 @@ ul {
 }
 
 /* ==============================================
-   21  FLOATING CONTACT WIDGET
+   23  FLOATING CONTACT WIDGET
    ============================================== */
 .floating-widget {
   position: fixed;
@@ -1668,7 +1795,7 @@ ul {
 }
 
 /* ==============================================
-   22  FORM VALIDATION STATES
+   24  FORM VALIDATION STATES
    ============================================== */
 .form-group input.is-error,
 .form-group textarea.is-error {
@@ -1694,7 +1821,7 @@ ul {
 }
 
 /* ==============================================
-   23  PROCESSING OVERLAY
+   25  PROCESSING OVERLAY
    ============================================== */
 .processing-overlay {
   position: fixed;
@@ -1762,7 +1889,7 @@ ul {
 }
 
 /* ==============================================
-   24  FOOTER
+   26  FOOTER
    ============================================== */
 .site-footer {
   background: var(--navy-dark);
@@ -1856,7 +1983,7 @@ ul {
 }
 
 /* ==============================================
-   25  REMEMBER ME & TRACKING ID
+   27  REMEMBER ME & TRACKING ID
    ============================================== */
 .checkbox-label {
   display: flex !important;
@@ -1933,7 +2060,7 @@ ul {
 }
 
 /* ==============================================
-   26  PRINT STYLES
+   28  PRINT STYLES
    ============================================== */
 @media print {
   .site-header,
@@ -1956,7 +2083,7 @@ ul {
 }
 
 /* ==============================================
-   27  ACCESSIBILITY
+   29  ACCESSIBILITY
    ============================================== */
 a:focus-visible,
 input:focus-visible,
@@ -1966,7 +2093,7 @@ textarea:focus-visible {
 }
 
 /* ==============================================
-   28  REDUCED MOTION
+   30  REDUCED MOTION
    ============================================== */
 @media (prefers-reduced-motion: reduce) {
   *,

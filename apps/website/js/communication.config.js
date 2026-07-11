@@ -61,6 +61,24 @@ window.QF_COMMUNICATION = {
       );
     },
 
+    /** NEW: Documents Submission Template */
+    documents() {
+      return (
+        "Hello Quick Freights Global Limited,\n\n" +
+        "I would like to submit my cargo documents for clearance processing.\n\n" +
+        "Please find my documents attached."
+      );
+    },
+
+    /** NEW: Bill of Lading Upload Template */
+    blUpload() {
+      return (
+        "Hello Quick Freights Global Limited,\n\n" +
+        "Please find my Bill of Lading attached.\n\n" +
+        "Kindly process my clearance and send me my Tracking ID."
+      );
+    },
+
     /** General Enquiry (Simplified) */
     whatsappGeneral() {
       return (
