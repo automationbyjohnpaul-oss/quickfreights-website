@@ -355,3 +355,18 @@ Object.freeze(window.QF_COMMUNICATION.company);
 Object.freeze(window.QF_COMMUNICATION.social);
 Object.freeze(window.QF_COMMUNICATION.subjects);
 Object.freeze(window.QF_COMMUNICATION.templates);
+
+// ================================================================
+// FRONTEND CONFIG — Used by script.js
+// ================================================================
+
+const QF_CONFIG = {
+  apiUrl:
+    "https://script.google.com/macros/s/AKfycbw-hWTQVKSeNRlbhG3V50zmXKccj_P4BFVz7K4pCU9FTBcoGkLf5MOVWXHDnJWoVTtK/exec",
+  whatsappNumber: "2348063388230",
+  maxFileSize: 10 * 1024 * 1024, // 10 MB
+  allowedMimeTypes: ["application/pdf", "image/jpeg", "image/png"],
+};
+
+// Also attach to window for global access
+window.QF_CONFIG = QF_CONFIG;

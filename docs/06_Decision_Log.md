@@ -85,3 +85,58 @@ _This document is part of the Quick Freights Global Limited documentation suite.
 **Date:** July 2026
 **Decision:** Officially declared V1 scope freeze — no new features
 **Reason:** Focus shifted to quality, optimization, and launch readiness. V2 will be driven by real customer data.
+
+## Decision #003
+
+### Title
+
+Adopt Randomized Public Tracking ID Format
+
+### Date
+
+July 2026
+
+### Decision
+
+The platform will use the following customer-facing tracking ID format:
+
+QFG-MM-YY-XXXXXX
+
+Example:
+
+QFG-07-26-A7X4K2
+
+A separate internal numeric Submission ID will be maintained for chronological sequencing.
+
+### Rationale
+
+- Protects operational volume from public exposure.
+- Improves customer readability.
+- Provides immediate month/year context.
+- Supports scalable growth.
+- Aligns with professional logistics industry practices.
+
+## Decision #004
+
+### Title
+
+Retire Monolithic Backend
+
+### Date
+
+July 2026
+
+### Decision
+
+The legacy monolithic `Code.gs` backend was archived externally as `Code_Legacy_v5.0.gs` and removed from the active Apps Script project.
+
+### Rationale
+
+- Eliminate duplicate entry points (`doGet()` and `doPost()`).
+- Prevent conflicts between legacy and modular backends.
+- Improve maintainability and AI-assisted debugging.
+- Ensure the Apps Script project contains only production code.
+
+### Status
+
+Completed

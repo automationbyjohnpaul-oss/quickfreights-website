@@ -38,6 +38,7 @@ TABLE OF CONTENTS
 28  Print Styles
 29  Accessibility
 30  Reduced Motion
+31  Form Details (Collapsible Optional Fields)
 ================================================
 */
 
@@ -2103,4 +2104,35 @@ textarea:focus-visible {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ==============================================
+   31  FORM DETAILS (Collapsible Optional Fields)
+   ============================================== */
+.form-details {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.form-details-summary {
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  cursor: pointer;
+  background: var(--light-grey);
+  transition: background 0.2s ease;
+  list-style: none;
+}
+.form-details-summary::-webkit-details-marker {
+  display: none;
+}
+.form-details-summary:hover {
+  background: rgba(218, 165, 32, 0.08);
+}
+.form-details-content {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
