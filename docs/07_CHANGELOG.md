@@ -1,4 +1,5 @@
 ﻿# Quick Freights Global Limited
+
 # 07 CHANGELOG
 
 > **Documentation v1.0**
@@ -9,7 +10,7 @@
 
 ## Overview
 
-*Content to be added*
+_Content to be added_
 
 ---
 
@@ -19,7 +20,8 @@
 
 ---
 
-*This document is part of the Quick Freights Global Limited documentation suite.*
+_This document is part of the Quick Freights Global Limited documentation suite._
+
 # 08 â€” Release Notes
 
 **Title:** QuickFreights Platform â€” Release Notes
@@ -357,3 +359,33 @@ It is intended for:
 - Release notes focus on what changed, not how it was built
 - Once the platform launches, new releases append at the top â€” past history is not reorganized
 
+## Version 2.1.0 (Backend Integration Milestone)
+
+### Added
+
+- Google Drive attachment upload.
+- Base64 file transfer from frontend to backend.
+- Automatic Drive link generation.
+- Tracking number display after successful submission.
+- Structured backend response payload.
+
+### Changed
+
+- Updated frontend submission payload to match backend validation model.
+- Improved submission diagnostics and error reporting.
+- Updated Google Sheets integration to store attachment URLs.
+- Improved success screen behaviour after submission.
+
+### Fixed
+
+- Browser ↔ Apps Script integration.
+- Duplicate JavaScript configuration declaration.
+- Bill of Lading validation mismatch.
+- Success page tracking ID display.
+- Form container remaining visible after submission.
+
+### Status
+
+Submission workflow is now fully operational from browser through Google Sheets and Google Drive.
+
+SMS integration remains the next scheduled development phase.
