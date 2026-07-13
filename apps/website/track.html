@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#0A1F3F" />
     <meta
       property="og:title"
-      content="Cargo Tracking & Document Submission Portal — Quick Freights Global"
+      content="Cargo Tracking & Document Submission Portal – Quick Freights Global"
     />
     <meta
       property="og:description"
@@ -29,7 +29,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Cargo Tracking & Document Submission Portal — Quick Freights Global"
+      content="Cargo Tracking & Document Submission Portal – Quick Freights Global"
     />
     <meta
       name="twitter:description"
@@ -44,7 +44,7 @@
     <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
 
     <title>
-      Cargo Tracking & Document Submission Portal — Quick Freights Global
+      Cargo Tracking & Document Submission Portal – Quick Freights Global
     </title>
 
     <link rel="stylesheet" href="css/styles.css" />
@@ -76,7 +76,7 @@
       fetchpriority="high"
     />
 
-    <!-- SCHEMA.ORG — WebApplication -->
+    <!-- SCHEMA.ORG – WebApplication -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -94,7 +94,7 @@
       }
     </script>
 
-    <!-- SCHEMA.ORG — LocalBusiness -->
+    <!-- SCHEMA.ORG – LocalBusiness -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -190,7 +190,7 @@
     </script>
   </head>
   <body
-    data-api="https://script.google.com/macros/s/AKfycbw-hWTQVKSeNRlbhG3V50zmXKccj_P4BFVz7K4pCU9FTBcoGkLf5MOVWXHDnJWoVTtK/exec"
+    data-api="https://script.google.com/macros/s/AKfycby7BzbstgloRMWh8TeBw64bxFk_v0pbB_w0sarT3IoT-FPWv42QHyaDePxZZdvsvk7R/exec"
   >
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -251,7 +251,7 @@
           <h1 id="track-heading">Track Your Cargo &amp; Submit Documents</h1>
           <p>
             Submit bill of lading documents, check clearance status, and stay
-            updated on your shipment — all in one place.
+            updated on your shipment – all in one place.
           </p>
         </div>
       </section>
@@ -349,8 +349,8 @@
                 </svg>
               </span>
               <h3>Send B/L via WhatsApp</h3>
-              <p>Upload document only — we handle the rest</p>
-              <span class="choice-badge">⚡ Processed within 2 hours</span>
+              <p>Upload document only – we handle the rest</p>
+              <span class="choice-badge">✓ Processed within 2 hours</span>
             </div>
           </div>
         </div>
@@ -553,7 +553,7 @@
                       >Choose file or drag &amp; drop</span
                     >
                   </div>
-                  <small id="file-help">PDF · JPG · PNG — Max 10 MB</small>
+                  <small id="file-help">PDF – JPG – PNG – Max 10 MB</small>
                 </div>
                 <span class="field-error" id="blFile-error" role="alert"></span>
               </div>
@@ -745,6 +745,137 @@
         </div>
       </section>
 
+      <!-- ============================================================ -->
+      <!-- SUCCESS MESSAGE -->
+      <div
+        id="successMessage"
+        style="display: none; text-align: center; padding: 40px 20px"
+      >
+        <div class="container">
+          <div
+            style="
+              max-width: 600px;
+              margin: 0 auto;
+              background: white;
+              padding: 40px;
+              border-radius: 12px;
+              box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <span style="font-size: 48px; display: block; margin-bottom: 16px"
+              >✅</span
+            >
+            <h2 style="color: #0a1f3f; margin-bottom: 8px">
+              Submission Successful!
+            </h2>
+            <p style="color: #555; margin-bottom: 16px">
+              Your Bill of Lading has been submitted successfully.
+            </p>
+            <div
+              style="
+                background: rgba(218, 165, 32, 0.1);
+                padding: 16px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+              "
+            >
+              <p style="color: #666; font-size: 0.85rem; margin-bottom: 4px">
+                Your Tracking ID
+              </p>
+              <span
+                id="trackingIdDisplay"
+                style="
+                  font-size: 1.6rem;
+                  font-weight: 800;
+                  color: #0a1f3f;
+                  letter-spacing: 1px;
+                  word-break: break-all;
+                "
+              ></span>
+              <div style="margin-top: 8px">
+                <button
+                  onclick="copyTrackingId()"
+                  class="btn btn-primary"
+                  style="font-size: 0.85rem; padding: 8px 16px"
+                >
+                  📋 Copy Tracking ID
+                </button>
+                <span
+                  id="copyFeedback"
+                  style="
+                    display: block;
+                    font-size: 0.8rem;
+                    color: #10b981;
+                    margin-top: 4px;
+                  "
+                ></span>
+              </div>
+            </div>
+            <p style="color: #555; font-size: 0.9rem; margin-bottom: 16px">
+              A confirmation has been sent to
+              <strong><span id="confirmPhone"></span></strong>
+            </p>
+            <div
+              style="
+                display: flex;
+                gap: 12px;
+                justify-content: center;
+                flex-wrap: wrap;
+              "
+            >
+              <a
+                href="track.html"
+                class="btn btn-primary"
+                style="font-size: 0.9rem"
+                >Submit Another</a
+              >
+              <a
+                href="index.html"
+                class="btn btn-outline-dark"
+                style="font-size: 0.9rem"
+                >Return Home</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERROR MESSAGE -->
+      <div
+        id="errorMessage"
+        style="display: none; text-align: center; padding: 40px 20px"
+      >
+        <div class="container">
+          <div
+            style="
+              max-width: 600px;
+              margin: 0 auto;
+              background: white;
+              padding: 40px;
+              border-radius: 12px;
+              box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <span style="font-size: 48px; display: block; margin-bottom: 16px"
+              >❌</span
+            >
+            <h2 style="color: #ef4444; margin-bottom: 8px">
+              Submission Failed
+            </h2>
+            <p id="errorText" style="color: #555; margin-bottom: 16px">
+              There was an error processing your submission. Please try again.
+            </p>
+            <a
+              href="track.html"
+              class="btn btn-primary"
+              style="font-size: 0.9rem"
+              >Try Again</a
+            >
+          </div>
+        </div>
+      </div>
+      <!-- ============================================================ -->
+
       <div
         id="trackExistingContainer"
         style="display: none; text-align: center; padding: 40px 20px"
@@ -920,7 +1051,7 @@
             </div>
           </div>
           <p>A subsidiary of Bondex Bridge Multinational Terminal Limited</p>
-          <p class="rc-note">RC: 8106184 · CAC Registered</p>
+          <p class="rc-note">RC: 8106184 – CAC Registered</p>
         </div>
         <div class="footer-links">
           <h4>Quick Links</h4>

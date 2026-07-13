@@ -1,94 +1,157 @@
-Quick Freights Global Limited — V1 Project Handover
+# Quick Freights Global Limited — Project Handover
 
-Version: 1.0.0 (Production Freeze)
-Project Status: V1 Complete and Frozen
+Version: 2.0.0
+Project Status: V1 Website Complete | V2 Backend In Progress
 Last Updated: July 2026
 
-Project Overview
+---
+
+# Project Overview
 
 Quick Freights Global Limited is a Nigerian Clearing & Forwarding company providing Customs Brokerage, Freight Forwarding, Cargo Handling and Logistics services.
 
-The website is a production-ready V1 corporate website built as the foundation for a future customer operations platform.
+The project has evolved from a corporate website into a customer operations platform.
 
-Current live site:
+The frontend (V1) is production-ready and frozen.
+
+Development is currently focused on building the backend architecture (V2) while preserving the V1 user experience.
+
+Live Website
 
 https://automationbyjohnpaul-oss.github.io/quickfreights-website/
-Primary Goal
 
-The website is NOT intended to be a full logistics management system yet.
+---
 
-Its purpose is to:
+# Technology Stack
 
-establish trust
-generate enquiries
-direct customers to the Cargo Portal
-prepare the architecture for V2
-Technology Stack
+## Frontend
 
-Frontend
+- HTML5
+- CSS3
+- Vanilla JavaScript
 
-HTML5
-CSS3
-Vanilla JavaScript
+Hosted on GitHub Pages.
 
-Hosting
+---
+
+## Backend
+
+Google Apps Script (Modular Architecture)
+
+Modules:
+
+- Main.gs
+- Config.gs
+- Logger.gs
+- Utilities.gs
+- Validation.gs
+- Tracking.gs
+- Sheets.gs
+- Drive.gs (not yet integrated)
+- SMS.gs (not yet integrated)
+
+Spreadsheet
+
+Google Sheets
+
+---
+
+# Backend Status
+
+Completed
+
+✓ Modular architecture
+
+✓ Configuration module
+
+✓ Validation module
+
+✓ Tracking ID generator
+
+✓ Spreadsheet write engine
+
+✓ Logger
+
+✓ Utility functions
+
+✓ Main doGet()
+
+✓ Main doPost()
+
+✓ Backend health endpoint
+
+✓ Internal backend testing
+
+Verified
+
+✓ Tracking ID generation
+
+✓ Spreadsheet write
+
+✓ Validation
+
+✓ End-to-end backend test (Apps Script)
+
+---
+
+# Current Issue
+
+Backend modules work correctly.
+
+The remaining issue is frontend integration.
+
+Current behaviour:
 
 GitHub Pages
 
-Communication
+↓
 
-WhatsApp
-Email
-Telephone
-
-No backend currently exists.
-
-Architecture
-Visitor
+fetch()
 
 ↓
 
-Corporate Website
+Google Apps Script Web App
 
 ↓
 
-Cargo Portal
+Browser reports:
+
+No Access-Control-Allow-Origin
 
 ↓
 
-WhatsApp / Email
+Submission fails on frontend.
 
-↓
+Manual Apps Script testing succeeds.
 
-Quick Freights Operations
-Folder Structure
-apps/
-website/
+The problem is therefore isolated to browser → Apps Script integration.
 
-        index.html
-        about.html
-        services.html
-        contact.html
-        track.html
+No redesign should be performed until this integration issue is resolved.
 
-        css/
-            styles.css
+---
 
-        js/
-            script.js
-            communication.config.js
-            floating-widget.js
+# Tracking ID Format
 
-        images/
-        icons/
+Current format
 
-        robots.txt
-        sitemap.xml
-        manifest.webmanifest
+QFG-MM-YY-XXXXXX
 
-Documentation
+Example
 
-The project now contains professional documentation including:
+QFG-07-26-JG1N6J
+
+Structure
+
+QFG
+Month
+Year
+Random six-character alphanumeric suffix
+
+---
+
+# Documentation
+
+Documentation now includes
 
 00_PROJECT_OVERVIEW.md
 
@@ -136,201 +199,212 @@ The project now contains professional documentation including:
 
 22_V1_FINAL_STATE.md
 
-These documents should be treated as the project's single source of documentation.
+23_HANDOVER_V1.md
 
-Frozen V1 Decisions
+24_BACKEND_SOURCE_OF_TRUTH.md
 
-These decisions are intentional and should NOT be changed without review.
+25_BACKEND_BUILD_LOG.md
 
-Cargo Portal
+These documents are the authoritative project documentation.
 
-The customer entry point is named:
+---
 
-Cargo Portal
+# Frozen V1 Decisions
 
-NOT:
+Do NOT redesign the website.
 
-Submit B/L
-Start Shipment
-Clear My Cargo
+The following are frozen.
 
-Reason:
+✓ Homepage structure
 
-Quick Freights serves both clearing and forwarding customers.
+✓ Hero
 
-Homepage
+✓ Trust bar
 
-Current journey:
+✓ Cargo Portal naming
 
-Hero
+✓ Floating Widget
 
-↓
+✓ Colour palette
 
-Credentials Bar
+✓ Typography
 
-↓
+✓ Services
 
-How It Works
+✓ CTA placement
 
-↓
+Only backend functionality should evolve.
 
-Services
+---
 
-↓
+# Backend Architecture
 
-Why Choose Us
+Customer
 
 ↓
 
-CTA
+GitHub Pages
 
 ↓
 
-Footer
+track.html
 
-This journey is frozen for V1.
+↓
 
-Hero
+script.js
 
-The hero height was intentionally reduced so the Credentials Bar is visible on first load.
+↓
 
-Do not increase hero height again.
+Google Apps Script
 
-Trust Philosophy
+↓
 
-Proof sections such as:
+Google Sheets
 
-testimonials
-years in operation
-certifications
-client logos
+↓
 
-were intentionally postponed until real operational evidence exists.
+Drive (future)
 
-No fake testimonials should ever be added.
+↓
 
-Communication
+SMS (future)
 
-All communication information is controlled only through:
+---
 
-communication.config.js
+# Completed Backend Milestones
 
-No phone numbers, WhatsApp numbers or email addresses should be hardcoded elsewhere.
+Phase 1
 
-Floating Widget
+✓ Config
 
-The floating customer assistant is generated via JavaScript.
+✓ Logger
 
-Never duplicate the widget HTML across pages.
+✓ Utilities
 
-Coding Standards
+✓ Validation
 
-Maintain:
+Phase 2
 
-semantic HTML
-responsive design
-accessibility
-modular JavaScript
-CSS variables
-clean documentation
+✓ Tracking Engine
 
-Avoid:
+✓ Sheets Engine
 
-inline CSS
-inline JavaScript
-duplicated business information
-duplicated contact information
-Completed Milestones
+✓ Main.gs
 
-✔ Brand identity
+✓ Backend testing
 
-✔ Responsive website
+Phase 3
 
-✔ Cargo Portal
+Currently in progress
 
-✔ Communication System
+Frontend integration
 
-✔ Floating Assistant
+Current blocker:
 
-✔ Performance optimisation
+Browser → Apps Script communication.
 
-✔ SEO foundation
+---
 
-✔ Security review
+# Outstanding Tasks
 
-✔ Production deployment
+Highest Priority
 
-✔ Documentation
+Resolve frontend submission integration.
 
-Audit Results
+After integration:
 
-Final technical audit:
+1. Drive.gs
 
-Area Score
-HTML 92/100
-CSS 92/100
-JavaScript 93/100
-Security 92/100
-Performance 91/100
-SEO 92/100
+2. SMS.gs
 
-Overall:
+3. Production testing
 
-92/100
+4. Customer acceptance testing
 
-Production Ready.
+---
 
-Current Limitations
+# Current Development Status
 
-V1 intentionally does NOT include:
-
-Customer login
-Dashboard
-File upload
-Shipment tracking system
-CRM
-Payment gateway
-Database
-V2 Direction
-
-Future development should focus on operational functionality rather than redesign.
-
-Priority order:
-
-Customer Dashboard
-Secure Document Upload
-Shipment Tracking
-Google Apps Script Integration
-CRM Integration
-Customer Notifications
-Admin Portal
-AI Working Instructions
-
-Future AI assistants should:
-
-read the documentation before suggesting changes
-preserve frozen V1 decisions
-treat 17_SOURCE_OF_TRUTH.md as authoritative
-follow 16_AI_DEVELOPMENT_GUIDE.md
-avoid unnecessary redesign
-prioritize maintainability over visual novelty
-Current Development Status
-V1
+Website
 
 ████████████████████████████
 
 100%
 
-Status:
+Backend Core
 
-PRODUCTION COMPLETE
+█████████████████████░░░░░
 
-FROZEN
+75%
 
-## Immediate Next Objective
+Frontend Integration
 
-The objective of the next development phase is NOT to redesign the website.
+██░░░░░░░░░░░░░░░░░░░░░░
 
-The objective is to evolve Quick Freights from a corporate website into a customer operations platform by introducing secure backend functionality while preserving the V1 user experience and architecture.
+20%
 
-READY FOR V2
+Overall Project
+
+█████████████████████░░░░
+
+85%
+
+---
+
+# AI Working Instructions
+
+Future AI assistants should:
+
+• Read all project documentation first.
+
+• Treat 17_SOURCE_OF_TRUTH.md as authoritative.
+
+• Treat 24_BACKEND_SOURCE_OF_TRUTH.md as authoritative for backend.
+
+• Preserve all frozen V1 decisions.
+
+• Never redesign the website unnecessarily.
+
+• Continue modular backend development.
+
+• Build → Test → Integrate.
+
+• Test each module independently before connecting systems.
+
+---
+
+# Immediate Next Objective
+
+Resolve the browser ↔ Google Apps Script integration.
+
+Do NOT redesign the frontend.
+
+Do NOT rebuild the backend.
+
+Focus exclusively on restoring production communication between:
+
+GitHub Pages
+
+↓
+
+script.js
+
+↓
+
+Apps Script
+
+↓
+
+Google Sheets
+
+Once this works, continue with:
+
+Drive Integration
+
+↓
+
+SMS Notifications
+
+↓
+
+Production Release

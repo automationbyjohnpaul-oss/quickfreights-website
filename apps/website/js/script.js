@@ -1,21 +1,26 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v6.0
-// CLEAN VERSION: Matches simplified track.html form
+// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v6.5
+// CONFIGURATION LOADED FROM communication.config.js
+// IMPROVED: File upload with validation and clean Base64
 // ================================================================
 
-// QF_CONFIG is now loaded from communication.config.js
-// Do NOT redeclare it here.
+// QF_CONFIG is defined in communication.config.js
+// DO NOT redeclare it here.
 
 var isSubmitting = false;
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Use QF_CONFIG from communication.config.js
-  // Override apiUrl with data-api from body if present
-  var apiUrl = document.body.getAttribute("data-api");
-  if (apiUrl && window.QF_CONFIG) {
-    window.QF_CONFIG.apiUrl = apiUrl;
-  }
+// File upload constants
+var MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB (matches backend)
+var ALLOWED_FILE_TYPES = [
+  "application/pdf",
+  "image/jpeg",
+  "image/png",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+];
+var ALLOWED_EXTENSIONS = [".pdf", ".jpg", ".jpeg", ".png", ".doc", ".docx"];
 
+document.addEventListener("DOMContentLoaded", function () {
   var yearEl = document.getElementById("copyrightYear");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -38,6 +43,67 @@ function normalizePhone(phone) {
   if (cleaned.startsWith("0")) cleaned = "234" + cleaned.substring(1);
   if (!cleaned.startsWith("234")) cleaned = "234" + cleaned;
   return cleaned;
+}
+
+// ── HELPER: Validate file before reading ──
+function validateFile(file) {
+  // Check if file exists
+  if (!file) {
+    throw new Error("No file selected.");
+  }
+
+  // Check file size (max 5 MB)
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error(
+      "File exceeds the 5 MB limit. Current size: " +
+        (file.size / 1024 / 1024).toFixed(2) +
+        " MB",
+    );
+  }
+
+  // Check file type by MIME type
+  if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+    // Fallback: check by extension
+    var fileName = file.name.toLowerCase();
+    var hasValidExtension = ALLOWED_EXTENSIONS.some(function (ext) {
+      return fileName.endsWith(ext);
+    });
+
+    if (!hasValidExtension) {
+      throw new Error(
+        "Unsupported file type: " +
+          file.type +
+          ". Allowed: PDF, JPG, PNG, DOC, DOCX",
+      );
+    }
+  }
+
+  return true;
+}
+
+// ── HELPER: Read file as clean Base64 (no prefix) ──
+function readFileAsBase64(file) {
+  return new Promise(function (resolve, reject) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        // Remove the data URL prefix (e.g., "data:image/jpeg;base64,")
+        var base64 = reader.result.split(",")[1];
+        resolve(base64);
+      } catch (error) {
+        reject(new Error("Failed to extract Base64 data: " + error.message));
+      }
+    };
+    reader.onerror = function () {
+      reject(
+        new Error(
+          "File read error: " +
+            (reader.error ? reader.error.message : "Unknown error"),
+        ),
+      );
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 // ================================================================
@@ -157,30 +223,40 @@ function initFileUpload() {
     if (!file) {
       document.getElementById("fileLabelText").textContent =
         "Choose file or drag & drop";
-      fileInfo.textContent = "PDF · JPG · PNG — Max 10 MB";
+      fileInfo.textContent = "PDF · JPG · PNG — Max 5 MB";
       fileInfo.style.color = "";
       return;
     }
 
+    // Validate file size
     var sizeMB = (file.size / 1048576).toFixed(1);
 
-    if (file.size > QF_CONFIG.maxFileSize) {
+    if (file.size > MAX_FILE_SIZE) {
       fileLabel.classList.add("is-error");
-      fileInfo.textContent = "File too large (" + sizeMB + "MB). Max 10MB.";
+      fileInfo.textContent = "File too large (" + sizeMB + "MB). Max 5MB.";
       fileInfo.style.color = "var(--error)";
-      if (fileError) fileError.textContent = "Please select a smaller file.";
+      if (fileError)
+        fileError.textContent = "Please select a smaller file (max 5MB).";
       fileInput.value = "";
       return;
     }
 
-    if (QF_CONFIG.allowedMimeTypes.indexOf(file.type) === -1) {
-      fileLabel.classList.add("is-error");
-      fileInfo.textContent =
-        "Unsupported file type. Please upload PDF, JPG, or PNG.";
-      fileInfo.style.color = "var(--error)";
-      if (fileError) fileError.textContent = "File type not allowed.";
-      fileInput.value = "";
-      return;
+    // Validate file type
+    if (!ALLOWED_FILE_TYPES.includes(file.type)) {
+      var fileName = file.name.toLowerCase();
+      var hasValidExtension = ALLOWED_EXTENSIONS.some(function (ext) {
+        return fileName.endsWith(ext);
+      });
+
+      if (!hasValidExtension) {
+        fileLabel.classList.add("is-error");
+        fileInfo.textContent =
+          "Unsupported file type. Please upload PDF, JPG, PNG, DOC, or DOCX.";
+        fileInfo.style.color = "var(--error)";
+        if (fileError) fileError.textContent = "File type not allowed.";
+        fileInput.value = "";
+        return;
+      }
     }
 
     fileLabel.classList.add("is-valid");
@@ -212,12 +288,11 @@ function initFileUpload() {
 }
 
 // ================================================================
-// FORM VALIDATION (FIX 2: Only 4 required fields)
+// FORM VALIDATION (Only 4 required fields)
 // ================================================================
 function validateForm() {
   var isValid = true;
 
-  // Clear previous errors
   document.querySelectorAll(".is-error").forEach(function (el) {
     el.classList.remove("is-error");
   });
@@ -233,7 +308,6 @@ function validateForm() {
     isValid = false;
   }
 
-  // 1. B/L Reference — required
   var blRef = document.getElementById("blReference");
   if (!blRef || !blRef.value.trim()) {
     setError(
@@ -243,7 +317,6 @@ function validateForm() {
     );
   }
 
-  // 2. Consignee Name — required
   var consignee = document.getElementById("consigneeName");
   if (!consignee || !consignee.value.trim()) {
     setError(
@@ -253,7 +326,6 @@ function validateForm() {
     );
   }
 
-  // 3. Consignee Phone — required
   var phone = document.getElementById("consigneePhone");
   if (phone) {
     var phoneVal = phone.value.trim().replace(/\s+/g, "");
@@ -273,7 +345,6 @@ function validateForm() {
     }
   }
 
-  // 4. File Upload — required
   var blFile = document.getElementById("blFile");
   if (!blFile || !blFile.files || !blFile.files[0]) {
     var fileErr = document.getElementById("blFile-error");
@@ -293,22 +364,6 @@ function validateForm() {
 }
 
 // ================================================================
-// READ FILE AS BASE64
-// ================================================================
-function readFileAsBase64(file) {
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function () {
-      resolve(reader.result);
-    };
-    reader.onerror = function () {
-      reject(reader.error);
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// ================================================================
 // FORM HANDLER
 // ================================================================
 function initFormHandler() {
@@ -317,7 +372,6 @@ function initFormHandler() {
 
   blForm.addEventListener("submit", handleFormSubmit);
 
-  // Clear errors on input
   var inputs = blForm.querySelectorAll("input, textarea");
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener("input", function () {
@@ -345,41 +399,104 @@ async function handleFormSubmit(event) {
   submitBtn.textContent = "Submitting...";
   submitBtn.classList.add("is-loading");
 
-  // Read file
+  // ============================================================
+  // READ AND VALIDATE THE FILE
+  // ============================================================
   var fileInput = document.getElementById("blFile");
   var fileData = null;
   var fileName = null;
+  var fileMimeType = null;
+  var fileSize = null;
 
-  if (fileInput && fileInput.files && fileInput.files[0]) {
+  if (fileInput && fileInput.files && fileInput.files.length > 0) {
+    var file = fileInput.files[0];
+    fileName = file.name;
+    fileMimeType = file.type;
+    fileSize = file.size;
+
     try {
-      var file = fileInput.files[0];
-      fileName = file.name;
+      // Validate file before reading
+      validateFile(file);
+      // Read file as clean Base64 (no prefix)
       fileData = await readFileAsBase64(file);
+      console.log(
+        "✅ File validated and loaded:",
+        fileName,
+        "Size:",
+        fileSize,
+        "Type:",
+        fileMimeType,
+      );
     } catch (err) {
-      console.error("File read error:", err);
+      console.error("❌ File validation/read error:", err.message);
+      // Show error in the file upload UI
+      var fileLabel = document.getElementById("fileLabel");
+      var fileInfo = document.getElementById("file-help");
+      var fileError = document.getElementById("blFile-error");
+      if (fileLabel) fileLabel.classList.add("is-error");
+      if (fileInfo) {
+        fileInfo.textContent = err.message;
+        fileInfo.style.color = "var(--error)";
+      }
+      if (fileError) fileError.textContent = err.message;
+      fileInput.value = "";
+
+      isSubmitting = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      submitBtn.classList.remove("is-loading");
+      return;
     }
+  } else {
+    console.warn("⚠️ No file selected");
   }
 
-  // Build form data — only required fields + optional fields if they exist
+  // Get form values
+  var consigneeName = getFieldValue("consigneeName");
+  var consigneePhone = normalizePhone(getFieldValue("consigneePhone"));
+  var blReference = getFieldValue("blReference");
+  var cargoDescription = getFieldValue("cargoDescription");
+  var shipperName = getFieldValue("shipperName") || "";
+  var consigneeEmail = getFieldValue("consigneeEmail") || "";
+  var portOfDischarge = getFieldValue("portOfDischarge") || "";
+  var containerNumber = getFieldValue("containerNumber") || "";
+  var expectedArrival = document.getElementById("expectedArrival")
+    ? document.getElementById("expectedArrival").value
+    : "";
+
+  // ============================================================
+  // BUILD FORMDATA WITH CLEAN BASE64 FILE CONTENT
+  // ============================================================
   var formData = {
-    customerName: getFieldValue("consigneeName"),
-    phoneNumber: normalizePhone(getFieldValue("consigneePhone")),
-    blNumber: getFieldValue("blReference"),
-    cargoDescription: getFieldValue("cargoDescription"),
-    containerNumber: getFieldValue("containerNumber") || "",
-    shipperName: getFieldValue("shipperName") || "",
-    consigneeEmail: getFieldValue("consigneeEmail") || "",
-    portOfDischarge: getFieldValue("portOfDischarge") || "",
-    expectedArrival: document.getElementById("expectedArrival")
-      ? document.getElementById("expectedArrival").value
-      : "",
+    blReference: blReference,
+    consigneeName: consigneeName,
+    consigneePhone: consigneePhone,
+    cargoDescription: cargoDescription,
+    shipperName: shipperName,
+    consigneeEmail: consigneeEmail,
+    portOfDischarge: portOfDischarge,
+    containerNumber: containerNumber,
+    expectedArrival: expectedArrival,
     attachmentName: fileName,
-    attachmentData: fileData,
+    attachmentMimeType: fileMimeType,
+    attachmentData: fileData, // ✅ Clean Base64 (no prefix)
   };
+
+  console.log("🔍 Sending form data:", {
+    blReference: formData.blReference,
+    consigneeName: formData.consigneeName,
+    consigneePhone: formData.consigneePhone,
+    cargoDescription: formData.cargoDescription,
+    attachmentName: formData.attachmentName,
+    attachmentMimeType: formData.attachmentMimeType,
+    attachmentDataLength: formData.attachmentData
+      ? formData.attachmentData.length
+      : 0,
+  });
 
   var apiUrl = QF_CONFIG.apiUrl;
   if (!apiUrl) {
-    console.error("API URL not configured.");
+    console.error("❌ API URL not configured.");
     isSubmitting = false;
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
@@ -387,28 +504,63 @@ async function handleFormSubmit(event) {
     return;
   }
 
+  console.log("🔍 API URL:", apiUrl);
+
   try {
+    console.log("🔍 Sending fetch request...");
+
     var response = await fetch(apiUrl, {
       method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      redirect: "follow",
       body: JSON.stringify(formData),
     });
 
-    if (!response.ok) throw new Error("Server error. Please try again.");
+    console.log("🔍 Response status:", response.status);
+    console.log("🔍 Response OK:", response.ok);
 
-    var data = await response.json();
+    var responseText = await response.text();
+    console.log("🔍 Raw response text:", responseText);
+
+    var data;
+    try {
+      data = JSON.parse(responseText);
+      console.log("🔍 Parsed JSON response:", data);
+    } catch (parseError) {
+      console.error("❌ Failed to parse JSON. Raw response:", responseText);
+      throw new Error(
+        "Server returned invalid JSON: " + responseText.substring(0, 100),
+      );
+    }
+
+    if (!response.ok) {
+      console.error("❌ Response not OK:", response.status, data);
+      throw new Error(data.error || "Server error. Please try again.");
+    }
+
     if (!data.success) {
+      console.error("❌ Server returned success: false", data);
       throw new Error(data.error || "Submission failed. Please try again.");
     }
+
+    console.log("✅ Submission successful!", data);
 
     // Show success
     if (blForm) blForm.style.display = "none";
     if (successMsg) successMsg.style.display = "block";
     if (errorMsg) errorMsg.style.display = "none";
 
+    // Use the documented API contract: data.data.trackingId
     var trackingIdEl = document.getElementById("trackingIdDisplay");
-    if (trackingIdEl) trackingIdEl.textContent = data.trackingId;
+    if (trackingIdEl) {
+      var trackingId =
+        data.data && data.data.trackingId
+          ? data.data.trackingId
+          : data.trackingId;
+      trackingIdEl.textContent = trackingId;
+    }
 
-    var displayPhone = formData.phoneNumber;
+    var displayPhone = formData.consigneePhone;
     if (
       displayPhone &&
       displayPhone.startsWith("234") &&
@@ -419,11 +571,12 @@ async function handleFormSubmit(event) {
     var confirmPhoneEl = document.getElementById("confirmPhone");
     if (confirmPhoneEl) confirmPhoneEl.textContent = displayPhone;
 
-    saveCustomerMemory(formData.customerName, formData.phoneNumber);
+    saveCustomerMemory(formData.consigneeName, formData.consigneePhone);
     if (successMsg)
-      successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+      successMsg.scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (error) {
-    console.error("Submission error:", error);
+    console.error("❌ Submission error:", error);
+    console.error("❌ Error stack:", error.stack);
     if (blForm) blForm.style.display = "none";
     if (successMsg) successMsg.style.display = "none";
     if (errorMsg) errorMsg.style.display = "block";
@@ -519,7 +672,7 @@ function resetForm() {
   }
 
   if (fileInfo) {
-    fileInfo.textContent = "PDF · JPG · PNG — Max 10 MB";
+    fileInfo.textContent = "PDF · JPG · PNG — Max 5 MB";
     fileInfo.style.color = "";
   }
 
@@ -569,5 +722,3 @@ function copyTrackingId() {
 // ================================================================
 window.copyTrackingId = copyTrackingId;
 window.resetForm = resetForm;
-// QF_CONFIG is already exposed from communication.config.js
-// Do not redeclare it here

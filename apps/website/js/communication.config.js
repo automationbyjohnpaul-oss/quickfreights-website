@@ -1,13 +1,18 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — COMMUNICATION CONFIG v1.0.1
+// QUICK FREIGHTS GLOBAL LIMITED — COMMUNICATION CONFIG v1.0.2
 // Single source of truth for all customer-facing communication.
-// Do NOT duplicate contact details or message templates elsewhere.
-// FIXED: Attached to window object for global access
 // ================================================================
 
-window.QF_COMMUNICATION = {
-  version: "1.0.1",
+const QF_CONFIG = {
+  version: "1.0.2",
 
+  // API Configuration - THIS IS THE KEY ADDITION
+  apiUrl:
+    "https://script.google.com/macros/s/AKfycby7BzbstgloRMWh8TeBw64bxFk_v0pbB_w0sarT3IoT-FPWv42QHyaDePxZZdvsvk7R/exec",
+  timeout: 30000,
+  debug: true,
+
+  // Company Details
   company: {
     name: "Quick Freights Global Limited",
     shortName: "Quick Freights",
@@ -16,9 +21,7 @@ window.QF_COMMUNICATION = {
     country: "Nigeria",
   },
 
-  // ------------------------------------------------------
-  // CONTACT DETAILS
-  // ------------------------------------------------------
+  // Contact Details
   phone: "+2348037883339",
   whatsapp: "2348037883339",
   email: "reception.quickfreightglobal@gmail.com",
@@ -30,9 +33,7 @@ window.QF_COMMUNICATION = {
     youtube: "",
   },
 
-  // ------------------------------------------------------
-  // EMAIL SUBJECTS
-  // ------------------------------------------------------
+  // Email Subjects
   subjects: {
     submission: "Bill of Lading Submission",
     tracking: "Shipment Tracking Support",
@@ -44,15 +45,12 @@ window.QF_COMMUNICATION = {
     account: "Corporate Account Registration",
   },
 
-  // ------------------------------------------------------
-  // MESSAGE TEMPLATES
-  // ------------------------------------------------------
-  templates: {
-    // ====================================================
-    // CUSTOMER INITIATED (Customer → Quick Freights)
-    // ====================================================
+  // File Upload Configuration
+  maxFileSize: 10 * 1024 * 1024, // 10 MB
+  allowedMimeTypes: ["application/pdf", "image/jpeg", "image/png"],
 
-    /** WhatsApp — Document Submission (Simplified) */
+  // Message Templates
+  templates: {
     whatsappSubmission() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -61,16 +59,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** NEW: Documents Submission Template */
-    documents() {
-      return (
-        "Hello Quick Freights Global Limited,\n\n" +
-        "I would like to submit my cargo documents for clearance processing.\n\n" +
-        "Please find my documents attached."
-      );
-    },
-
-    /** NEW: Bill of Lading Upload Template */
     blUpload() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -79,7 +67,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** General Enquiry (Simplified) */
     whatsappGeneral() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -87,7 +74,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** WhatsApp — Talk to Our Team (NEW) */
     whatsappTeam() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -95,7 +81,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Shipment Tracking Support (Simplified) */
     whatsappTracking() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -105,7 +90,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Freight Quote Request (Simplified) */
     whatsappQuote() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -117,7 +101,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Customs Clearance Enquiry (Simplified) */
     whatsappCustoms() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -127,7 +110,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Warehousing Enquiry (Simplified) */
     whatsappWarehousing() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -136,7 +118,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Business Partnership (Simplified) */
     whatsappPartnership() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -146,7 +127,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Corporate Account Opening (Simplified) */
     whatsappAccount() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -156,7 +136,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Complaint (Simplified) */
     whatsappComplaint() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -167,7 +146,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Compliment / Feedback (Simplified) */
     whatsappFeedback() {
       return (
         "Hello Quick Freights Global Limited,\n\n" +
@@ -176,11 +154,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    // ====================================================
-    // COMPANY RESPONSE (Quick Freights → Customer)
-    // ====================================================
-
-    /** Submission Received */
     responseReceived(trackingId) {
       return (
         "Hello,\n\n" +
@@ -193,7 +166,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Documents Incomplete */
     responseIncomplete(trackingId) {
       return (
         "Hello,\n\n" +
@@ -207,7 +179,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Additional Information Required */
     responseAdditionalInfo(trackingId) {
       return (
         "Hello,\n\n" +
@@ -220,11 +191,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    // ====================================================
-    // OPERATIONAL (Tracking & Shipment Updates)
-    // ====================================================
-
-    /** Customs Clearance Started */
     opsClearanceStarted(trackingId) {
       return (
         "Hello,\n\n" +
@@ -236,7 +202,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Shipment Cleared */
     opsCleared(trackingId) {
       return (
         "Hello,\n\n" +
@@ -249,7 +214,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Ready for Collection */
     opsReadyForCollection(trackingId) {
       return (
         "Hello,\n\n" +
@@ -261,7 +225,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Delivery Scheduled */
     opsDeliveryScheduled(trackingId) {
       return (
         "Hello,\n\n" +
@@ -273,7 +236,6 @@ window.QF_COMMUNICATION = {
       );
     },
 
-    /** Delivery Completed */
     opsDeliveryCompleted(trackingId) {
       return (
         "Hello,\n\n" +
@@ -285,10 +247,6 @@ window.QF_COMMUNICATION = {
         "We look forward to serving you again."
       );
     },
-
-    // ====================================================
-    // SMS TEMPLATES (Future Automation)
-    // ====================================================
 
     smsReceived(trackingId) {
       return (
@@ -319,10 +277,7 @@ window.QF_COMMUNICATION = {
     },
   },
 
-  // ------------------------------------------------------
-  // HELPER METHODS
-  // ------------------------------------------------------
-
+  // Helper Methods
   getWhatsAppUrl(message) {
     return (
       "https://wa.me/" + this.whatsapp + "?text=" + encodeURIComponent(message)
@@ -350,23 +305,8 @@ window.QF_COMMUNICATION = {
 };
 
 // Freeze — no accidental modifications
-Object.freeze(window.QF_COMMUNICATION);
-Object.freeze(window.QF_COMMUNICATION.company);
-Object.freeze(window.QF_COMMUNICATION.social);
-Object.freeze(window.QF_COMMUNICATION.subjects);
-Object.freeze(window.QF_COMMUNICATION.templates);
-
-// ================================================================
-// FRONTEND CONFIG — Used by script.js
-// ================================================================
-
-const QF_CONFIG = {
-  apiUrl:
-    "https://script.google.com/macros/s/AKfycbw-hWTQVKSeNRlbhG3V50zmXKccj_P4BFVz7K4pCU9FTBcoGkLf5MOVWXHDnJWoVTtK/exec",
-  whatsappNumber: "2348063388230",
-  maxFileSize: 10 * 1024 * 1024, // 10 MB
-  allowedMimeTypes: ["application/pdf", "image/jpeg", "image/png"],
-};
-
-// Also attach to window for global access
-window.QF_CONFIG = QF_CONFIG;
+Object.freeze(QF_CONFIG);
+Object.freeze(QF_CONFIG.company);
+Object.freeze(QF_CONFIG.social);
+Object.freeze(QF_CONFIG.subjects);
+Object.freeze(QF_CONFIG.templates);
