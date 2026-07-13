@@ -382,6 +382,9 @@ function initFormHandler() {
   }
 }
 
+// ================================================================
+// MAIN FORM SUBMIT HANDLER — UPDATED WITH PROPER CONTAINER HIDING
+// ================================================================
 async function handleFormSubmit(event) {
   event.preventDefault();
 
@@ -391,6 +394,8 @@ async function handleFormSubmit(event) {
   isSubmitting = true;
   var submitBtn = document.getElementById("submitBtn");
   var blForm = document.getElementById("blForm");
+  var formContainer = document.getElementById("formContainer");
+  var submissionSection = document.getElementById("submissionSection");
   var successMsg = document.getElementById("successMessage");
   var errorMsg = document.getElementById("errorMessage");
 
@@ -415,9 +420,7 @@ async function handleFormSubmit(event) {
     fileSize = file.size;
 
     try {
-      // Validate file before reading
       validateFile(file);
-      // Read file as clean Base64 (no prefix)
       fileData = await readFileAsBase64(file);
       console.log(
         "✅ File validated and loaded:",
@@ -429,7 +432,6 @@ async function handleFormSubmit(event) {
       );
     } catch (err) {
       console.error("❌ File validation/read error:", err.message);
-      // Show error in the file upload UI
       var fileLabel = document.getElementById("fileLabel");
       var fileInfo = document.getElementById("file-help");
       var fileError = document.getElementById("blFile-error");
@@ -479,7 +481,7 @@ async function handleFormSubmit(event) {
     expectedArrival: expectedArrival,
     attachmentName: fileName,
     attachmentMimeType: fileMimeType,
-    attachmentData: fileData, // ✅ Clean Base64 (no prefix)
+    attachmentData: fileData,
   };
 
   console.log("🔍 Sending form data:", {
@@ -545,21 +547,46 @@ async function handleFormSubmit(event) {
 
     console.log("✅ Submission successful!", data);
 
-    // Show success
-    if (blForm) blForm.style.display = "none";
-    if (successMsg) successMsg.style.display = "block";
-    if (errorMsg) errorMsg.style.display = "none";
-
-    // Use the documented API contract: data.data.trackingId
-    var trackingIdEl = document.getElementById("trackingIdDisplay");
-    if (trackingIdEl) {
-      var trackingId =
-        data.data && data.data.trackingId
-          ? data.data.trackingId
-          : data.trackingId;
-      trackingIdEl.textContent = trackingId;
+    // ============================================================
+    // FIX: Hide the ENTIRE submission section, not just the form
+    // ============================================================
+    // Hide the form container
+    if (formContainer) {
+      formContainer.style.display = "none";
     }
 
+    // Hide the entire submission section if it exists
+    if (submissionSection) {
+      submissionSection.style.display = "none";
+    }
+
+    // Hide the form itself as well (backup)
+    if (blForm) {
+      blForm.style.display = "none";
+    }
+
+    // Show success message
+    if (successMsg) {
+      successMsg.style.display = "block";
+    }
+
+    // Hide error message if visible
+    if (errorMsg) {
+      errorMsg.style.display = "none";
+    }
+
+    // ============================================================
+    // FIX: Display tracking ID correctly
+    // ============================================================
+    var trackingIdEl = document.getElementById("trackingIdDisplay");
+    if (trackingIdEl) {
+      // Handle both response formats: data.data.trackingId OR data.trackingId
+      var trackingId = data.data?.trackingId || data.trackingId || "";
+      trackingIdEl.textContent = trackingId;
+      console.log("✅ Tracking ID displayed:", trackingId);
+    }
+
+    // Display phone number
     var displayPhone = formData.consigneePhone;
     if (
       displayPhone &&
@@ -569,21 +596,39 @@ async function handleFormSubmit(event) {
       displayPhone = "0" + displayPhone.substring(3);
     }
     var confirmPhoneEl = document.getElementById("confirmPhone");
-    if (confirmPhoneEl) confirmPhoneEl.textContent = displayPhone;
+    if (confirmPhoneEl) {
+      confirmPhoneEl.textContent = displayPhone;
+    }
 
     saveCustomerMemory(formData.consigneeName, formData.consigneePhone);
-    if (successMsg)
+    if (successMsg) {
       successMsg.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   } catch (error) {
     console.error("❌ Submission error:", error);
     console.error("❌ Error stack:", error.stack);
-    if (blForm) blForm.style.display = "none";
-    if (successMsg) successMsg.style.display = "none";
-    if (errorMsg) errorMsg.style.display = "block";
+
+    // Hide form
+    if (formContainer) {
+      formContainer.style.display = "none";
+    }
+    if (blForm) {
+      blForm.style.display = "none";
+    }
+
+    // Show error message
+    if (successMsg) {
+      successMsg.style.display = "none";
+    }
+    if (errorMsg) {
+      errorMsg.style.display = "block";
+    }
+
     var errorTextEl = document.getElementById("errorText");
-    if (errorTextEl)
+    if (errorTextEl) {
       errorTextEl.textContent =
         error.message || "Network error. Please try again.";
+    }
 
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;

@@ -377,6 +377,9 @@
         information.
       </p>
 
+      <!-- ============================================================ -->
+      <!-- FORM SECTION -->
+      <!-- ============================================================ -->
       <section
         class="form-section is-hidden"
         id="formSection"
@@ -553,7 +556,7 @@
                       >Choose file or drag &amp; drop</span
                     >
                   </div>
-                  <small id="file-help">PDF – JPG – PNG – Max 10 MB</small>
+                  <small id="file-help">PDF – JPG – PNG – Max 5 MB</small>
                 </div>
                 <span class="field-error" id="blFile-error" role="alert"></span>
               </div>
@@ -747,6 +750,7 @@
 
       <!-- ============================================================ -->
       <!-- SUCCESS MESSAGE -->
+      <!-- ============================================================ -->
       <div
         id="successMessage"
         style="display: none; text-align: center; padding: 40px 20px"
@@ -771,6 +775,7 @@
             <p style="color: #555; margin-bottom: 16px">
               Your Bill of Lading has been submitted successfully.
             </p>
+
             <div
               style="
                 background: rgba(218, 165, 32, 0.1);
@@ -811,10 +816,12 @@
                 ></span>
               </div>
             </div>
+
             <p style="color: #555; font-size: 0.9rem; margin-bottom: 16px">
               A confirmation has been sent to
               <strong><span id="confirmPhone"></span></strong>
             </p>
+
             <div
               style="
                 display: flex;
@@ -840,7 +847,9 @@
         </div>
       </div>
 
+      <!-- ============================================================ -->
       <!-- ERROR MESSAGE -->
+      <!-- ============================================================ -->
       <div
         id="errorMessage"
         style="display: none; text-align: center; padding: 40px 20px"
@@ -876,6 +885,9 @@
       </div>
       <!-- ============================================================ -->
 
+      <!-- ============================================================ -->
+      <!-- TRACK EXISTING CONTAINER -->
+      <!-- ============================================================ -->
       <div
         id="trackExistingContainer"
         style="display: none; text-align: center; padding: 40px 20px"
@@ -940,6 +952,9 @@
         </div>
       </div>
 
+      <!-- ============================================================ -->
+      <!-- TRUST BAR -->
+      <!-- ============================================================ -->
       <section class="trust-bar" aria-label="Company credentials">
         <div class="container">
           <div class="trust-grid">
@@ -1021,6 +1036,9 @@
         </div>
       </section>
 
+      <!-- ============================================================ -->
+      <!-- CTA BANNER -->
+      <!-- ============================================================ -->
       <section class="cta-banner" aria-labelledby="track-cta-heading">
         <div class="container cta-banner-content">
           <h2 id="track-cta-heading">Need Help With Your Submission?</h2>
@@ -1108,13 +1126,11 @@
     <script>
       (function () {
         "use strict";
-        const choiceNew = document.getElementById("choiceNew");
-        const choiceExisting = document.getElementById("choiceExisting");
-        const choiceBLWhatsApp = document.getElementById("choiceBLWhatsApp");
-        const formSection = document.getElementById("formSection");
-        const trackContainer = document.getElementById(
-          "trackExistingContainer",
-        );
+        var choiceNew = document.getElementById("choiceNew");
+        var choiceExisting = document.getElementById("choiceExisting");
+        var choiceBLWhatsApp = document.getElementById("choiceBLWhatsApp");
+        var formSection = document.getElementById("formSection");
+        var trackContainer = document.getElementById("trackExistingContainer");
 
         function resetSelections() {
           choiceNew.classList.remove("is-active");
@@ -1150,16 +1166,14 @@
             choiceBLWhatsApp.classList.add("is-active");
             choiceBLWhatsApp.setAttribute("aria-checked", "true");
           }
-          // Open WhatsApp with the B/L upload template
           if (window.QF_COMMUNICATION) {
-            const message = QF_COMMUNICATION.templates.blUpload();
-            const url = QF_COMMUNICATION.getWhatsAppUrl(message);
+            var message = QF_COMMUNICATION.templates.blUpload();
+            var url = QF_COMMUNICATION.getWhatsAppUrl(message);
             window.open(url, "_blank");
           } else {
-            // Fallback if communication.config.js isn't loaded
-            const message =
+            var message =
               "Hello Quick Freights Global Limited,\n\nPlease find my Bill of Lading attached.\n\nKindly process my clearance and send me my Tracking ID.";
-            const url =
+            var url =
               "https://wa.me/2348037883339?text=" + encodeURIComponent(message);
             window.open(url, "_blank");
           }
