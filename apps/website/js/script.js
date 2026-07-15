@@ -1,7 +1,7 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v6.5
+// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v6.6
 // CONFIGURATION LOADED FROM communication.config.js
-// IMPROVED: File upload with validation and clean Base64
+// IMPROVED: File upload with validation, clean Base64, and timing
 // ================================================================
 
 // QF_CONFIG is defined in communication.config.js
@@ -383,13 +383,16 @@ function initFormHandler() {
 }
 
 // ================================================================
-// MAIN FORM SUBMIT HANDLER — UPDATED WITH PROPER CONTAINER HIDING
+// MAIN FORM SUBMIT HANDLER — WITH TIMING INSTRUMENTATION
 // ================================================================
 async function handleFormSubmit(event) {
   event.preventDefault();
 
   if (isSubmitting) return;
   if (!validateForm()) return;
+
+  // Start total timing
+  console.time("🚀 Total Submission");
 
   isSubmitting = true;
   var submitBtn = document.getElementById("submitBtn");
@@ -412,6 +415,8 @@ async function handleFormSubmit(event) {
   var fileName = null;
   var fileMimeType = null;
   var fileSize = null;
+
+  var tFileStart = performance.now();
 
   if (fileInput && fileInput.files && fileInput.files.length > 0) {
     var file = fileInput.files[0];
@@ -447,11 +452,14 @@ async function handleFormSubmit(event) {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
       submitBtn.classList.remove("is-loading");
+      console.timeEnd("🚀 Total Submission");
       return;
     }
   } else {
     console.warn("⚠️ No file selected");
   }
+
+  var tFileEnd = performance.now();
 
   // Get form values
   var consigneeName = getFieldValue("consigneeName");
@@ -503,10 +511,13 @@ async function handleFormSubmit(event) {
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
     submitBtn.classList.remove("is-loading");
+    console.timeEnd("🚀 Total Submission");
     return;
   }
 
   console.log("🔍 API URL:", apiUrl);
+
+  var tFetchStart = performance.now();
 
   try {
     console.log("🔍 Sending fetch request...");
@@ -517,6 +528,8 @@ async function handleFormSubmit(event) {
       redirect: "follow",
       body: JSON.stringify(formData),
     });
+
+    var tFetchEnd = performance.now();
 
     console.log("🔍 Response status:", response.status);
     console.log("🔍 Response OK:", response.ok);
@@ -536,6 +549,13 @@ async function handleFormSubmit(event) {
     }
 
     // ============================================================
+    // LOG SERVER TIMING (if available)
+    // ============================================================
+    if (data.data && data.data.timing) {
+      console.log("⏱️ Server Timing:", data.data.timing);
+    }
+
+    // ============================================================
     // FIX: Include data.message as a fallback error message
     // ============================================================
     if (!response.ok) {
@@ -551,6 +571,11 @@ async function handleFormSubmit(event) {
         data.error || data.message || "Submission failed. Please try again.",
       );
     }
+
+    // ============================================================
+    // FRONTEND TIMING — Total
+    // ============================================================
+    console.timeEnd("🚀 Total Submission");
 
     console.log("✅ Submission successful!", data);
 
@@ -611,7 +636,14 @@ async function handleFormSubmit(event) {
     if (successMsg) {
       successMsg.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
+    // Log frontend timing breakdown
+    console.log("⏱️ Frontend Timing:", {
+      fileRead: Math.round(tFileEnd - tFileStart) + "ms",
+      fetch: Math.round(tFetchEnd - tFetchStart) + "ms",
+    });
   } catch (error) {
+    console.timeEnd("🚀 Total Submission");
     console.error("❌ Submission error:", error);
     console.error("❌ Error stack:", error.stack);
 

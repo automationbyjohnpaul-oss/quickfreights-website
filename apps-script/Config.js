@@ -4,7 +4,7 @@
  * Cargo Portal Backend
  * ------------------------------------------------------------
  * Module: Config
- * Version: 7.6
+ * Version: 8.0
  *
  * PURPOSE
  * -------
@@ -12,6 +12,9 @@
  *
  * CHANGELOG
  * ---------
+ * v8.0 - Added DEBUG section for performance logging and diagnostics
+ * v7.9 - Added SUBMISSIONS column map to SHEET_COLUMNS (fixes BL_REFERENCE error)
+ * v7.8 - Version bump
  * v7.6 - Added STATUS_NOTIFICATION router for workflow mapping
  * v7.5 - Added SMS_FLAGS, SMS_FLAG_STATUS, updated SMS TYPES,
  *        updated SMS templates with {{supportPhone}},
@@ -24,13 +27,11 @@
  */
 
 const CONFIG = {
-
   // ==========================================================
   // COMPANY
   // ==========================================================
 
   COMPANY: {
-
     NAME: "Quick Freights Global Limited",
 
     SHORT_NAME: "Quick Freights",
@@ -42,11 +43,9 @@ const CONFIG = {
     WEBSITE:
       "https://automationbyjohnpaul-oss.github.io/quickfreights-website/",
 
-    SUPPORT_EMAIL:
-      "reception.quickfreightglobal@gmail.com",
+    SUPPORT_EMAIL: "reception.quickfreightglobal@gmail.com",
 
-    RC_NUMBER: "8106184"
-
+    RC_NUMBER: "8106184",
   },
 
   // ==========================================================
@@ -54,13 +53,11 @@ const CONFIG = {
   // ==========================================================
 
   CONTACT: {
-
     SUPPORT_PHONE: "08037883339",
 
     SUPPORT_PHONE_INTL: "2348037883339",
 
-    EMAIL: "reception.quickfreightglobal@gmail.com"
-
+    EMAIL: "reception.quickfreightglobal@gmail.com",
   },
 
   // ==========================================================
@@ -68,21 +65,11 @@ const CONFIG = {
   // ==========================================================
 
   VALIDATION: {
-
     MIN_BL_LENGTH: 5,
 
     PHONE_PATTERN: /^234\d{10}$/,
 
-    REQUIRED_FIELDS: [
-
-      "blReference",
-
-      "consigneeName",
-
-      "consigneePhone"
-
-    ]
-
+    REQUIRED_FIELDS: ["blReference", "consigneeName", "consigneePhone"],
   },
 
   // ==========================================================
@@ -90,11 +77,9 @@ const CONFIG = {
   // ==========================================================
 
   TRACKING: {
-
     PREFIX: "QFG",
 
-    RANDOM_LENGTH: 6
-
+    RANDOM_LENGTH: 6,
   },
 
   // ==========================================================
@@ -102,15 +87,28 @@ const CONFIG = {
   // ==========================================================
 
   SHEETS: {
-
     SUBMISSIONS: "Submissions",
 
     STATUS: "Shipment Status",
 
     SMS_LOG: "SMS Log",
 
-    ERROR_LOG: "Error Log"
+    ERROR_LOG: "Error Log",
+  },
 
+  // ==========================================================
+  // DEBUG (Performance logging, diagnostics)
+  // ==========================================================
+
+  DEBUG: {
+    // Master switch for performance logging
+    ENABLE_PERFORMANCE_LOGGING: true, // Set to false for production
+
+    // Log level: DEBUG, INFO, WARN, ERROR
+    LOG_LEVEL: "INFO",
+
+    // Whether to include timing in API responses (development only)
+    INCLUDE_TIMING_IN_RESPONSE: false, // Always false in production
   },
 
   // ==========================================================
@@ -118,15 +116,13 @@ const CONFIG = {
   // ==========================================================
 
   SMS_COLUMNS: {
-
     SUBMISSION: "Confirmation SMS",
 
     DISCHARGED: "Discharged SMS",
 
     PROCESSING: "Processing SMS",
 
-    CLEARED: "Cleared SMS"
-
+    CLEARED: "Cleared SMS",
   },
 
   // ==========================================================
@@ -134,15 +130,13 @@ const CONFIG = {
   // ==========================================================
 
   SMS_FLAGS: {
-
     SUBMISSION: "SUBMISSION",
 
     DISCHARGED: "DISCHARGED",
 
     PROCESSING: "PROCESSING",
 
-    CLEARED: "CLEARED"
-
+    CLEARED: "CLEARED",
   },
 
   // ==========================================================
@@ -150,13 +144,11 @@ const CONFIG = {
   // ==========================================================
 
   SMS_FLAG_STATUS: {
-
     SENT: "SENT",
 
     FAILED: "FAILED",
 
-    PENDING: "PENDING"
-
+    PENDING: "PENDING",
   },
 
   // ==========================================================
@@ -164,19 +156,17 @@ const CONFIG = {
   // ==========================================================
 
   STATUS_NOTIFICATION: {
-
     DISCHARGED: {
-      flag: "DISCHARGED"
+      flag: "DISCHARGED",
     },
 
     PROCESSING: {
-      flag: "PROCESSING"
+      flag: "PROCESSING",
     },
 
     CLEARED: {
-      flag: "CLEARED"
-    }
-
+      flag: "CLEARED",
+    },
   },
 
   // ==========================================================
@@ -184,31 +174,43 @@ const CONFIG = {
   // ==========================================================
 
   SHEET_COLUMNS: {
+    // ==========================================================
+    // SUBMISSIONS SHEET — Column mapping
+    // Matches the Submissions sheet structure
+    // ==========================================================
+    SUBMISSIONS: {
+      SUBMISSION_ID: 1, // A
+      TRACKING_ID: 2, // B
+      TIMESTAMP: 3, // C
+      BL_REFERENCE: 4, // D
+      CONSIGNEE_NAME: 5, // E
+      CUSTOMER_PHONE: 6, // F
+      SHIPPER_NAME: 7, // G
+      EMAIL: 8, // H
+      PORT: 9, // I
+      ETA: 10, // J
+      NOTES: 11, // K
+      ATTACHMENT_NAME: 12, // L
+      ATTACHMENT_URL: 13, // M
+      STATUS: 14, // N
+    },
 
+    // ==========================================================
+    // STATUS SHEET — Column mapping
+    // Matches the Shipment Status sheet structure
+    // ==========================================================
     STATUS: {
-
-      TRACKING_ID: 1,
-
-      BL_NUMBER: 2,
-
-      CUSTOMER_NAME: 3,
-
-      CUSTOMER_PHONE: 4,
-
-      STATUS: 5,
-
-      SMS_SENT: 6,
-
-      LAST_UPDATED: 7,
-
-      DISCHARGED_SMS: 8,
-
-      PROCESSING_SMS: 9,
-
-      CLEARED_SMS: 10
-
-    }
-
+      TRACKING_ID: 1, // A
+      BL_NUMBER: 2, // B
+      CUSTOMER_NAME: 3, // C
+      CUSTOMER_PHONE: 4, // D
+      STATUS: 5, // E
+      SMS_SENT: 6, // F
+      LAST_UPDATED: 7, // G
+      DISCHARGED_SMS: 8, // H
+      PROCESSING_SMS: 9, // I
+      CLEARED_SMS: 10, // J
+    },
   },
 
   // ==========================================================
@@ -216,7 +218,6 @@ const CONFIG = {
   // ==========================================================
 
   STATUS: {
-
     RECEIVED: "Received",
 
     DISCHARGED: "Discharged at Port",
@@ -225,8 +226,7 @@ const CONFIG = {
 
     CLEARED: "Cleared & Ready for Collection",
 
-    DELIVERED: "Delivered"
-
+    DELIVERED: "Delivered",
   },
 
   // ==========================================================
@@ -234,21 +234,11 @@ const CONFIG = {
   // ==========================================================
 
   DRIVE: {
-
     ROOT_FOLDER: "QuickFreights_Attachments",
 
     MAX_FILE_SIZE: 10 * 1024 * 1024,
 
-    ALLOWED_TYPES: [
-
-      "application/pdf",
-
-      "image/jpeg",
-
-      "image/png"
-
-    ]
-
+    ALLOWED_TYPES: ["application/pdf", "image/jpeg", "image/png"],
   },
 
   // ==========================================================
@@ -256,7 +246,6 @@ const CONFIG = {
   // ==========================================================
 
   SMS: {
-
     // -------- MASTER CONTROL -----------------------------------------
     ENABLED: true,
 
@@ -270,26 +259,20 @@ const CONFIG = {
     // -------- PROVIDER CONFIG ----------------------------------------
     PROVIDER: "PAYLESS",
 
-    API_ENDPOINT:
-      "https://app.paylessbulksms.com.ng/api/http/sms/send",
+    API_ENDPOINT: "https://app.paylessbulksms.com.ng/api/http/sms/send",
 
     SENDER_ID: "QuickFreigh",
 
     // -------- STAFF NOTIFICATIONS ------------------------------------
-    STAFF_PHONES: [
-      "2349168611825"
-    ],
+    STAFF_PHONES: ["2349168611825"],
 
     // -------- RETRY & ERROR HANDLING --------------------------------
     RETRY_LIMIT: 3,
 
-    SUCCESS_KEYWORDS: [
-      "queued", "sent", "successfully", "success", "200"
-    ],
+    SUCCESS_KEYWORDS: ["queued", "sent", "successfully", "success", "200"],
 
     // -------- SMS TYPES ---------------------------------------------
     TYPES: {
-
       SUBMISSION_CONFIRMATION: "SUBMISSION_CONFIRMATION",
 
       STATUS_DISCHARGED: "STATUS_DISCHARGED",
@@ -298,13 +281,11 @@ const CONFIG = {
 
       STATUS_CLEARED: "STATUS_CLEARED",
 
-      STAFF_ALERT: "STAFF_ALERT"
-
+      STAFF_ALERT: "STAFF_ALERT",
     },
 
     // -------- SMS TEMPLATES -----------------------------------------
     TEMPLATES: {
-
       SUBMISSION_CONFIRMATION:
         "Dear Customer,\n\n" +
         "Your cargo documents have been received and are being processed.\n\n" +
@@ -336,12 +317,9 @@ const CONFIG = {
         "Quick Freights Update\n\n" +
         "Great news! Your shipment has been cleared and is ready for collection.\n\n" +
         "Tracking: {{trackingId}}\n" +
-        "Support: {{supportPhone}}"
-
-    }
-
-  }
-
+        "Support: {{supportPhone}}",
+    },
+  },
 };
 
 /**
@@ -364,22 +342,50 @@ function getSecret(key) {
   }
   if (errors.length > 0) {
     Logger.log("=== CONFIG VALIDATION ERRORS ===");
-    errors.forEach(function(err) { Logger.log(err); });
+    errors.forEach(function (err) {
+      Logger.log(err);
+    });
   } else {
-    Logger.log("✅ Config loaded successfully! v7.6");
+    Logger.log("✅ Config loaded successfully! v8.0");
     Logger.log("   Spreadsheet ID: " + sheetId);
     Logger.log("   SMS Enabled: " + CONFIG.SMS.ENABLED);
+    Logger.log(
+      "   SUBMISSIONS columns: " +
+        Object.keys(CONFIG.SHEET_COLUMNS.SUBMISSIONS).join(", "),
+    );
+    Logger.log(
+      "   STATUS columns: " +
+        Object.keys(CONFIG.SHEET_COLUMNS.STATUS).join(", "),
+    );
+    Logger.log(
+      "   Performance Logging: " +
+        (CONFIG.DEBUG.ENABLE_PERFORMANCE_LOGGING ? "ENABLED" : "DISABLED"),
+    );
   }
 })();
 
 function testConfig() {
-  Logger.log("=== Config v7.6 Test ===");
+  Logger.log("=== Config v8.0 Test ===");
   Logger.log("Company: " + CONFIG.COMPANY.NAME);
   Logger.log("Support: " + CONFIG.CONTACT.SUPPORT_PHONE);
   Logger.log("SMS Templates: " + Object.keys(CONFIG.SMS.TEMPLATES).join(", "));
   Logger.log("SMS Types: " + Object.keys(CONFIG.SMS.TYPES).join(", "));
   Logger.log("SMS Flags: " + Object.keys(CONFIG.SMS_FLAGS).join(", "));
   Logger.log("Statuses: " + Object.keys(CONFIG.STATUS).join(", "));
-  Logger.log("Status Notification: " + Object.keys(CONFIG.STATUS_NOTIFICATION).join(", "));
+  Logger.log(
+    "Status Notification: " +
+      Object.keys(CONFIG.STATUS_NOTIFICATION).join(", "),
+  );
+  Logger.log(
+    "Submissions Columns: " +
+      Object.keys(CONFIG.SHEET_COLUMNS.SUBMISSIONS).join(", "),
+  );
+  Logger.log(
+    "Status Columns: " + Object.keys(CONFIG.SHEET_COLUMNS.STATUS).join(", "),
+  );
+  Logger.log(
+    "Performance Logging: " +
+      (CONFIG.DEBUG.ENABLE_PERFORMANCE_LOGGING ? "ENABLED" : "DISABLED"),
+  );
   Logger.log("=== Complete ===");
 }
