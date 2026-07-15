@@ -106,4 +106,96 @@ Google Drive Upload
 
 Response Returned
 
-SMS notification is intentionally excluded from the current processing pipeline and will be introduced during the SMS Integration milestone.
+## SMS notification is intentionally excluded from the current processing pipeline and will be introduced during the SMS Integration milestone.
+
+# Backend Architecture Source of Truth
+
+## Configuration
+
+All backend configuration is maintained exclusively in `Config.gs`.
+
+This includes:
+
+- Sheet names
+- SMS configuration
+- Validation rules
+- Drive configuration
+- Status values
+- Feature flags
+
+No business module should contain duplicated configuration.
+
+---
+
+## Secrets
+
+Secrets are never stored in `CONFIG`.
+
+Secrets are retrieved only through:
+
+- `getSecret()`
+
+Infrastructure modules are responsible for secret retrieval.
+
+---
+
+## Spreadsheet Access
+
+All spreadsheet access must occur through `Spreadsheet.gs`.
+
+Approved functions:
+
+- `getSpreadsheet()`
+- `getSheet(sheetName)`
+
+Direct calls to:
+
+- `SpreadsheetApp.openById()`
+- `SpreadsheetApp.getActiveSpreadsheet()`
+
+are prohibited outside `Spreadsheet.gs`.
+
+---
+
+## Sheet Names
+
+Sheet names shall only exist in:
+
+`CONFIG.SHEETS`
+
+Business modules must reference:
+
+- `CONFIG.SHEETS.SUBMISSIONS`
+- `CONFIG.SHEETS.STATUS`
+- `CONFIG.SHEETS.SMS_LOG`
+
+Hardcoded sheet names are prohibited.
+
+---
+
+## Business Modules
+
+Business modules contain application logic only.
+
+They must not:
+
+- retrieve secrets
+- contain duplicated configuration
+- hardcode spreadsheet IDs
+- hardcode sheet names
+
+---
+
+## SSOT Compliance
+
+Backend Version: **v7.1**
+
+Architecture Status:
+
+**Frozen**
+
+All backend modules comply with the Single Source of Truth architecture.
+
+Future development should preserve this architecture and extend functionality without introducing duplicate configuration or infrastructure coupling.
+
+---

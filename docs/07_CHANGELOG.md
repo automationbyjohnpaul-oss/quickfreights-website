@@ -389,3 +389,50 @@ It is intended for:
 Submission workflow is now fully operational from browser through Google Sheets and Google Drive.
 
 SMS integration remains the next scheduled development phase.
+
+# Version 7.1 — Backend Architecture Freeze
+
+**Release Date:** 2026-07-14
+
+## Added
+
+- Centralized backend configuration using Single Source of Truth (SSOT).
+- SMS configuration management.
+- Staff SMS notification workflow.
+- Customer SMS confirmation workflow.
+- Spreadsheet abstraction layer.
+- Standardized sheet access helpers.
+
+## Changed
+
+- Migrated backend modules to use `CONFIG.SHEETS`.
+- Standardized spreadsheet access through `Spreadsheet.gs`.
+- Refactored SMS workflow integration.
+- Improved tracking ID generation.
+- Simplified retry configuration.
+- Removed temporary debug logging.
+- Improved production error handling.
+
+## Fixed
+
+- SMS function integration.
+- Duplicate `jsonResponse()` implementation.
+- Legacy configuration references.
+- Legacy spreadsheet access.
+- Hardcoded sheet names.
+- Tracking ID character ambiguity.
+
+## Removed
+
+- `CONFIG.DATABASE`
+- `CONFIG.STORAGE`
+- Duplicate retry configuration.
+- Temporary development diagnostics.
+
+## Architecture Status
+
+Backend architecture frozen.
+
+Future releases will focus on functionality, performance, monitoring, and operational improvements.
+
+---

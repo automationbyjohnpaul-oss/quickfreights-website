@@ -547,3 +547,57 @@ Leave the documentation better than it was before.
 Initial AI Development Guide created after successful completion and deployment of Version 1 of the Quick Freights Global Limited website.
 
 This document establishes the long-term AI collaboration standards for future development.
+
+## Backend Logging Standard
+
+### Purpose
+
+Quick Freights adopts a consistent backend logging standard to improve debugging, maintenance, and AI-assisted development.
+
+Beginning with **Backend Version 7.0**, all newly developed backend modules shall use the JavaScript **Console API** for logging.
+
+---
+
+### Standard
+
+Use the appropriate console method based on the type of message:
+
+| Method            | Purpose                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| `console.log()`   | Informational messages, execution flow, successful operations and debugging output.      |
+| `console.warn()`  | Recoverable issues, missing optional data, fallback behaviour and non-critical warnings. |
+| `console.error()` | Errors, exceptions, failed operations and unexpected conditions.                         |
+
+Example:
+
+```javascript
+console.log("Submission received:", trackingId);
+
+console.warn("No attachment supplied.");
+
+console.error("Drive upload failed:", error);
+```
+
+---
+
+### Legacy Compatibility
+
+Earlier backend modules may still contain `Logger.log()` statements.
+
+These modules remain fully supported and **must not be modified solely to replace logging statements**.
+
+When an existing module undergoes functional enhancement or refactoring, any legacy `Logger.log()` calls should be migrated to the Console API as part of that work.
+
+---
+
+### Engineering Principle
+
+This standard supports the Quick Freights engineering philosophy:
+
+- Single Source of Truth (SSOT)
+- Readability over cleverness
+- Modern JavaScript (V8) practices
+- AI-friendly debugging
+- Consistent backend architecture
+
+This logging standard applies to all backend modules created from **Version 7.0** onward.

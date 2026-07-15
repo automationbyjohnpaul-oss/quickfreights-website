@@ -535,14 +535,21 @@ async function handleFormSubmit(event) {
       );
     }
 
+    // ============================================================
+    // FIX: Include data.message as a fallback error message
+    // ============================================================
     if (!response.ok) {
       console.error("❌ Response not OK:", response.status, data);
-      throw new Error(data.error || "Server error. Please try again.");
+      throw new Error(
+        data.error || data.message || "Server error. Please try again.",
+      );
     }
 
     if (!data.success) {
       console.error("❌ Server returned success: false", data);
-      throw new Error(data.error || "Submission failed. Please try again.");
+      throw new Error(
+        data.error || data.message || "Submission failed. Please try again.",
+      );
     }
 
     console.log("✅ Submission successful!", data);
