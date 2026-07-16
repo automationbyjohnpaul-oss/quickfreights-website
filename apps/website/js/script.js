@@ -1,42 +1,200 @@
 // ================================================================
-// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v6.6
+// QUICK FREIGHTS GLOBAL LIMITED — WEBSITE SCRIPT v7.0
 // CONFIGURATION LOADED FROM communication.config.js
-// IMPROVED: File upload with validation, clean Base64, and timing
+// FEATURES: Premium submission progress overlay with event-driven stages
 // ================================================================
 
 // QF_CONFIG is defined in communication.config.js
 // DO NOT redeclare it here.
 
-var isSubmitting = false;
+// ================================================================
+// PROCESSING UI — Configuration for the progress flow
+// ================================================================
 
-// File upload constants
-var MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB (matches backend)
-var ALLOWED_FILE_TYPES = [
-  "application/pdf",
-  "image/jpeg",
-  "image/png",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-];
-var ALLOWED_EXTENSIONS = [".pdf", ".jpg", ".jpeg", ".png", ".doc", ".docx"];
+var PROCESSING_UI = {
+  stages: [
+    "Verifying your details",
+    "Preparing your Bill of Lading",
+    "Uploading cargo documents",
+    "Registering your shipment",
+    "Sending your Tracking ID",
+  ],
+  progress: [
+    { stage: 1, percent: 5 },
+    { stage: 2, percent: 20 },
+    { stage: 3, percent: 38 },
+    { stage: 4, percent: 58 },
+    { stage: 5, percent: 90 },
+  ],
+  successMessage: "Shipment Registered Successfully",
+  successDelay: 700,
+  reassurance: [
+    "Your documents are encrypted and securely transmitted.",
+    "Your Tracking ID will be sent to your phone via SMS.",
+    "Large files may take a few extra seconds. Please keep this page open.",
+    "Quick Freights — RC: 8106184 · Licensed Customs Broker.",
+  ],
+};
+
+var currentStage = 0;
+var processingTimer = null;
+var processingSeconds = 0;
+var reassuranceTimer = null;
+
+// ================================================================
+// PROCESSING UI HELPERS
+// ================================================================
+
+function setStageState(stageId, state) {
+  var el = document.getElementById(stageId);
+  if (el) el.setAttribute("data-state", state);
+}
+
+function setProgress(percent) {
+  var fill = document.getElementById("progressBarFill");
+  var pct = document.getElementById("progressPercent");
+  var wrapper = document.getElementById("progressBarWrapper");
+  if (fill) fill.style.width = percent + "%";
+  if (pct) pct.textContent = percent + "%";
+  if (wrapper) wrapper.setAttribute("aria-valuenow", percent);
+}
+
+function advanceStage(num) {
+  if (num <= currentStage) return;
+  for (var i = currentStage + 1; i <= num; i++) {
+    if (i > 1) setStageState("stage" + (i - 1), "done");
+    setStageState("stage" + i, "active");
+    var match = PROCESSING_UI.progress.filter(function (p) {
+      return p.stage === i;
+    });
+    if (match.length > 0) setProgress(match[0].percent);
+  }
+  currentStage = num;
+}
+
+function showProcessingOverlay() {
+  var overlay = document.getElementById("processingOverlay");
+  if (!overlay) return;
+
+  currentStage = 0;
+  processingSeconds = 0;
+  PROCESSING_UI.stages.forEach(function (_, i) {
+    setStageState("stage" + (i + 1), "pending");
+  });
+  setProgress(0);
+  document.getElementById("elapsedTime").textContent = "00:00";
+  var title = document.getElementById("processingTitle");
+  if (title) title.textContent = "Submitting Your Bill of Lading";
+
+  overlay.setAttribute("data-locked", "true");
+  overlay.style.display = "flex";
+  overlay.classList.add("active");
+
+  advanceStage(1);
+
+  var timerEl = document.getElementById("elapsedTime");
+  processingTimer = setInterval(function () {
+    processingSeconds++;
+    var mins = String(Math.floor(processingSeconds / 60)).padStart(2, "0");
+    var secs = String(processingSeconds % 60).padStart(2, "0");
+    if (timerEl) timerEl.textContent = mins + ":" + secs;
+  }, 1000);
+
+  var msgEl = document.getElementById("processingReassurance");
+  var msgIndex = 0;
+  if (msgEl) {
+    msgEl.textContent = PROCESSING_UI.reassurance[0];
+    reassuranceTimer = setInterval(function () {
+      msgIndex = (msgIndex + 1) % PROCESSING_UI.reassurance.length;
+      msgEl.style.opacity = "0";
+      setTimeout(function () {
+        if (msgEl) {
+          msgEl.textContent = PROCESSING_UI.reassurance[msgIndex];
+          msgEl.style.opacity = "1";
+        }
+      }, 400);
+    }, 4000);
+  }
+
+  document.addEventListener("keydown", blockEscapeDuringProcessing);
+}
+
+function blockEscapeDuringProcessing(e) {
+  if (e.key === "Escape") {
+    var overlay = document.getElementById("processingOverlay");
+    if (
+      overlay &&
+      overlay.classList.contains("active") &&
+      overlay.getAttribute("data-locked") === "true"
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+}
+
+function signalProcessingComplete() {
+  PROCESSING_UI.stages.forEach(function (_, i) {
+    setStageState("stage" + (i + 1), "done");
+  });
+  setProgress(100);
+
+  var title = document.getElementById("processingTitle");
+  if (title) title.textContent = PROCESSING_UI.successMessage;
+
+  setTimeout(function () {
+    hideProcessingOverlay();
+  }, PROCESSING_UI.successDelay);
+}
+
+function hideProcessingOverlay() {
+  clearInterval(processingTimer);
+  clearInterval(reassuranceTimer);
+  document.removeEventListener("keydown", blockEscapeDuringProcessing);
+
+  var overlay = document.getElementById("processingOverlay");
+  if (overlay) {
+    overlay.style.display = "none";
+    overlay.classList.remove("active");
+    overlay.removeAttribute("data-locked");
+  }
+
+  currentStage = 0;
+  PROCESSING_UI.stages.forEach(function (_, i) {
+    setStageState("stage" + (i + 1), "pending");
+  });
+  setProgress(0);
+  var title = document.getElementById("processingTitle");
+  if (title) title.textContent = "Submitting Your Bill of Lading";
+}
+
+// ================================================================
+// CORE VARIABLES
+// ================================================================
+
+var isSubmitting = false;
+var MAX_FILE_SIZE = 5 * 1024 * 1024;
+var ALLOWED_FILE_TYPES = ["application/pdf", "image/jpeg", "image/png"];
+var ALLOWED_EXTENSIONS = [".pdf", ".jpg", ".jpeg", ".png"];
+
+// ================================================================
+// DOM CONTENT LOADED
+// ================================================================
 
 document.addEventListener("DOMContentLoaded", function () {
   var yearEl = document.getElementById("copyrightYear");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
-
   initMobileMenu();
   initFormHandler();
   initFileUpload();
   initFormMemory();
 });
 
-// ── HELPER: Safe field value getter ──
 function getFieldValue(id) {
   var el = document.getElementById(id);
   return el ? el.value.trim() : "";
 }
 
-// ── HELPER: Phone normalization ──
 function normalizePhone(phone) {
   if (!phone) return "";
   var cleaned = phone.toString().replace(/[\s\+\-\(\)]/g, "");
@@ -45,14 +203,8 @@ function normalizePhone(phone) {
   return cleaned;
 }
 
-// ── HELPER: Validate file before reading ──
 function validateFile(file) {
-  // Check if file exists
-  if (!file) {
-    throw new Error("No file selected.");
-  }
-
-  // Check file size (max 5 MB)
+  if (!file) throw new Error("No file selected.");
   if (file.size > MAX_FILE_SIZE) {
     throw new Error(
       "File exceeds the 5 MB limit. Current size: " +
@@ -60,34 +212,25 @@ function validateFile(file) {
         " MB",
     );
   }
-
-  // Check file type by MIME type
   if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-    // Fallback: check by extension
     var fileName = file.name.toLowerCase();
     var hasValidExtension = ALLOWED_EXTENSIONS.some(function (ext) {
       return fileName.endsWith(ext);
     });
-
     if (!hasValidExtension) {
       throw new Error(
-        "Unsupported file type: " +
-          file.type +
-          ". Allowed: PDF, JPG, PNG, DOC, DOCX",
+        "Unsupported file type: " + file.type + ". Allowed: PDF, JPG, or PNG",
       );
     }
   }
-
   return true;
 }
 
-// ── HELPER: Read file as clean Base64 (no prefix) ──
 function readFileAsBase64(file) {
   return new Promise(function (resolve, reject) {
     var reader = new FileReader();
     reader.onload = function () {
       try {
-        // Remove the data URL prefix (e.g., "data:image/jpeg;base64,")
         var base64 = reader.result.split(",")[1];
         resolve(base64);
       } catch (error) {
@@ -107,7 +250,7 @@ function readFileAsBase64(file) {
 }
 
 // ================================================================
-// MOBILE MENU WITH FOCUS TRAP
+// MOBILE MENU
 // ================================================================
 function initMobileMenu() {
   var menuToggle = document.getElementById("menuToggle");
@@ -133,7 +276,6 @@ function initMobileMenu() {
     menuToggle.setAttribute("aria-label", "Close navigation menu");
     overlay.setAttribute("aria-hidden", "false");
     document.body.classList.add("menu-open");
-
     navList.addEventListener(
       "transitionend",
       function handler() {
@@ -159,9 +301,7 @@ function initMobileMenu() {
     e.stopPropagation();
     navList.classList.contains("active") ? closeMenu() : openMenu();
   });
-
   overlay.addEventListener("click", closeMenu);
-
   navList.querySelectorAll("a").forEach(function (link) {
     link.addEventListener("click", closeMenu);
   });
@@ -191,7 +331,6 @@ function initMobileMenu() {
     },
     { passive: true },
   );
-
   navList.addEventListener(
     "touchend",
     function (e) {
@@ -212,14 +351,12 @@ function initFileUpload() {
   var fileLabel = document.getElementById("fileLabel");
   var fileInfo = document.getElementById("file-help");
   var fileError = document.getElementById("blFile-error");
-
   if (!fileInput || !fileLabel || !fileInfo) return;
 
   fileInput.addEventListener("change", function () {
     var file = fileInput.files[0];
     fileLabel.classList.remove("is-valid", "is-error");
     if (fileError) fileError.textContent = "";
-
     if (!file) {
       document.getElementById("fileLabelText").textContent =
         "Choose file or drag & drop";
@@ -227,10 +364,7 @@ function initFileUpload() {
       fileInfo.style.color = "";
       return;
     }
-
-    // Validate file size
     var sizeMB = (file.size / 1048576).toFixed(1);
-
     if (file.size > MAX_FILE_SIZE) {
       fileLabel.classList.add("is-error");
       fileInfo.textContent = "File too large (" + sizeMB + "MB). Max 5MB.";
@@ -240,25 +374,21 @@ function initFileUpload() {
       fileInput.value = "";
       return;
     }
-
-    // Validate file type
     if (!ALLOWED_FILE_TYPES.includes(file.type)) {
       var fileName = file.name.toLowerCase();
       var hasValidExtension = ALLOWED_EXTENSIONS.some(function (ext) {
         return fileName.endsWith(ext);
       });
-
       if (!hasValidExtension) {
         fileLabel.classList.add("is-error");
         fileInfo.textContent =
-          "Unsupported file type. Please upload PDF, JPG, PNG, DOC, or DOCX.";
+          "Unsupported file type. Please upload PDF, JPG, or PNG.";
         fileInfo.style.color = "var(--error)";
         if (fileError) fileError.textContent = "File type not allowed.";
         fileInput.value = "";
         return;
       }
     }
-
     fileLabel.classList.add("is-valid");
     document.getElementById("fileLabelText").textContent = file.name;
     fileInfo.textContent = sizeMB + " MB · Ready";
@@ -269,16 +399,13 @@ function initFileUpload() {
     e.preventDefault();
     fileLabel.classList.add("is-dragover");
   });
-
   fileLabel.addEventListener("dragleave", function () {
     fileLabel.classList.remove("is-dragover");
   });
-
   fileLabel.addEventListener("drop", function (e) {
     e.preventDefault();
     fileLabel.classList.remove("is-dragover");
     if (e.dataTransfer.files.length > 1) {
-      var fileError = document.getElementById("blFile-error");
       if (fileError) fileError.textContent = "Only one attachment allowed.";
       return;
     }
@@ -288,11 +415,10 @@ function initFileUpload() {
 }
 
 // ================================================================
-// FORM VALIDATION (Only 4 required fields)
+// FORM VALIDATION (4 required fields)
 // ================================================================
 function validateForm() {
   var isValid = true;
-
   document.querySelectorAll(".is-error").forEach(function (el) {
     el.classList.remove("is-error");
   });
@@ -309,40 +435,37 @@ function validateForm() {
   }
 
   var blRef = document.getElementById("blReference");
-  if (!blRef || !blRef.value.trim()) {
+  if (!blRef || !blRef.value.trim())
     setError(
       "blReference",
       "blReference-error",
       "Please enter your B/L number.",
     );
-  }
 
   var consignee = document.getElementById("consigneeName");
-  if (!consignee || !consignee.value.trim()) {
+  if (!consignee || !consignee.value.trim())
     setError(
       "consigneeName",
       "consigneeName-error",
       "Please enter the consignee name.",
     );
-  }
 
   var phone = document.getElementById("consigneePhone");
   if (phone) {
     var phoneVal = phone.value.trim().replace(/\s+/g, "");
     var normalized = normalizePhone(phoneVal);
-    if (!phoneVal) {
+    if (!phoneVal)
       setError(
         "consigneePhone",
         "consigneePhone-error",
         "Please enter the consignee phone number.",
       );
-    } else if (!/^234\d{10}$/.test(normalized)) {
+    else if (!/^234\d{10}$/.test(normalized))
       setError(
         "consigneePhone",
         "consigneePhone-error",
         "Enter a valid Nigerian phone number.",
       );
-    }
   }
 
   var blFile = document.getElementById("blFile");
@@ -359,7 +482,6 @@ function validateForm() {
       firstError.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
-
   return isValid;
 }
 
@@ -369,9 +491,7 @@ function validateForm() {
 function initFormHandler() {
   var blForm = document.getElementById("blForm");
   if (!blForm) return;
-
   blForm.addEventListener("submit", handleFormSubmit);
-
   var inputs = blForm.querySelectorAll("input, textarea");
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].addEventListener("input", function () {
@@ -383,15 +503,32 @@ function initFormHandler() {
 }
 
 // ================================================================
-// MAIN FORM SUBMIT HANDLER — WITH TIMING INSTRUMENTATION
+// MAIN FORM SUBMIT HANDLER
 // ================================================================
 async function handleFormSubmit(event) {
   event.preventDefault();
-
   if (isSubmitting) return;
   if (!validateForm()) return;
 
-  // Start total timing
+  const T0 = performance.now();
+  var T1 = T0,
+    T2 = T0,
+    T3 = T0,
+    T4 = T0,
+    T5 = T0,
+    T6 = T0,
+    T7 = T0,
+    T8 = T0,
+    T9 = T0;
+  var validateStart = T0,
+    validateEnd = T0,
+    readStart = T0,
+    readEnd = T0;
+  var serializeStart = T0,
+    serializeEnd = T0;
+
+  showProcessingOverlay();
+  T1 = performance.now();
   console.time("🚀 Total Submission");
 
   isSubmitting = true;
@@ -401,274 +538,139 @@ async function handleFormSubmit(event) {
   var submissionSection = document.getElementById("submissionSection");
   var successMsg = document.getElementById("successMessage");
   var errorMsg = document.getElementById("errorMessage");
-
   var originalText = submitBtn.textContent;
   submitBtn.disabled = true;
   submitBtn.textContent = "Submitting...";
   submitBtn.classList.add("is-loading");
 
-  // ============================================================
-  // READ AND VALIDATE THE FILE
-  // ============================================================
   var fileInput = document.getElementById("blFile");
-  var fileData = null;
-  var fileName = null;
-  var fileMimeType = null;
-  var fileSize = null;
+  var fileData = null,
+    fileName = null,
+    fileMimeType = null,
+    fileSize = null;
 
-  var tFileStart = performance.now();
+  T2 = performance.now();
+  advanceStage(2);
 
   if (fileInput && fileInput.files && fileInput.files.length > 0) {
     var file = fileInput.files[0];
     fileName = file.name;
     fileMimeType = file.type;
     fileSize = file.size;
-
     try {
+      validateStart = performance.now();
       validateFile(file);
+      validateEnd = performance.now();
+      readStart = performance.now();
       fileData = await readFileAsBase64(file);
-      console.log(
-        "✅ File validated and loaded:",
-        fileName,
-        "Size:",
-        fileSize,
-        "Type:",
-        fileMimeType,
-      );
+      readEnd = performance.now();
+      T3 = performance.now();
     } catch (err) {
-      console.error("❌ File validation/read error:", err.message);
-      var fileLabel = document.getElementById("fileLabel");
-      var fileInfo = document.getElementById("file-help");
-      var fileError = document.getElementById("blFile-error");
-      if (fileLabel) fileLabel.classList.add("is-error");
-      if (fileInfo) {
-        fileInfo.textContent = err.message;
-        fileInfo.style.color = "var(--error)";
-      }
-      if (fileError) fileError.textContent = err.message;
-      fileInput.value = "";
-
+      hideProcessingOverlay();
       isSubmitting = false;
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
       submitBtn.classList.remove("is-loading");
-      console.timeEnd("🚀 Total Submission");
       return;
     }
-  } else {
-    console.warn("⚠️ No file selected");
   }
 
-  var tFileEnd = performance.now();
-
-  // Get form values
-  var consigneeName = getFieldValue("consigneeName");
-  var consigneePhone = normalizePhone(getFieldValue("consigneePhone"));
-  var blReference = getFieldValue("blReference");
-  var cargoDescription = getFieldValue("cargoDescription");
-  var shipperName = getFieldValue("shipperName") || "";
-  var consigneeEmail = getFieldValue("consigneeEmail") || "";
-  var portOfDischarge = getFieldValue("portOfDischarge") || "";
-  var containerNumber = getFieldValue("containerNumber") || "";
-  var expectedArrival = document.getElementById("expectedArrival")
-    ? document.getElementById("expectedArrival").value
-    : "";
-
-  // ============================================================
-  // BUILD FORMDATA WITH CLEAN BASE64 FILE CONTENT
-  // ============================================================
+  T4 = performance.now();
   var formData = {
-    blReference: blReference,
-    consigneeName: consigneeName,
-    consigneePhone: consigneePhone,
-    cargoDescription: cargoDescription,
-    shipperName: shipperName,
-    consigneeEmail: consigneeEmail,
-    portOfDischarge: portOfDischarge,
-    containerNumber: containerNumber,
-    expectedArrival: expectedArrival,
+    blReference: getFieldValue("blReference"),
+    consigneeName: getFieldValue("consigneeName"),
+    consigneePhone: normalizePhone(getFieldValue("consigneePhone")),
+    cargoDescription: getFieldValue("cargoDescription"),
+    shipperName: getFieldValue("shipperName") || "",
+    consigneeEmail: getFieldValue("consigneeEmail") || "",
+    portOfDischarge: getFieldValue("portOfDischarge") || "",
+    containerNumber: getFieldValue("containerNumber") || "",
+    expectedArrival: document.getElementById("expectedArrival")
+      ? document.getElementById("expectedArrival").value
+      : "",
     attachmentName: fileName,
     attachmentMimeType: fileMimeType,
     attachmentData: fileData,
   };
 
-  console.log("🔍 Sending form data:", {
-    blReference: formData.blReference,
-    consigneeName: formData.consigneeName,
-    consigneePhone: formData.consigneePhone,
-    cargoDescription: formData.cargoDescription,
-    attachmentName: formData.attachmentName,
-    attachmentMimeType: formData.attachmentMimeType,
-    attachmentDataLength: formData.attachmentData
-      ? formData.attachmentData.length
-      : 0,
-  });
+  T5 = performance.now();
+  advanceStage(3);
 
   var apiUrl = QF_CONFIG.apiUrl;
   if (!apiUrl) {
-    console.error("❌ API URL not configured.");
+    hideProcessingOverlay();
     isSubmitting = false;
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
     submitBtn.classList.remove("is-loading");
-    console.timeEnd("🚀 Total Submission");
     return;
   }
 
-  console.log("🔍 API URL:", apiUrl);
+  serializeStart = performance.now();
+  var requestBody = JSON.stringify(formData);
+  serializeEnd = performance.now();
 
-  var tFetchStart = performance.now();
+  T6 = performance.now();
+  advanceStage(4);
 
   try {
-    console.log("🔍 Sending fetch request...");
-
     var response = await fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      redirect: "follow",
-      body: JSON.stringify(formData),
+      body: requestBody,
     });
-
-    var tFetchEnd = performance.now();
-
-    console.log("🔍 Response status:", response.status);
-    console.log("🔍 Response OK:", response.ok);
-
+    T7 = performance.now();
     var responseText = await response.text();
-    console.log("🔍 Raw response text:", responseText);
+    var data = JSON.parse(responseText);
+    T8 = performance.now();
+    advanceStage(5);
 
-    var data;
-    try {
-      data = JSON.parse(responseText);
-      console.log("🔍 Parsed JSON response:", data);
-    } catch (parseError) {
-      console.error("❌ Failed to parse JSON. Raw response:", responseText);
-      throw new Error(
-        "Server returned invalid JSON: " + responseText.substring(0, 100),
-      );
-    }
+    if (!data.success)
+      throw new Error(data.error || data.message || "Submission failed.");
 
-    // ============================================================
-    // LOG SERVER TIMING (if available)
-    // ============================================================
-    if (data.data && data.data.timing) {
-      console.log("⏱️ Server Timing:", data.data.timing);
-    }
-
-    // ============================================================
-    // FIX: Include data.message as a fallback error message
-    // ============================================================
-    if (!response.ok) {
-      console.error("❌ Response not OK:", response.status, data);
-      throw new Error(
-        data.error || data.message || "Server error. Please try again.",
-      );
-    }
-
-    if (!data.success) {
-      console.error("❌ Server returned success: false", data);
-      throw new Error(
-        data.error || data.message || "Submission failed. Please try again.",
-      );
-    }
-
-    // ============================================================
-    // FRONTEND TIMING — Total
-    // ============================================================
     console.timeEnd("🚀 Total Submission");
+    signalProcessingComplete();
 
-    console.log("✅ Submission successful!", data);
+    if (formContainer) formContainer.style.display = "none";
+    if (submissionSection) submissionSection.style.display = "none";
+    if (blForm) blForm.style.display = "none";
+    if (successMsg) successMsg.style.display = "block";
+    if (errorMsg) errorMsg.style.display = "none";
 
-    // ============================================================
-    // FIX: Hide the ENTIRE submission section, not just the form
-    // ============================================================
-    // Hide the form container
-    if (formContainer) {
-      formContainer.style.display = "none";
-    }
-
-    // Hide the entire submission section if it exists
-    if (submissionSection) {
-      submissionSection.style.display = "none";
-    }
-
-    // Hide the form itself as well (backup)
-    if (blForm) {
-      blForm.style.display = "none";
-    }
-
-    // Show success message
-    if (successMsg) {
-      successMsg.style.display = "block";
-    }
-
-    // Hide error message if visible
-    if (errorMsg) {
-      errorMsg.style.display = "none";
-    }
-
-    // ============================================================
-    // FIX: Display tracking ID correctly
-    // ============================================================
     var trackingIdEl = document.getElementById("trackingIdDisplay");
-    if (trackingIdEl) {
-      // Handle both response formats: data.data.trackingId OR data.trackingId
-      var trackingId = data.data?.trackingId || data.trackingId || "";
-      trackingIdEl.textContent = trackingId;
-      console.log("✅ Tracking ID displayed:", trackingId);
-    }
+    if (trackingIdEl)
+      trackingIdEl.textContent = data.data?.trackingId || data.trackingId || "";
 
-    // Display phone number
     var displayPhone = formData.consigneePhone;
     if (
       displayPhone &&
       displayPhone.startsWith("234") &&
       displayPhone.length === 13
-    ) {
+    )
       displayPhone = "0" + displayPhone.substring(3);
-    }
     var confirmPhoneEl = document.getElementById("confirmPhone");
-    if (confirmPhoneEl) {
-      confirmPhoneEl.textContent = displayPhone;
-    }
+    if (confirmPhoneEl) confirmPhoneEl.textContent = displayPhone;
 
     saveCustomerMemory(formData.consigneeName, formData.consigneePhone);
-    if (successMsg) {
-      successMsg.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
 
-    // Log frontend timing breakdown
-    console.log("⏱️ Frontend Timing:", {
-      fileRead: Math.round(tFileEnd - tFileStart) + "ms",
-      fetch: Math.round(tFetchEnd - tFetchStart) + "ms",
-    });
+    T9 = performance.now();
+    console.log("⏱️ TOTAL: " + (T9 - T0).toFixed(0) + " ms");
+    if (successMsg)
+      successMsg.scrollIntoView({ behavior: "smooth", block: "start" });
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+    submitBtn.classList.remove("is-loading");
   } catch (error) {
     console.timeEnd("🚀 Total Submission");
-    console.error("❌ Submission error:", error);
-    console.error("❌ Error stack:", error.stack);
-
-    // Hide form
-    if (formContainer) {
-      formContainer.style.display = "none";
-    }
-    if (blForm) {
-      blForm.style.display = "none";
-    }
-
-    // Show error message
-    if (successMsg) {
-      successMsg.style.display = "none";
-    }
-    if (errorMsg) {
-      errorMsg.style.display = "block";
-    }
-
+    hideProcessingOverlay();
+    if (formContainer) formContainer.style.display = "none";
+    if (blForm) blForm.style.display = "none";
+    if (successMsg) successMsg.style.display = "none";
+    if (errorMsg) errorMsg.style.display = "block";
     var errorTextEl = document.getElementById("errorText");
-    if (errorTextEl) {
+    if (errorTextEl)
       errorTextEl.textContent =
         error.message || "Network error. Please try again.";
-    }
-
     submitBtn.disabled = false;
     submitBtn.textContent = originalText;
     submitBtn.classList.remove("is-loading");
@@ -681,7 +683,6 @@ async function handleFormSubmit(event) {
 // FORM MEMORY
 // ================================================================
 var FORM_MEMORY_KEY = "quickfreights_customer";
-
 function saveCustomerMemory(name, phone) {
   try {
     var remember = document.getElementById("rememberMe");
@@ -692,24 +693,20 @@ function saveCustomerMemory(name, phone) {
     );
   } catch (e) {}
 }
-
 function loadCustomerMemory() {
   try {
     var data = localStorage.getItem(FORM_MEMORY_KEY);
     if (!data) return;
     var customer = JSON.parse(data);
-
-    var nameEl = document.getElementById("consigneeName");
-    var phoneEl = document.getElementById("consigneePhone");
-    var rememberEl = document.getElementById("rememberMe");
-
+    var nameEl = document.getElementById("consigneeName"),
+      phoneEl = document.getElementById("consigneePhone"),
+      rememberEl = document.getElementById("rememberMe");
     if (nameEl && customer.consigneeName) nameEl.value = customer.consigneeName;
     if (phoneEl && customer.consigneePhone)
       phoneEl.value = customer.consigneePhone;
     if (rememberEl) rememberEl.checked = true;
   } catch (e) {}
 }
-
 function initFormMemory() {
   loadCustomerMemory();
 }
@@ -718,57 +715,50 @@ function initFormMemory() {
 // FORM RESET
 // ================================================================
 function resetForm() {
-  var blForm = document.getElementById("blForm");
-  var successMsg = document.getElementById("successMessage");
-  var errorMsg = document.getElementById("errorMessage");
-  var submitBtn = document.getElementById("submitBtn");
-
+  var blForm = document.getElementById("blForm"),
+    successMsg = document.getElementById("successMessage"),
+    errorMsg = document.getElementById("errorMessage"),
+    submitBtn = document.getElementById("submitBtn");
   if (blForm) {
     blForm.reset();
     blForm.style.display = "flex";
   }
-
   if (successMsg) successMsg.style.display = "none";
   if (errorMsg) errorMsg.style.display = "none";
-
   if (submitBtn) {
     submitBtn.disabled = false;
     var submitText = document.getElementById("submitText");
     if (submitText) submitText.textContent = "Submit Documents";
     submitBtn.classList.remove("is-loading");
   }
-
   document.querySelectorAll(".is-error").forEach(function (el) {
     el.classList.remove("is-error");
   });
   document.querySelectorAll(".field-error").forEach(function (el) {
     el.textContent = "";
   });
-
-  var fileLabel = document.getElementById("fileLabel");
-  var fileInfo = document.getElementById("file-help");
-  var fileError = document.getElementById("blFile-error");
-
+  var fileLabel = document.getElementById("fileLabel"),
+    fileInfo = document.getElementById("file-help"),
+    fileError = document.getElementById("blFile-error");
   if (fileLabel) {
     var fileLabelText = document.getElementById("fileLabelText");
     if (fileLabelText) fileLabelText.textContent = "Choose file or drag & drop";
     fileLabel.classList.remove("is-valid", "is-error", "is-dragover");
   }
-
   if (fileInfo) {
     fileInfo.textContent = "PDF · JPG · PNG — Max 5 MB";
     fileInfo.style.color = "";
   }
-
   if (fileError) fileError.textContent = "";
-
   var copyFeedback = document.getElementById("copyFeedback");
   if (copyFeedback) copyFeedback.textContent = "";
-
+  currentStage = 0;
+  PROCESSING_UI.stages.forEach(function (_, i) {
+    setStageState("stage" + (i + 1), "pending");
+  });
+  setProgress(0);
   isSubmitting = false;
-
   if (blForm) blForm.scrollIntoView({ behavior: "smooth", block: "start" });
-
   var nameInput = document.getElementById("consigneeName");
   if (nameInput) nameInput.focus();
 }
@@ -777,13 +767,11 @@ function resetForm() {
 // COPY TRACKING ID
 // ================================================================
 function copyTrackingId() {
-  var idEl = document.getElementById("trackingIdDisplay");
-  var feedback = document.getElementById("copyFeedback");
-
+  var idEl = document.getElementById("trackingIdDisplay"),
+    feedback = document.getElementById("copyFeedback");
   if (!idEl) return;
   var id = idEl.textContent.trim();
   if (!id) return;
-
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard
       .writeText(id)
@@ -801,8 +789,5 @@ function copyTrackingId() {
   }
 }
 
-// ================================================================
-// EXPOSE GLOBALLY
-// ================================================================
 window.copyTrackingId = copyTrackingId;
 window.resetForm = resetForm;

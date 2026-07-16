@@ -1,438 +1,345 @@
-﻿# Quick Freights Global Limited
+﻿# 07 — CHANGELOG
 
-# 07 CHANGELOG
+## Quick Freights Global Limited Platform
 
-> **Documentation v1.0**
-> Created: 2026-07-07
-> Status: Draft
-
----
-
-## Overview
-
-_Content to be added_
-
----
-
-## Related Documents
-
-- [Back to README](./README.md)
-
----
-
-_This document is part of the Quick Freights Global Limited documentation suite._
-
-# 08 â€” Release Notes
-
-**Title:** QuickFreights Platform â€” Release Notes
-**Document Version:** 1.0
+**Document Version:** 4.0
+**Last Updated:** July 2026
 **Status:** Active
-**Owner:** Quick Freights Global Limited
-**Last Updated:** 2026-07-03
-
----
-
-## Document Relationships
-
-### Parent Document
-
-`00_Project_Blueprint.md`
-
-### References
-
-- `00A_Project_Journey.md` â€” Detailed progress log
-- `07_Project_Roadmap.md` â€” Planned milestones
 
 ---
 
 ## Purpose
 
-This document records each significant release of the QuickFreights Platform,
-providing a concise history of what changed, why, and when.
+This document records every significant change made to the Quick Freights Global Limited Platform.
 
-It is intended for:
-
-- Project stakeholders reviewing progress
-- New contributors understanding the codebase history
-- AI assistants needing context on when features were introduced
+It serves as the authoritative history of what changed, when, and why.
 
 ---
 
-## Current Platform Status
+## Platform V2.0 — Production Backend Baseline
 
-**Current Platform Release:** v5.6
-
-**Overall Progress:**
-
-- âœ… Phases 1â€“5 Complete
-- ðŸš§ Phase 6 (SEO & Content Enhancement)
-- â¬œ Phase 7 (Visual Polish)
-- â¬œ Phase 8 (Operational Testing)
-- â¬œ Phase 9 (Production Launch)
-
-**Platform Readiness:**
-
-- Feature Complete: Yes
-- Production Ready: Nearly Complete
-- Remaining Work: SEO, launch validation, deployment
+**Platform Version:** V2.0
+**Backend Build:** 8.1
+**Release Date:** July 15, 2026
+**Release Type:** Major Release
+**Status:** ✅ Production
 
 ---
-
-## Release History
-
----
-
-### v5.6 â€” Documentation Synchronization & Design Tokens
-
-**Date:** 2026-07-03
-**Phase:** 5 Complete / 6 Begin
-
-**Changes:**
-
-- Source of Truth restructured: slogan added, design tokens aligned
-- Roadmap updated: Phase 6 in progress, Phase 7-8 tasks refined
-- Release Notes polished with platform status section
-- CSS design tokens corrected (`--grey: #4B5563`, `--gold-dark: #B8860B`)
-- AI review artifact removed from documentation
-- Corporate slogan "Moving Cargo. Building Trust." formalized
-
-**Files Changed:**
-
-- `docs/04_Source_of_Truth.md`
-- `docs/07_Project_Roadmap.md`
-- `docs/08_Release_Notes.md`
-- `apps/website/css/styles.css`
-
----
-
-### v5.5 â€” Phase 5 Complete â€” Performance, UX & Visual Polish
-
-**Date:** 2026-07-03
-**Phase:** 5 Complete
-
-**Changes:**
-
-- Final hero visual refinements completed
-- Stylesheet consolidated and cleaned
-- Project Journey updated to reflect current progress
-- Roadmap restructured to show completed and upcoming phases
-- Frozen Brand Decisions added to Source of Truth
-- Release Notes document created
-
-**Files Changed:**
-
-- `apps/website/css/styles.css`
-- `docs/00A_Project_Journey.md`
-- `docs/04_Source_of_Truth.md`
-- `docs/07_Project_Roadmap.md`
-- `docs/08_Release_Notes.md` (new)
-
----
-
-### v5.4 â€” Hero Redesign & Brand Messaging
-
-**Date:** 2026-07-03
-**Phase:** 5
-
-**Changes:**
-
-- Hero section redesigned with left-aligned layout
-- Cinematic left-to-right gradient overlay
-- New hero typography hierarchy (welcome â†’ company â†’ subsidiary â†’ headline â†’ subtitle)
-- "CLEARING THE WAYâ€¦" headline introduced
-- "A Subsidiary of Bondex Bridge Multinational Terminal Limited" added
-- Hero stats with backdrop-filter blur
-- Brand messaging finalized and frozen
-
-**Files Changed:**
-
-- `apps/website/index.html`
-- `apps/website/css/styles.css`
-
----
-
-### v5.3 â€” Performance Fixes
-
-**Date:** 2026-07-03
-**Phase:** 5
-
-**Changes:**
-
-- Forced reflow in mobile menu fixed (setTimeout â†’ transitionend)
-- Diagnostic console.log removed from production code
-- Page transition blink eliminated (inline navy background)
-- Manifest link added to all pages
-- OG image references corrected
-
-**Files Changed:**
-
-- `apps/website/js/script.js`
-- `apps/website/index.html`
-- `apps/website/track.html`
-- `apps/website/about.html`
-- `apps/website/services.html`
-- `apps/website/contact.html`
-- `apps/website/manifest.webmanifest` (new)
-
----
-
-### v5.2 â€” UX Enhancements
-
-**Date:** 2026-07-02
-**Phase:** 5
-
-**Changes:**
-
-- Processing subtext element added to submission overlay
-- `decoding="async"` added to all content images
-- Favicon corrected (SVG with proper MIME type)
-
-**Files Changed:**
-
-- `apps/website/track.html`
-- `apps/website/index.html`
-- `apps/website/css/styles.css`
-
----
-
-### v5.1 â€” Image Optimization & Lighthouse Improvements
-
-**Date:** 2026-07-02
-**Phase:** 5
-
-**Changes:**
-
-- All placeholder SVGs replaced with optimized WebP images
-- CSS background-image references updated
-- Lazy loading added to below-the-fold images
-- Hero image preloaded with fetchpriority
-- Old placeholder assets removed
-- Lighthouse audit completed (Mobile: Perf 91%, A11y 94%, BP 100%, SEO 100%)
-
-**Files Changed:**
-
-- `apps/website/images/*` (14 files)
-- `apps/website/css/styles.css`
-- `apps/website/index.html`
-- `apps/website/track.html`
-
----
-
-### v5.0 â€” Accessibility Improvements
-
-**Date:** 2026-07-01
-**Phase:** 4 Complete / 5 Begin
-
-**Changes:**
-
-- Skip-to-main-content link added
-- Semantic HTML verified across all pages
-- ARIA labels on navigation, forms, and interactive elements
-- Focus trap implemented in mobile menu
-- Form validation with inline error messages
-- Keyboard navigation tested
-- Color contrast verified (navy/gold meets WCAG AA)
-
-**Files Changed:**
-
-- All HTML files
-- `apps/website/js/script.js`
-- `apps/website/css/styles.css`
-
----
-
-### v4.0 â€” Integration Complete
-
-**Date:** 2026-07-01
-**Phase:** 4 Complete
-
-**Changes:**
-
-- Submission workflow fully operational end-to-end
-- Google Apps Script backend deployed
-- Form submission to Google Sheets operational
-- File upload to Google Drive operational
-- Tracking ID generation and display
-- SMS notification via Payless Bulk SMS
-- Duplicate B/L detection
-- Processing overlay with timer
-- Local storage "Remember Me" functionality
-- Error handling and timeout messaging
-
-**Files Changed:**
-
-- `apps/website/js/script.js`
-- `apps/website/track.html`
-- Google Apps Script (external)
-
----
-
-### v3.0 â€” Frontend Complete
-
-**Date:** 2026-07-01
-**Phase:** 3 Complete
-
-**Changes:**
-
-- 5-page website built (Home, About, Services, Contact, Submit B/L)
-- CSS design system with CSS custom properties
-- Mobile-first responsive layout
-- Mobile off-canvas navigation
-- All page templates with placeholder content
-- Form UI with file upload styling
-
-**Files Changed:**
-
-- `apps/website/index.html`
-- `apps/website/about.html`
-- `apps/website/services.html`
-- `apps/website/contact.html`
-- `apps/website/track.html`
-- `apps/website/css/styles.css`
-
----
-
-### v2.0 â€” Platform Infrastructure
-
-**Date:** 2026-06-30
-**Phase:** 2 Complete
-
-**Changes:**
-
-- GitHub repository configured
-- GitHub Pages deployment active
-- Google Apps Script Web App created
-- Google Sheets database established
-- SMS integration configured (Payless Bulk SMS)
-- File storage configured (Google Drive)
-
-**Files Changed:**
-
-- `.github/workflows/` (GitHub Actions)
-- Google Apps Script (external)
-- Google Sheets (external)
-
----
-
-### v1.0 â€” Foundation & Planning
-
-**Date:** 2026-06-29
-**Phase:** 0-1 Complete
-
-**Changes:**
-
-- Project workspace created
-- Git repository initialized
-- Initial engineering documentation established
-- Engineering Constitution approved
-- Architecture designed
-- Source of Truth established
-
-**Files Changed:**
-
-- `docs/00_Project_Blueprint.md`
-- `docs/00A_Project_Journey.md`
-- `docs/01_System_Architecture.md`
-- `docs/02_Engineering_Constitution.md`
-- `docs/03_AI_Engineering_Guide.md`
-- `docs/04_Source_of_Truth.md`
-- `docs/05_Coding_Standards.md`
-- `docs/06_Decision_Log.md`
-- `docs/07_Project_Roadmap.md`
-- `docs/08_Glossary.md`
-
----
-
-## Version Numbering Convention
-
-| Component | Meaning                                                         | Example |
-| --------- | --------------------------------------------------------------- | ------- |
-| Major     | Completion of a project phase or significant platform milestone | v5.0    |
-| Minor     | Enhancements, optimizations, or refinements within that phase   | v5.6    |
-
----
-
-## Notes
-
-- This document is updated with each significant release
-- Detailed day-by-day progress is recorded in `00A_Project_Journey.md`
-- Release notes focus on what changed, not how it was built
-- Once the platform launches, new releases append at the top â€” past history is not reorganized
-
-## Version 2.1.0 (Backend Integration Milestone)
 
 ### Added
 
-- Google Drive attachment upload.
-- Base64 file transfer from frontend to backend.
-- Automatic Drive link generation.
-- Tracking number display after successful submission.
-- Structured backend response payload.
+#### Backend Modules
+
+- **Performance.gs** — Request-scoped performance timer with stage tracking
+- **Notification Queue** — Asynchronous SMS queuing system
+- **Status.gs** — Shipment workflow and status transition logic
+- **Triggers.gs** — Apps Script trigger entry points (onEdit, scheduled jobs)
+
+#### Frontend
+
+- Premium submission overlay with event-driven stage progression
+- Gradient progress bar (never reaches 100%)
+- Rotating reassurance messages during submission
+- Elapsed timer for submission processing
+- Success animation ("Shipment Registered Successfully")
+- ESC key blocked during processing
+- Reduced motion support for accessibility
+
+#### SMS
+
+- Parallel SMS sending using `UrlFetchApp.fetchAll()`
+- `buildSMSRequest()` helper for parallel requests
+- Customer confirmation SMS
+- Staff alert SMS
+- Status change SMS templates (Discharged, Processing, Cleared)
+- SMS Logging with retry tracking
+
+#### Google Sheets
+
+- Notification Queue sheet with status tracking
+- Shipment Status sheet with SMS flag columns
+- SMS Log sheet with provider response tracking
+
+---
 
 ### Changed
 
-- Updated frontend submission payload to match backend validation model.
-- Improved submission diagnostics and error reporting.
-- Updated Google Sheets integration to store attachment URLs.
-- Improved success screen behaviour after submission.
+#### Architecture
+
+- Migrated from monolithic to modular architecture (17 modules)
+- Adopted Single Source of Truth (SSOT) for all configuration
+- Standardized spreadsheet access through `Spreadsheet.gs`
+- Replaced direct SMS calls with notification queue
+- Added performance instrumentation
+- Changed response MIME to `text/plain` for CORS compatibility
+
+#### Frontend
+
+- Replaced simple loading spinner with premium overlay
+- Improved form validation feedback
+- Enhanced success screen with tracking ID display
+- Added copy tracking ID functionality
+
+#### Development Workflow
+
+- Migrated development workflow from Apps Script Editor to VS Code + Git + clasp
+- Apps Script Editor is now deployment and monitoring only
+- Source code managed through Git
+- Comprehensive documentation established
+
+---
+
+### Performance
+
+Measured frontend and backend execution.
+
+**Average submission time:** 7–14 seconds
+
+Identified Apps Script runtime latency as the dominant performance bottleneck.
+
+Moved SMS processing outside the critical request path using asynchronous notification queue.
+
+Established performance instrumentation for future optimisation.
+
+| Operation           | Typical Time |
+| ------------------- | -----------: |
+| Validation          |       ~12 ms |
+| Tracking Generation |        ~8 ms |
+| Spreadsheet Write   |      ~120 ms |
+| Drive Upload        |       ~1.5 s |
+| SMS Send (parallel) |       ~2.3 s |
+| Total Submission    |       ~3.5 s |
+
+---
 
 ### Fixed
 
-- Browser ↔ Apps Script integration.
-- Duplicate JavaScript configuration declaration.
-- Bill of Lading validation mismatch.
-- Success page tracking ID display.
-- Form container remaining visible after submission.
+- Browser ↔ Apps Script CORS communication
+- Duplicate configuration declarations
+- Tracking ID visibility on success screen
+- Google Sheets column mapping for submissions
+- SMS function name conflicts
+- `jsonResponse()` duplication
+- Hardcoded sheet names across modules
+- Attachment upload reliability
+- Phone number normalization
 
-### Status
+---
 
-Submission workflow is now fully operational from browser through Google Sheets and Google Drive.
+### Removed
 
-SMS integration remains the next scheduled development phase.
+- Monolithic backend architecture (`Code.gs`)
+- Duplicate configuration definitions
+- Duplicate `COLUMNS` constant from `Sheets.gs`
+- Duplicate `now()` from `Sheets.gs`
+- Duplicate `jsonResponse()` from `Utilities.gs`
+- Duplicate `updateSMSSentStatus()` from multiple files
+- Legacy test functions from `Sheets.gs`
+- Legacy spreadsheet access
+- Legacy SMS workflow
+- Temporary debugging infrastructure
 
-# Version 7.1 — Backend Architecture Freeze
+---
 
-**Release Date:** 2026-07-14
+### Milestone
 
-## Added
+✅ Backend architecture frozen
+✅ Production baseline established
+✅ Business feature development begins
 
-- Centralized backend configuration using Single Source of Truth (SSOT).
-- SMS configuration management.
-- Staff SMS notification workflow.
-- Customer SMS confirmation workflow.
-- Spreadsheet abstraction layer.
-- Standardized sheet access helpers.
+---
 
-## Changed
+### Next Planned Release
 
-- Migrated backend modules to use `CONFIG.SHEETS`.
-- Standardized spreadsheet access through `Spreadsheet.gs`.
-- Refactored SMS workflow integration.
-- Improved tracking ID generation.
-- Simplified retry configuration.
-- Removed temporary debug logging.
-- Improved production error handling.
+**Platform V3**
 
-## Fixed
+**Focus Areas:**
 
-- SMS function integration.
-- Duplicate `jsonResponse()` implementation.
-- Legacy configuration references.
-- Legacy spreadsheet access.
-- Hardcoded sheet names.
-- Tracking ID character ambiguity.
+- Customer shipment tracking
+- Admin shipment management
+- Shipment status workflow
+- Automated status notifications
+- Operational analytics
 
-## Removed
+**See:** `31_V3_ROADMAP.md`
+
+---
+
+## Platform V2.0 RC — Architecture Freeze
+
+**Platform Version:** V2.0 RC
+**Backend Build:** 8.0
+**Release Date:** July 14, 2026
+**Release Type:** Major Release Candidate
+
+---
+
+### Added
+
+- Centralized backend configuration using Single Source of Truth (SSOT)
+- SMS configuration management
+- Staff SMS notification workflow
+- Customer SMS confirmation workflow
+- Spreadsheet abstraction layer
+- Standardized sheet access helpers
+- Performance instrumentation with DEBUG feature flags
+
+---
+
+### Changed
+
+- Migrated backend modules to use `CONFIG.SHEETS`
+- Standardized spreadsheet access through `Spreadsheet.gs`
+- Refactored SMS workflow integration
+- Improved tracking ID generation (removed ambiguous characters)
+- Simplified retry configuration
+- Removed temporary debug logging
+- Improved production error handling
+
+---
+
+### Fixed
+
+- SMS function integration
+- Duplicate `jsonResponse()` implementation
+- Legacy configuration references
+- Legacy spreadsheet access
+- Hardcoded sheet names
+- Tracking ID character ambiguity
+
+---
+
+### Removed
 
 - `CONFIG.DATABASE`
 - `CONFIG.STORAGE`
-- Duplicate retry configuration.
-- Temporary development diagnostics.
-
-## Architecture Status
-
-Backend architecture frozen.
-
-Future releases will focus on functionality, performance, monitoring, and operational improvements.
+- Duplicate retry configuration
+- Temporary development diagnostics
 
 ---
+
+## Platform V2.0 Beta — Backend Core Completion
+
+**Platform Version:** V2.0 Beta
+**Backend Build:** 7.0
+**Release Date:** July 12, 2026
+**Release Type:** Minor Release
+
+---
+
+### Added
+
+- Modular backend architecture (17 modules)
+- Validation engine
+- Tracking ID generator
+- Google Sheets integration
+- Google Drive integration
+- Logger module
+- Utilities module
+- Main API entry point
+
+---
+
+### Changed
+
+- Replaced monolithic `Code.gs` with modular structure
+- Centralized configuration
+- Standardized error handling
+
+---
+
+### Fixed
+
+- Duplicate B/L detection
+- Phone number normalization
+- JSON response formatting
+
+---
+
+## Platform V1.5 — Frontend Backend Integration
+
+**Platform Version:** V1.5
+**Backend Build:** 6.0
+**Release Date:** July 10, 2026
+**Release Type:** Minor Release
+
+---
+
+### Added
+
+- End-to-end submission workflow
+- Google Apps Script Web App deployment
+- Google Sheets database write
+- Google Drive attachment upload
+- Tracking ID generation and display
+- Success screen with tracking ID
+
+---
+
+### Changed
+
+- Updated frontend payload to match backend validation
+- Improved error handling and diagnostics
+
+---
+
+### Fixed
+
+- Browser ↔ Apps Script CORS communication
+- Duplicate configuration declarations
+- Payload naming mismatches
+
+---
+
+## Platform V1.0 — Frontend Production Release
+
+**Platform Version:** V1.0
+**Backend Build:** 5.0
+**Release Date:** July 1, 2026
+**Release Type:** Major Release
+**Status:** ✅ Production
+
+---
+
+### Added
+
+- 5-page premium corporate website
+- Mobile-first responsive design
+- Cargo Portal with submission form
+- Floating Customer Assistant
+- Communication Configuration System
+- Trust Bar with credentials
+- How It Works section
+- SEO foundation (sitemap, robots.txt, manifest)
+- Accessibility improvements
+
+---
+
+### Changed
+
+- Hero redesign with left-aligned layout
+- Trust Bar restructured with stacked typography
+- Cargo Portal replaces "Submit B/L" terminology
+- Optimized images to WebP format
+
+---
+
+## Version History
+
+| Platform  | Backend   | Date       | Type  | Summary                                                                     |
+| --------- | --------- | ---------- | ----- | --------------------------------------------------------------------------- |
+| V2.0      | Build 8.1 | 2026-07-15 | Major | Production backend baseline with SSOT, SMS, and performance instrumentation |
+| V2.0 RC   | Build 8.0 | 2026-07-14 | Major | Architecture freeze                                                         |
+| V2.0 Beta | Build 7.0 | 2026-07-12 | Minor | Backend core completion                                                     |
+| V1.5      | Build 6.0 | 2026-07-10 | Minor | Frontend/backend integration                                                |
+| V1.0      | Build 5.0 | 2026-07-01 | Major | Website production release                                                  |
+
+---
+
+**Next Planned Release:** Platform V3
+
+**See:** `31_V3_ROADMAP.md`
+
+---
+
+**End of Changelog**

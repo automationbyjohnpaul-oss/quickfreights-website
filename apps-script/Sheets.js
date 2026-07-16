@@ -4,7 +4,7 @@
  * Cargo Portal Backend
  * ------------------------------------------------------------
  * Module: Sheets
- * Version: 7.2
+ * Version: 7.3
  *
  * PURPOSE
  * -------
@@ -13,6 +13,7 @@
  *
  * CHANGELOG
  * ---------
+ * v7.3 - Added NOTIFICATION_QUEUE sheet to createAllSheets()
  * v7.2 - Removed duplicate COLUMNS (now using CONFIG.SHEET_COLUMNS.SUBMISSIONS),
  *        deleted test functions (syncSubmissionsToStatus, testSMSQuick,
  *        testQuickSMS, findWorkingSender)
@@ -240,6 +241,16 @@ function createAllSheets() {
       "Context",
       "Stack",
     ],
+    [CONFIG.SHEETS.NOTIFICATION_QUEUE]: [
+      "Queue ID",
+      "Tracking ID",
+      "Type",
+      "Recipient",
+      "Payload",
+      "Status",
+      "Attempts",
+      "Created",
+    ],
   };
 
   for (const [sheetName, headers] of Object.entries(sheets)) {
@@ -276,7 +287,7 @@ function createAllSheets() {
 }
 
 function testSheetsModule() {
-  logInfo("Sheets", "=== Sheets v7.2 Test ===");
+  logInfo("Sheets", "=== Sheets v7.3 Test ===");
   try {
     logInfo("Sheets", "Submissions: " + getSubmissionSheet().getName());
   } catch (e) {
@@ -284,6 +295,15 @@ function testSheetsModule() {
   }
   try {
     logInfo("Sheets", "Status: " + getStatusSheet().getName());
+  } catch (e) {
+    logError("Sheets", "testSheetsModule", e.message);
+  }
+  try {
+    logInfo(
+      "Sheets",
+      "Notification Queue: " +
+        getSheet(CONFIG.SHEETS.NOTIFICATION_QUEUE).getName(),
+    );
   } catch (e) {
     logError("Sheets", "testSheetsModule", e.message);
   }

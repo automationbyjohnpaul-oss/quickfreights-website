@@ -1,19 +1,19 @@
-# 27 — MODULE RESPONSIBILITIES
+markdown
 
-## Quick Freights Global Limited Platform
+# Quick Freights Global Limited
 
-**Document Version:** 2.1
-**Backend Version:** V2 Baseline (v8.1)
-**Last Updated:** July 2026
+## Backend Module Responsibilities
+
+**Document Version:** 1.1
+**Backend Version:** v7.1
+**Last Updated:** 2026-07-14
 **Status:** Frozen
 
 ---
 
 ## Purpose
 
-This document defines the responsibility of every backend module.
-
-Each module has a single responsibility. Business logic must never leak into infrastructure modules. Infrastructure must never contain business rules.
+This document defines the responsibility of every backend module. Each module has a single responsibility. Business logic must never leak into infrastructure modules. Infrastructure must never contain business rules.
 
 This document is part of the Backend Source of Truth (SSOT).
 
@@ -31,7 +31,6 @@ The following operations have a single authoritative owner. No other module may 
 | SMS sending                                               | `SMS.gs`             |
 | SMS template construction                                 | `SMS.gs`             |
 | SMS logging                                               | `SMS.gs`             |
-| Parallel SMS requests                                     | `SMS.gs`             |
 | Spreadsheet gateway (`SpreadsheetApp.openById`)           | `Spreadsheet.gs`     |
 | Sheet CRUD operations                                     | `Sheets.gs`          |
 | Google Drive operations                                   | `Drive.gs`           |
@@ -40,64 +39,13 @@ The following operations have a single authoritative owner. No other module may 
 | Generic helper functions                                  | `Utilities.gs`       |
 | Application logging                                       | `Logger.gs`          |
 | Configuration / SSOT                                      | `Config.gs`          |
-| Performance instrumentation                               | `Performance.gs`     |
-| Notification queue configuration                          | `Config.gs`          |
-| Notification queue persistence                            | `Sheets.gs`          |
-| Notification queue orchestration                          | `Main.gs`            |
-| Notification queue processing                             | `Triggers.gs`        |
-| Response orchestration                                    | `Main.gs`            |
-| Performance timing integration                            | `Main.gs`            |
 
 **No duplicate implementations are permitted.**
 
 ---
 
-## Request Flow
-
-Customer Submission
-│
-▼
-Browser
-│
-▼
-Main.gs
-│
-├── Validation.gs
-├── Tracking.gs
-├── Drive.gs
-├── Sheets.gs
-├── Performance.gs
-│
-▼
-Notification Queue Created
-│
-▼
-Success Response Returned
-│
-▼
-Background Trigger
-│
-▼
-Status.gs
-│
-▼
-SMS.gs
-│
-├── Customer SMS
-└── Staff SMS
-
-text
-
-This flow illustrates the separation between the critical request path and background processing.
-
----
-
 ## Architecture Overview
 
-┌─────────────────────────────────────────────────────────────┐
-│ Browser / Client │
-└─────────────────────────────────────────────────────────────┘
-│
 ┌─────────────────────────────────────────────────────────────┐
 │ Presentation Layer │
 │ Main.gs │
@@ -108,9 +56,9 @@ This flow illustrates the separation between the critical request path and backg
 │ ┌─────────────┐ ┌────────────┐ ┌───────────┐ ┌────────┐ │
 │ │Validation.gs│ │Tracking.gs │ │ Drive.gs │ │SMS.gs │ │
 │ └─────────────┘ └────────────┘ └───────────┘ └────────┘ │
-│ ┌─────────────┐ ┌─────────────┐ ┌───────────┐ │
-│ │ Status.gs │ │ Triggers.gs │ │Performance│ │
-│ └─────────────┘ └─────────────┘ └───────────┘ │
+│ ┌─────────────┐ │
+│ │ Status.gs │ │
+│ └─────────────┘ │
 └─────────────────────────────────────────────────────────────┘
 │
 ┌─────────────────────────────────────────────────────────────┐
@@ -118,6 +66,11 @@ This flow illustrates the separation between the critical request path and backg
 │ ┌───────────────┐ ┌───────────┐ ┌───────────┐ ┌────────┐ │
 │ │Spreadsheet.gs │ │Sheets.gs │ │Utilities │ │Logger │ │
 │ └───────────────┘ └───────────┘ └───────────┘ └────────┘ │
+└─────────────────────────────────────────────────────────────┘
+│
+┌─────────────────────────────────────────────────────────────┐
+│ Automation Layer │
+│ Triggers.gs │
 └─────────────────────────────────────────────────────────────┘
 │
 ┌─────────────────────────────────────────────────────────────┐
@@ -136,16 +89,13 @@ text
 - Web App entry points (`doGet`, `doPost`, `doOptions`)
 - Request orchestration
 - API responses
-- Notification queue creation
-- Response orchestration
-- Performance timing integration
 
-**Delegates to:** `Validation.gs`, `Tracking.gs`, `Drive.gs`, `Sheets.gs`, `SMS.gs`, `Status.gs`
+**Delegates to:** `Validation.gs`, `Tracking.gs`, `Drive.gs`, `Sheets.gs`, `SMS.gs`
 
 **Must NOT:**
 
 - Access `SpreadsheetApp` directly
-- Send SMS directly (uses queue)
+- Send SMS directly
 - Generate Tracking IDs
 - Perform business validation
 - Contain configuration values
@@ -164,7 +114,6 @@ text
 - Contact details
 - Feature flags
 - Column mappings
-- Notification queue configuration
 
 **Must NOT:**
 
@@ -187,28 +136,11 @@ text
 
 ---
 
-### Logger.gs
-
-- Error logging (`logError()`)
-- Information logging (`logInfo()`)
-- Warning logging (`logWarn()`)
-- Debug logging (`logDebug()`)
-- Performance logging (`logPerformance()`)
-
-**Must NOT:**
-
-- Modify business data
-- Send SMS
-
----
-
 ### Validation.gs
 
 - Form validation
 - Duplicate checks
 - Required field validation
-- Phone normalization
-- B/L reference validation
 
 **Must NOT:**
 
@@ -221,9 +153,8 @@ text
 ### Tracking.gs
 
 - `generateTrackingID()`
-- `buildTrackingID()`
-- `generateRandomCode()`
-- `trackingIDExists()`
+- Tracking format
+- Random ID generation
 
 **Must NOT:**
 
@@ -235,11 +166,9 @@ text
 
 ### Drive.gs
 
-- File upload (`saveAttachment()`)
+- File upload
 - File validation
 - Folder management
-- File deletion
-- File info retrieval
 
 **Must NOT:**
 
@@ -251,13 +180,11 @@ text
 
 ### SMS.gs
 
-- SMS sending (`sendSMS()`)
-- Parallel SMS requests (`buildSMSRequest()`)
+- SMS sending
 - SMS templates
-- SMS logging (`logSMS()`)
-- Provider integration (`callPaylessAPI()`)
-- Status SMS functions
-- Phone normalization
+- SMS logging
+- Provider integration
+- `processStatusChange()` (business rules for status SMS)
 
 **Must NOT:**
 
@@ -269,11 +196,10 @@ text
 
 ### Status.gs
 
-- Status transitions (`processStatusChange()`)
+- Status transitions
 - Status validation
 - Duplicate notification prevention
 - Status business rules
-- Create shipment status records (`createShipmentStatusRecord()`)
 
 **Delegates to:** `SMS.gs`, `Sheets.gs`
 
@@ -287,8 +213,7 @@ text
 ### Spreadsheet.gs
 
 - `getSpreadsheet()`
-- `getSheet(sheetName)`
-- `createSheetIfNotExists()`
+- `getSheet()`
 
 **This is the ONLY module allowed to call `SpreadsheetApp.openById()`**
 
@@ -302,14 +227,12 @@ text
 
 ### Sheets.gs
 
-- Save submission (`saveSubmission()`)
-- Read submission (`findSubmissionByBL()`)
+- Save submission
+- Read submission
 - Status context (`getStatusChangeContext()`)
 - SMS flags (`markSMSFlag()`)
-- Error logging (`logErrorToSheet()`)
-- Sheet CRUD operations
-- Sheet setup (`createAllSheets()`)
-- Notification queue persistence
+- Error logging
+- Sheet read/write operations
 
 **Must NOT:**
 
@@ -319,13 +242,23 @@ text
 
 ---
 
+### Logger.gs
+
+- Error logging (`logError()`)
+- Information logging (`logInfo()`)
+- Warning logging
+
+**Must NOT:**
+
+- Modify business data
+- Send SMS
+
+---
+
 ### Triggers.gs
 
 - Apps Script triggers (`onEdit`, `onOpen`, scheduled jobs)
 - `dailyMaintenance()`
-- Notification queue processing
-- Background SMS execution
-- Maintenance jobs
 
 **Delegates to:** `Status.gs` for status changes
 
@@ -334,41 +267,6 @@ text
 - Send SMS directly
 - Access `SpreadsheetApp` directly
 - Contain business rules
-
----
-
-### Performance.gs
-
-- Request-scoped timing (`createTimer()`)
-- Stage begin/end tracking
-- Performance logging
-- Unaccounted time calculation
-- Request profiling
-- Stage timing
-- Execution breakdown
-
-**Must NOT:**
-
-- Contain business logic
-- Send SMS
-- Access Sheets or Drive
-
----
-
-## Performance Philosophy
-
-The backend is designed to minimise the time spent on the critical request path.
-
-The guiding principles are:
-
-- Validate early.
-- Generate Tracking ID once.
-- Write to Google Sheets once.
-- Upload attachments once.
-- Return success immediately.
-- Defer non-essential operations to background processing.
-
-Performance instrumentation is retained permanently to support future optimisation and production diagnostics.
 
 ---
 
@@ -396,14 +294,11 @@ Sheets.gs
 ▼
 Spreadsheet.gs
 
-Config.gs
-│
-▲
-available to every module (read-only)
-
 text
 
 ### Forbidden Dependencies
+
+The following are architectural violations:
 
 | Violation                                          | Reason                              |
 | -------------------------------------------------- | ----------------------------------- |
@@ -432,7 +327,6 @@ A public function may exist in one module only.
 - `logSMS()` → `SMS.gs`
 - `getSpreadsheet()` → `Spreadsheet.gs`
 - `jsonResponse()` → `Main.gs`
-- `processStatusChange()` → `Status.gs`
 
 ### Rule 3 — Infrastructure Isolation
 
@@ -478,44 +372,32 @@ Infrastructure modules must never contain business rules.
 | `logSMS()`            | `SMS.gs`            | `Sheets.gs`           | ✅ Resolved |
 | `jsonResponse`        | `Main.gs`           | `Utilities.gs`        | ✅ Resolved |
 | `updateSMSSentStatus` | ❌ Removed entirely | `SMS.gs`, `Sheets.gs` | ✅ Resolved |
-| `processStatusChange` | `Status.gs`         | `SMS.gs`              | ✅ Resolved |
 
 ---
 
 ## Version History
 
-| Version | Date       | Summary                                                                                                           |
-| ------- | ---------- | ----------------------------------------------------------------------------------------------------------------- |
-| 1.0     | 2026-07-14 | Initial module responsibility document created                                                                    |
-| 1.1     | 2026-07-14 | Added Module Ownership Rules, Dependency Matrix, Architectural Rules                                              |
-| 2.0     | 2026-07-16 | Added Performance.gs, Notification Queue, updated module list                                                     |
-| 2.1     | 2026-07-16 | Updated notification queue ownership, added Request Flow, Performance Philosophy, refined module responsibilities |
+| Version | Date       | Summary                                                                                                             |
+| ------- | ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| 1.0     | 2026-07-14 | Initial module responsibility document created                                                                      |
+| 1.1     | 2026-07-14 | Added Module Ownership Rules, Dependency Matrix, Architectural Rules, SSOT governance, and duplicate cleanup status |
 
 ---
 
 ## Freeze Statement
 
-This document forms part of the Quick Freights Backend Single Source of Truth (SSOT).
+This document forms part of the Quick Freights Backend Source of Truth.
 
-Any modification to:
-
-- module ownership
-- dependency direction
-- infrastructure responsibilities
-- notification workflow
-- spreadsheet access
-- performance instrumentation
-
-requires:
+Any change to module ownership or dependency direction requires:
 
 1. Architecture review
-2. SSOT update
-3. Documentation update
-4. Build Log entry
+2. Update to this document
+3. Update to the Backend Source of Truth
+4. Entry in the Backend Build Log
 5. Version increment
 
-No production code may violate these responsibilities.
+No production code may violate the responsibilities defined herein.
 
 ---
 
-**Document Status:** Frozen (V2.1)
+**Document Status:** Frozen (V1.1)

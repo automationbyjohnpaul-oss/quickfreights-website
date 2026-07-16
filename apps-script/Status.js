@@ -4,7 +4,7 @@
  * Status Module
  * ------------------------------------------------------------
  * Module: Status
- * Version: 1.0
+ * Version: 1.1
  *
  * PURPOSE
  * -------
@@ -14,13 +14,53 @@
  * - Status transition decisions
  * - Duplicate notification prevention
  * - Status business rules
+ * - Creation of shipment status records
  *
  * This module delegates:
  * - SMS sending → SMS.gs
  * - Sheet updates → Sheets.gs
  *
+ * CHANGELOG
+ * ---------
+ * v1.1 - Added createShipmentStatusRecord() for new submissions
+ * v1.0 - Initial version with processStatusChange()
  * ============================================================
  */
+
+/**
+ * ============================================================
+ * CREATE SHIPMENT STATUS RECORD
+ * ============================================================
+ *
+ * Creates a Shipment Status record for a new submission.
+ * Called by Main.js after saveSubmission() succeeds.
+ *
+ * @param {string} trackingId - The generated tracking ID
+ * @param {Object} payload - The submission payload
+ * @param {string} payload.blReference - Bill of Lading reference
+ * @param {string} payload.consigneeName - Customer name
+ * @param {string} payload.consigneePhone - Customer phone number
+ */
+function createShipmentStatusRecord(trackingId, payload) {
+  var sheet = getSheet(CONFIG.SHEETS.STATUS);
+  var row = sheet.getLastRow() + 1;
+
+  sheet
+    .getRange(row, 1, 1, 7)
+    .setValues([
+      [
+        trackingId,
+        payload.blReference || "",
+        payload.consigneeName || "",
+        payload.consigneePhone || "",
+        CONFIG.STATUS.RECEIVED,
+        "",
+        now(),
+      ],
+    ]);
+
+  logInfo("Status", "Status record created: " + trackingId);
+}
 
 /**
  * ============================================================
@@ -46,7 +86,10 @@ function processStatusChange(context) {
 
   // DUPLICATE CHECK — Prevent sending the same status SMS twice
   if (context.smsAlreadySent) {
-    logInfo("Status", "Already sent: " + context.trackingId + " — " + context.status);
+    logInfo(
+      "Status",
+      "Already sent: " + context.trackingId + " — " + context.status,
+    );
     return { sent: false, reason: "already sent" };
   }
 
@@ -54,22 +97,25 @@ function processStatusChange(context) {
   var STATUS_ROUTER = {
     [CONFIG.STATUS.DISCHARGED]: {
       sender: sendStatusDischargedSMS,
-      flag: CONFIG.SMS_FLAGS.DISCHARGED
+      flag: CONFIG.SMS_FLAGS.DISCHARGED,
     },
     [CONFIG.STATUS.PROCESSING]: {
       sender: sendStatusProcessingSMS,
-      flag: CONFIG.SMS_FLAGS.PROCESSING
+      flag: CONFIG.SMS_FLAGS.PROCESSING,
     },
     [CONFIG.STATUS.CLEARED]: {
       sender: sendStatusClearedSMS,
-      flag: CONFIG.SMS_FLAGS.CLEARED
-    }
+      flag: CONFIG.SMS_FLAGS.CLEARED,
+    },
   };
 
   // Find the route for this status
   var route = STATUS_ROUTER[context.status];
   if (!route) {
-    logInfo("Status", "Unmapped status: " + context.status + " — " + context.trackingId);
+    logInfo(
+      "Status",
+      "Unmapped status: " + context.status + " — " + context.trackingId,
+    );
     return { sent: false, reason: "unmapped status" };
   }
 
@@ -80,14 +126,18 @@ function processStatusChange(context) {
   return {
     sent: result.success || false,
     reason: result.success ? "success" : "send failed",
-    flag: result.success ? route.flag : null
+    flag: result.success ? route.flag : null,
   };
 }
 
 /**
  * ============================================================
- * TEST FUNCTION
+ * TEST FUNCTIONS
  * ============================================================
+ */
+
+/**
+ * Test the status change processor.
  */
 function testProcessStatusChange() {
   var context = {
@@ -95,11 +145,27 @@ function testProcessStatusChange() {
     phone: "2348037883339",
     status: CONFIG.STATUS.DISCHARGED,
     smsAlreadySent: false,
-    row: 2
+    row: 2,
   };
 
   var result = processStatusChange(context);
   Logger.log("=== processStatusChange Test ===");
   Logger.log(JSON.stringify(result, null, 2));
   return result;
+}
+
+/**
+ * Test creating a shipment status record.
+ */
+function testCreateShipmentStatusRecord() {
+  var payload = {
+    blReference: "MAEU123456789",
+    consigneeName: "Test Customer",
+    consigneePhone: "2348037883339",
+  };
+
+  createShipmentStatusRecord("QFG-TEST-001", payload);
+  Logger.log("=== createShipmentStatusRecord Test ===");
+  Logger.log("Status record created for QFG-TEST-001");
+  return true;
 }

@@ -4,7 +4,7 @@
  * Cargo Portal Backend
  * ------------------------------------------------------------
  * Module: Config
- * Version: 8.0
+ * Version: 8.1
  *
  * PURPOSE
  * -------
@@ -12,6 +12,7 @@
  *
  * CHANGELOG
  * ---------
+ * v8.1 - Added NOTIFICATION_QUEUE section and NOTIFICATION_QUEUE sheet
  * v8.0 - Added DEBUG section for performance logging and diagnostics
  * v7.9 - Added SUBMISSIONS column map to SHEET_COLUMNS (fixes BL_REFERENCE error)
  * v7.8 - Version bump
@@ -94,6 +95,31 @@ const CONFIG = {
     SMS_LOG: "SMS Log",
 
     ERROR_LOG: "Error Log",
+
+    NOTIFICATION_QUEUE: "Notification Queue",
+  },
+
+  // ==========================================================
+  // NOTIFICATION QUEUE
+  // ==========================================================
+
+  NOTIFICATIONS: {
+    STATUS: {
+      PENDING: "PENDING",
+      SENT: "SENT",
+      RETRY: "RETRY",
+      FAILED: "FAILED",
+    },
+
+    TYPE: {
+      SUBMISSION_CONFIRMATION: "SUBMISSION_CONFIRMATION",
+      STAFF_ALERT: "STAFF_ALERT",
+      STATUS_DISCHARGED: "STATUS_DISCHARGED",
+      STATUS_PROCESSING: "STATUS_PROCESSING",
+      STATUS_CLEARED: "STATUS_CLEARED",
+    },
+
+    MAX_ATTEMPTS: 3,
   },
 
   // ==========================================================
@@ -346,7 +372,7 @@ function getSecret(key) {
       Logger.log(err);
     });
   } else {
-    Logger.log("✅ Config loaded successfully! v8.0");
+    Logger.log("✅ Config loaded successfully! v8.1");
     Logger.log("   Spreadsheet ID: " + sheetId);
     Logger.log("   SMS Enabled: " + CONFIG.SMS.ENABLED);
     Logger.log(
@@ -361,11 +387,12 @@ function getSecret(key) {
       "   Performance Logging: " +
         (CONFIG.DEBUG.ENABLE_PERFORMANCE_LOGGING ? "ENABLED" : "DISABLED"),
     );
+    Logger.log("   Notification Queue: " + CONFIG.SHEETS.NOTIFICATION_QUEUE);
   }
 })();
 
 function testConfig() {
-  Logger.log("=== Config v8.0 Test ===");
+  Logger.log("=== Config v8.1 Test ===");
   Logger.log("Company: " + CONFIG.COMPANY.NAME);
   Logger.log("Support: " + CONFIG.CONTACT.SUPPORT_PHONE);
   Logger.log("SMS Templates: " + Object.keys(CONFIG.SMS.TEMPLATES).join(", "));
@@ -386,6 +413,13 @@ function testConfig() {
   Logger.log(
     "Performance Logging: " +
       (CONFIG.DEBUG.ENABLE_PERFORMANCE_LOGGING ? "ENABLED" : "DISABLED"),
+  );
+  Logger.log(
+    "Notification Queue Statuses: " +
+      Object.keys(CONFIG.NOTIFICATIONS.STATUS).join(", "),
+  );
+  Logger.log(
+    "Notification Types: " + Object.keys(CONFIG.NOTIFICATIONS.TYPE).join(", "),
   );
   Logger.log("=== Complete ===");
 }

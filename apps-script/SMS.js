@@ -4,7 +4,7 @@
  * SMS Module
  * ------------------------------------------------------------
  * Module: SMS
- * Version: 8.1
+ * Version: 8.2
  *
  * PURPOSE
  * -------
@@ -13,6 +13,7 @@
  *
  * CHANGELOG
  * ---------
+ * v8.2 - Added buildSMSRequest() for parallel SMS sending
  * v8.1 - Removed processStatusChange() (moved to Status.gs)
  * v8.0 - Added dedicated status SMS functions, STATUS_ROUTER,
  *        removed legacy builders, removed updateSMSSentStatus
@@ -39,15 +40,18 @@ function replaceSMSPlaceholders(template, data) {
 }
 
 function buildTemplateSMS(template, data) {
-  var values = Object.assign({
-    supportPhone: CONFIG.CONTACT.SUPPORT_PHONE,
-    supportPhoneIntl: CONFIG.CONTACT.SUPPORT_PHONE_INTL,
-    companyName: CONFIG.COMPANY.NAME,
-    shortName: CONFIG.COMPANY.SHORT_NAME,
-    rcNumber: CONFIG.COMPANY.RC_NUMBER,
-    website: CONFIG.COMPANY.WEBSITE,
-    supportEmail: CONFIG.CONTACT.EMAIL
-  }, data || {});
+  var values = Object.assign(
+    {
+      supportPhone: CONFIG.CONTACT.SUPPORT_PHONE,
+      supportPhoneIntl: CONFIG.CONTACT.SUPPORT_PHONE_INTL,
+      companyName: CONFIG.COMPANY.NAME,
+      shortName: CONFIG.COMPANY.SHORT_NAME,
+      rcNumber: CONFIG.COMPANY.RC_NUMBER,
+      website: CONFIG.COMPANY.WEBSITE,
+      supportEmail: CONFIG.CONTACT.EMAIL,
+    },
+    data || {},
+  );
   return replaceSMSPlaceholders(template, values);
 }
 
@@ -71,24 +75,27 @@ function normalizeSMSPhone(phone) {
 function callPaylessAPI(recipient, message) {
   const props = PropertiesService.getScriptProperties();
   const apiToken = props.getProperty("SMS_API_TOKEN");
-  if (!apiToken) return { success: false, response: "SMS_API_TOKEN not configured." };
+  if (!apiToken)
+    return { success: false, response: "SMS_API_TOKEN not configured." };
 
   const params = {
     api_token: apiToken,
     recipient: recipient,
     message: message,
-    sender_id: CONFIG.SMS.SENDER_ID
+    sender_id: CONFIG.SMS.SENDER_ID,
   };
-  const query = Object.keys(params).map(function (key) {
-    return key + "=" + encodeURIComponent(params[key]);
-  }).join("&");
+  const query = Object.keys(params)
+    .map(function (key) {
+      return key + "=" + encodeURIComponent(params[key]);
+    })
+    .join("&");
   const url = CONFIG.SMS.API_ENDPOINT + "?" + query;
 
   try {
     const response = UrlFetchApp.fetch(url, {
       method: "get",
       muteHttpExceptions: true,
-      headers: { Accept: "application/json" }
+      headers: { Accept: "application/json" },
     });
     return { success: true, response: response.getContentText() };
   } catch (error) {
@@ -96,16 +103,55 @@ function callPaylessAPI(recipient, message) {
   }
 }
 
+/**
+ * Builds a URL fetch request for parallel SMS sending.
+ * Does NOT send — returns request object for UrlFetchApp.fetchAll().
+ *
+ * @param {string} phone - Recipient phone number (will be normalized)
+ * @param {string} message - SMS message content
+ * @returns {Object} Request object for UrlFetchApp.fetchAll()
+ */
+function buildSMSRequest(phone, message) {
+  var token =
+    PropertiesService.getScriptProperties().getProperty("SMS_API_TOKEN");
+  var params = {
+    api_token: token,
+    recipient: phone,
+    message: message,
+    sender_id: CONFIG.SMS.SENDER_ID,
+  };
+  var query = Object.keys(params)
+    .map(function (k) {
+      return k + "=" + encodeURIComponent(params[k]);
+    })
+    .join("&");
+  return {
+    url: CONFIG.SMS.API_ENDPOINT + "?" + query,
+    method: "get",
+    muteHttpExceptions: true,
+  };
+}
+
 function sendSMS(phone, message, metadata) {
   metadata = metadata || {};
   if (!CONFIG.SMS.ENABLED) return { success: false, message: "SMS disabled." };
 
   var normalizedPhone = normalizeSMSPhone(phone);
-  if (!normalizedPhone) return { success: false, message: "Invalid phone number." };
+  if (!normalizedPhone)
+    return { success: false, message: "Invalid phone number." };
 
   const result = callPaylessAPI(normalizedPhone, message);
   if (!result.success) {
-    logSMS({ smsType: metadata.smsType || "UNKNOWN", trackingId: metadata.trackingId || "", customerPhone: metadata.customerPhone || phone, recipient: normalizedPhone, message: message, status: "FAILED", providerResponse: result.response, retryCount: 0 });
+    logSMS({
+      smsType: metadata.smsType || "UNKNOWN",
+      trackingId: metadata.trackingId || "",
+      customerPhone: metadata.customerPhone || phone,
+      recipient: normalizedPhone,
+      message: message,
+      status: "FAILED",
+      providerResponse: result.response,
+      retryCount: 0,
+    });
     return { success: false, message: result.response };
   }
 
@@ -114,9 +160,22 @@ function sendSMS(phone, message, metadata) {
     return responseText.indexOf(keyword.toLowerCase()) !== -1;
   });
 
-  logSMS({ smsType: metadata.smsType || "UNKNOWN", trackingId: metadata.trackingId || "", customerPhone: metadata.customerPhone || phone, recipient: normalizedPhone, message: message, status: success ? "SENT" : "FAILED", providerResponse: result.response, retryCount: 0 });
+  logSMS({
+    smsType: metadata.smsType || "UNKNOWN",
+    trackingId: metadata.trackingId || "",
+    customerPhone: metadata.customerPhone || phone,
+    recipient: normalizedPhone,
+    message: message,
+    status: success ? "SENT" : "FAILED",
+    providerResponse: result.response,
+    retryCount: 0,
+  });
 
-  return { success: success, recipient: normalizedPhone, providerResponse: result.response };
+  return {
+    success: success,
+    recipient: normalizedPhone,
+    providerResponse: result.response,
+  };
 }
 
 // ============================================================
@@ -124,7 +183,17 @@ function sendSMS(phone, message, metadata) {
 // ============================================================
 
 function buildSMSLogRow(data) {
-  return [now(), data.smsType || "", data.trackingId || "", data.customerPhone || "", data.recipient || "", data.message || "", data.status || "", data.providerResponse || "", data.retryCount || 0];
+  return [
+    now(),
+    data.smsType || "",
+    data.trackingId || "",
+    data.customerPhone || "",
+    data.recipient || "",
+    data.message || "",
+    data.status || "",
+    data.providerResponse || "",
+    data.retryCount || 0,
+  ];
 }
 
 function logSMS(data) {
@@ -133,7 +202,21 @@ function logSMS(data) {
     let sheet = getSheet(CONFIG.SHEETS.SMS_LOG);
     if (!sheet) {
       sheet = getSpreadsheet().insertSheet(CONFIG.SHEETS.SMS_LOG);
-      sheet.getRange(1, 1, 1, 9).setValues([['Timestamp', 'SMS Type', 'Tracking ID', 'Customer Phone', 'Recipient', 'Message', 'Status', 'Provider Response', 'Retry Count']]);
+      sheet
+        .getRange(1, 1, 1, 9)
+        .setValues([
+          [
+            "Timestamp",
+            "SMS Type",
+            "Tracking ID",
+            "Customer Phone",
+            "Recipient",
+            "Message",
+            "Status",
+            "Provider Response",
+            "Retry Count",
+          ],
+        ]);
       sheet.setFrozenRows(1);
     }
     sheet.appendRow(buildSMSLogRow(data));
@@ -149,20 +232,43 @@ function logSMS(data) {
 // ============================================================
 
 function sendSubmissionConfirmationSMS(trackingId, customerPhone) {
-  if (!CONFIG.SMS.SEND_CUSTOMER_CONFIRMATION) return { success: false, skipped: true };
-  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.SUBMISSION_CONFIRMATION, { trackingId: trackingId });
-  return sendSMS(customerPhone, message, { smsType: CONFIG.SMS.TYPES.SUBMISSION_CONFIRMATION, trackingId: trackingId, customerPhone: customerPhone });
+  if (!CONFIG.SMS.SEND_CUSTOMER_CONFIRMATION)
+    return { success: false, skipped: true };
+  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.SUBMISSION_CONFIRMATION, {
+    trackingId: trackingId,
+  });
+  return sendSMS(customerPhone, message, {
+    smsType: CONFIG.SMS.TYPES.SUBMISSION_CONFIRMATION,
+    trackingId: trackingId,
+    customerPhone: customerPhone,
+  });
 }
 
 function sendStaffAlertSMS(trackingId, blReference, consigneeName) {
   if (!CONFIG.SMS.SEND_STAFF_ALERTS) return { success: false, skipped: true };
-  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STAFF_ALERT, { blReference: blReference, consigneeName: consigneeName, trackingId: trackingId });
+  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STAFF_ALERT, {
+    blReference: blReference,
+    consigneeName: consigneeName,
+    trackingId: trackingId,
+  });
   var results = [];
   var staffNumbers = CONFIG.SMS.STAFF_PHONES || [];
   for (var i = 0; i < staffNumbers.length; i++) {
-    results.push({ recipient: staffNumbers[i], result: sendSMS(staffNumbers[i], message, { smsType: CONFIG.SMS.TYPES.STAFF_ALERT, trackingId: trackingId, customerPhone: null }) });
+    results.push({
+      recipient: staffNumbers[i],
+      result: sendSMS(staffNumbers[i], message, {
+        smsType: CONFIG.SMS.TYPES.STAFF_ALERT,
+        trackingId: trackingId,
+        customerPhone: null,
+      }),
+    });
   }
-  return { success: results.every(function(r) { return r.result.success; }), results: results };
+  return {
+    success: results.every(function (r) {
+      return r.result.success;
+    }),
+    results: results,
+  };
 }
 
 // ============================================================
@@ -171,20 +277,38 @@ function sendStaffAlertSMS(trackingId, blReference, consigneeName) {
 
 function sendStatusDischargedSMS(trackingId, customerPhone) {
   if (!CONFIG.SMS.SEND_STATUS_UPDATES) return { success: false, skipped: true };
-  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STATUS_DISCHARGED, { trackingId: trackingId });
-  return sendSMS(customerPhone, message, { smsType: CONFIG.SMS.TYPES.STATUS_DISCHARGED, trackingId: trackingId, customerPhone: customerPhone });
+  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STATUS_DISCHARGED, {
+    trackingId: trackingId,
+  });
+  return sendSMS(customerPhone, message, {
+    smsType: CONFIG.SMS.TYPES.STATUS_DISCHARGED,
+    trackingId: trackingId,
+    customerPhone: customerPhone,
+  });
 }
 
 function sendStatusProcessingSMS(trackingId, customerPhone) {
   if (!CONFIG.SMS.SEND_STATUS_UPDATES) return { success: false, skipped: true };
-  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STATUS_PROCESSING, { trackingId: trackingId });
-  return sendSMS(customerPhone, message, { smsType: CONFIG.SMS.TYPES.STATUS_PROCESSING, trackingId: trackingId, customerPhone: customerPhone });
+  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STATUS_PROCESSING, {
+    trackingId: trackingId,
+  });
+  return sendSMS(customerPhone, message, {
+    smsType: CONFIG.SMS.TYPES.STATUS_PROCESSING,
+    trackingId: trackingId,
+    customerPhone: customerPhone,
+  });
 }
 
 function sendStatusClearedSMS(trackingId, customerPhone) {
   if (!CONFIG.SMS.SEND_STATUS_UPDATES) return { success: false, skipped: true };
-  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STATUS_CLEARED, { trackingId: trackingId });
-  return sendSMS(customerPhone, message, { smsType: CONFIG.SMS.TYPES.STATUS_CLEARED, trackingId: trackingId, customerPhone: customerPhone });
+  var message = buildTemplateSMS(CONFIG.SMS.TEMPLATES.STATUS_CLEARED, {
+    trackingId: trackingId,
+  });
+  return sendSMS(customerPhone, message, {
+    smsType: CONFIG.SMS.TYPES.STATUS_CLEARED,
+    trackingId: trackingId,
+    customerPhone: customerPhone,
+  });
 }
 
 // ============================================================
@@ -192,7 +316,11 @@ function sendStatusClearedSMS(trackingId, customerPhone) {
 // ============================================================
 
 function testSendSMS() {
-  var result = sendSMS("2348037883339", "Quick Freights SMS Test - " + new Date().toISOString(), { smsType: "TEST", trackingId: "QFG-TEST-001" });
+  var result = sendSMS(
+    "2348037883339",
+    "Quick Freights SMS Test - " + new Date().toISOString(),
+    { smsType: "TEST", trackingId: "QFG-TEST-001" },
+  );
   Logger.log("=== SMS Test: " + JSON.stringify(result));
   return result;
 }
@@ -201,4 +329,19 @@ function testStatusDischarged() {
   var result = sendStatusDischargedSMS("QFG-TEST-001", "2348037883339");
   Logger.log("=== Discharged SMS: " + JSON.stringify(result));
   return result;
+}
+
+/**
+ * Test function for buildSMSRequest
+ */
+function testBuildSMSRequest() {
+  var request = buildSMSRequest(
+    "2348037883339",
+    "Test message for parallel SMS",
+  );
+  Logger.log("=== buildSMSRequest Test ===");
+  Logger.log("URL: " + request.url);
+  Logger.log("Method: " + request.method);
+  Logger.log("muteHttpExceptions: " + request.muteHttpExceptions);
+  return request;
 }

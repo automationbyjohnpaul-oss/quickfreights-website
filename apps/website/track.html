@@ -1,3 +1,5 @@
+Here is the complete updated `track.html` with the `style="display: none"`
+removed from the processing overlay: ```html
 <!doctype html>
 <html lang="en">
   <head>
@@ -749,6 +751,105 @@
       </section>
 
       <!-- ============================================================ -->
+      <!-- PROCESSING OVERLAY (Premium Submission Progress)              -->
+      <!-- ============================================================ -->
+      <div
+        class="processing-overlay"
+        id="processingOverlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="processingTitle"
+        aria-live="polite"
+      >
+        <div class="processing-card">
+          <!-- Header -->
+          <div class="processing-header">
+            <div class="processing-icon">
+              <svg
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--gold)"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                <polyline points="9 12 11 14 15 10" />
+              </svg>
+            </div>
+            <h2 id="processingTitle">Submitting Your Bill of Lading</h2>
+            <p class="processing-subtitle">
+              Please wait while we process your cargo documents
+            </p>
+          </div>
+
+          <!-- Progress Bar -->
+          <div
+            class="progress-wrapper"
+            id="progressBarWrapper"
+            role="progressbar"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div class="progress-track">
+              <div class="progress-fill" id="progressBarFill"></div>
+            </div>
+            <span class="progress-percent" id="progressPercent">0%</span>
+          </div>
+
+          <!-- Stages List -->
+          <div class="stages-list">
+            <div class="stage-item" id="stage1" data-state="pending">
+              <span class="stage-icon"></span>
+              <span class="stage-label">Verifying your details</span>
+            </div>
+            <div class="stage-item" id="stage2" data-state="pending">
+              <span class="stage-icon"></span>
+              <span class="stage-label">Preparing your Bill of Lading</span>
+            </div>
+            <div class="stage-item" id="stage3" data-state="pending">
+              <span class="stage-icon"></span>
+              <span class="stage-label">Uploading cargo documents</span>
+            </div>
+            <div class="stage-item" id="stage4" data-state="pending">
+              <span class="stage-icon"></span>
+              <span class="stage-label">Registering your shipment</span>
+            </div>
+            <div class="stage-item" id="stage5" data-state="pending">
+              <span class="stage-icon"></span>
+              <span class="stage-label">Sending your Tracking ID</span>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="processing-footer">
+            <div class="processing-timer">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <span id="elapsedTime">00:00</span>
+            </div>
+            <p class="processing-reassurance" id="processingReassurance">
+              Your documents are encrypted and securely transmitted.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
       <!-- SUCCESS MESSAGE -->
       <!-- ============================================================ -->
       <div
@@ -1225,3 +1326,4 @@
     <script defer src="js/script.js"></script>
   </body>
 </html>
+```

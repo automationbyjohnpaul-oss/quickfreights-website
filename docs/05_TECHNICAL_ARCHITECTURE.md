@@ -1,497 +1,523 @@
-﻿# Quick Freights Global Limited
+﻿Here is the updated `05_TECHNICAL_ARCHITECTURE.md` with all the suggested improvements applied:
 
-## Technical Architecture
+```markdown
+# 05 — TECHNICAL ARCHITECTURE
 
-Version: 1.0
-Last Updated: July 2026
-Status: Production (V1)
+## Quick Freights Global Limited Platform
 
----
-
-# Purpose
-
-This document describes the technical architecture of the Quick Freights Global Limited website.
-
-It serves as the reference for developers, maintainers and future contributors by documenting how the website is structured, how components interact, and how future enhancements should be integrated.
+**Document Version:** 3.0
+**Last Updated:** July 2026
+**Status:** Production (V2)
 
 ---
 
-# Architecture Overview
+## Purpose
 
-The website follows a lightweight static architecture designed for:
+This document describes the technical architecture of the Quick Freights Global Limited Platform.
 
-- High performance
+It serves as the reference for developers, maintainers and future contributors by documenting how the platform is structured, how components interact, and how future enhancements should be integrated.
+
+---
+
+## Architecture Overview
+
+The platform follows a **hybrid architecture**:
+
+- **Frontend**: Static website hosted on GitHub Pages
+- **Backend**: Google Apps Script modular backend
+- **Database**: Google Sheets
+- **Storage**: Google Drive
+- **SMS**: Payless Bulk SMS
+
+This architecture was chosen for:
+
+- Cost-effectiveness (free tiers)
 - Simplicity
 - Reliability
-- Easy maintenance
+- Maintainability
 - Future scalability
-
-Current deployment is entirely frontend-based, with the architecture intentionally prepared for backend integration in Version 2.
+- AI-assisted maintainability
+- Documentation-driven engineering
 
 ---
 
-# High-Level Architecture
-
-```
-                Internet
-                    │
-                    ▼
-          GitHub Pages Hosting
-                    │
-        ┌───────────┴───────────┐
-        │                       │
-        ▼                       ▼
-   Static HTML             Static Assets
-        │
-        ▼
-    CSS + JavaScript
-        │
-        ▼
- User Interaction Layer
-        │
-        ▼
- Communication System
-        │
- ┌──────┼─────────┐
- ▼      ▼         ▼
-WhatsApp Email Telephone
+## High-Level Architecture
 ```
 
----
-
-# Technology Stack
-
-## Frontend
-
-- HTML5
-- CSS3
-- Vanilla JavaScript (ES6)
-
----
-
-## Assets
-
-- SVG Icons
-- WebP Images
-- Google Fonts (Inter)
-
----
-
-## Hosting
-
-GitHub Pages
-
----
-
-## Version Control
-
-Git
-
-GitHub
-
----
-
-# Repository Structure
+┌─────────────────────────────────────────────────────────────────┐
+│ Internet │
+│ │ │
+│ ▼ │
+│ ┌─────────────────────────┐ │
+│ │ GitHub Pages Hosting │ │
+│ │ (Static Frontend) │ │
+│ └─────────────────────────┘ │
+│ │ │
+│ ▼ │
+│ ┌─────────────────────────┐ │
+│ │ Google Apps Script │ │
+│ │ (Backend API) │ │
+│ └─────────────────────────┘ │
+│ │ │
+│ ┌─────────────────┼─────────────────┐ │
+│ ▼ ▼ ▼ │
+│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │
+│ │ Google │ │ Google │ │ Payless │ │
+│ │ Sheets │ │ Drive │ │ Bulk SMS │ │
+│ │ (Database) │ │ (Storage) │ │ (SMS) │ │
+│ └─────────────┘ └─────────────┘ └─────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
 
 ```
-QuickFreights-Platform/
 
-├── apps/
-│   └── website/
-│       ├── css/
-│       ├── js/
-│       ├── images/
-│       ├── icons/
-│       ├── index.html
-│       ├── about.html
-│       ├── services.html
-│       ├── contact.html
-│       └── track.html
+---
+
+## Frontend Architecture
+
+### Technology Stack
+
+| Layer | Technology |
+|-------|------------|
+| HTML | HTML5 |
+| CSS | Custom Design System (CSS Variables) |
+| JavaScript | Vanilla (no frameworks) |
+| Hosting | GitHub Pages |
+| Fonts | Google Fonts (Inter) |
+| Images | WebP format |
+
+### Pages
+
+| Page | Purpose |
+|------|---------|
+| index.html | Homepage |
+| about.html | Company story & values |
+| services.html | Service categories |
+| track.html | Cargo Portal with submission overlay |
+| contact.html | Contact methods & office locations |
+
+### JavaScript Modules
+
+| File | Responsibility |
+|------|----------------|
+| script.js | Navigation, form handling, overlay, submission |
+| communication.config.js | Centralized contact configuration |
+| floating-widget.js | Dynamic floating contact widget |
+
+### CSS Architecture
+
+- Mobile-first responsive design
+- CSS custom properties (design tokens)
+- Component-based styling
+- Premium corporate design language
+
+### Submission Overlay
+
+- Event-driven stage progression
+- Gradient progress bar (never hits 100%)
+- Rotating reassurance messages
+- Elapsed timer
+- Success animation
+- ESC blocked during processing
+- Reduced motion support
+
+---
+
+## Backend Architecture
+
+### Technology Stack
+
+| Layer | Technology |
+|-------|------------|
+| Runtime | Google Apps Script |
+| Database | Google Sheets |
+| Storage | Google Drive |
+| SMS | Payless Bulk SMS |
+| Deployment | clasp CLI |
+| Version Control | Git / GitHub |
+
+### Module Architecture
+
+The backend follows a **modular Single Source of Truth (SSOT)** architecture.
+
+Each backend module has a clearly defined responsibility, with infrastructure isolated from business logic. Shared configuration is centralized in `Config.gs`, while infrastructure access is abstracted through dedicated gateway modules.
+
+This design minimizes duplication, improves maintainability, and enables efficient AI-assisted debugging and future feature development.
+
+```
+
+┌─────────────────────────────────────────────────────────────┐
+│ Presentation Layer │
+│ Main.gs │
+└─────────────────────────────────────────────────────────────┘
 │
-├── docs/
+┌─────────────────────────────────────────────────────────────┐
+│ Business Layer │
+│ ┌─────────────┐ ┌────────────┐ ┌───────────┐ ┌────────┐ │
+│ │Validation.gs│ │Tracking.gs │ │ Drive.gs │ │SMS.gs │ │
+│ └─────────────┘ └────────────┘ └───────────┘ └────────┘ │
+│ ┌─────────────┐ ┌─────────────┐ ┌───────────┐ │
+│ │ Status.gs │ │ Triggers.gs │ │Performance│ │
+│ └─────────────┘ └─────────────┘ └───────────┘ │
+└─────────────────────────────────────────────────────────────┘
 │
-└── .github/
+┌─────────────────────────────────────────────────────────────┐
+│ Infrastructure Layer │
+│ ┌───────────────┐ ┌───────────┐ ┌───────────┐ ┌────────┐ │
+│ │Spreadsheet.gs │ │Sheets.gs │ │Utilities │ │Logger │ │
+│ └───────────────┘ └───────────┘ └───────────┘ └────────┘ │
+└─────────────────────────────────────────────────────────────┘
+│
+┌─────────────────────────────────────────────────────────────┐
+│ Configuration Layer │
+│ Config.gs │
+└─────────────────────────────────────────────────────────────┘
+
+```
+
+### Module Inventory (17 Modules)
+
+| Module | Version | Responsibility |
+|--------|---------|----------------|
+| Config.gs | v8.1 | SSOT configuration |
+| Spreadsheet.gs | v2.0 | Spreadsheet gateway |
+| Utilities.gs | v1.1 | Generic helpers |
+| Logger.gs | v1.1 | Application logging |
+| Validation.gs | v7.0 | Input validation |
+| Tracking.gs | v7.0 | Tracking ID generation |
+| Sheets.gs | v7.3 | Sheet CRUD operations |
+| Drive.gs | v7.0 | Google Drive operations |
+| SMS.gs | v8.2 | SMS sending and logging |
+| Status.gs | v1.1 | Shipment workflow |
+| Triggers.gs | v1.0 | Apps Script triggers |
+| Performance.gs | v1.0 | Performance instrumentation |
+| Main.gs | v8.2 | API entry point |
+| Notifications.gs | v1.0 | Notification placeholder |
+| Reports.gs | v1.0 | Reports placeholder |
+| test.gs | v1.0 | Test functions |
+
+---
+
+## Backend Processing Pipeline
+
+A typical submission follows this sequence:
+
+1. Receive request (`Main.gs`)
+2. Validate payload (`Validation.gs`)
+3. Generate Tracking ID (`Tracking.gs`)
+4. Upload attachment (`Drive.gs`)
+5. Persist submission (`Sheets.gs`)
+6. Create shipment status record (`Status.gs`)
+7. Queue notifications
+8. Return success response
+9. Process SMS asynchronously
+
+This workflow minimizes the time before the user receives confirmation while allowing slower operations to continue outside the critical request path.
+
+---
+
+## Data Flow
+
+### Submission Flow
+
+```
+
+Customer
+│
+▼
+track.html
+│
+▼
+script.js (fetch)
+│
+▼
+Google Apps Script (doPost)
+│
+├── Validation.gs (validate)
+├── Tracking.gs (generate ID)
+├── Drive.gs (upload attachment)
+├── Sheets.gs (save to sheets)
+├── Status.gs (create status record)
+└── Performance.gs (timing)
+│
+▼
+Success Response
+
+```
+
+### SMS Flow
+
+```
+
+Main.gs
+│
+▼
+Notification Queue
+│
+▼
+SMS.gs
+│
+▼
+buildSMSRequest()
+│
+▼
+UrlFetchApp.fetchAll()
+│
+├── Customer SMS
+└── Staff SMS
+│
+▼
+SMS Log
+
 ```
 
 ---
 
-# Page Architecture
-
-The website consists of five primary pages.
-
-## Home
-
-Purpose
-
-Customer acquisition
-
-Major sections
-
-- Hero
-- Credentials Bar
-- How It Works
-- Services
-- Why Choose Us
-- Call to Action
-
----
-
-## About
-
-Purpose
-
-Company credibility
-
-Contains
-
-- Company overview
-- Mission
-- Vision
-- Core values
-
----
-
-## Services
-
-Purpose
-
-Service discovery
-
-Displays
-
-- Customs Clearance
-- Freight Forwarding
-- Import Services
-- Export Services
-
----
-
-## Contact
-
-Purpose
-
-Customer communication
-
-Includes
-
-- Contact details
-- Office hours
-- Email support
-- Telephone
-- WhatsApp
-
----
-
-## Cargo Portal
-
-Purpose
-
-Customer onboarding
-
-Provides
-
-- Online document submission
-- WhatsApp submission
-- Cargo enquiry
-
----
-
-# CSS Architecture
-
-Primary stylesheet
+## Communication Architecture
 
 ```
-css/styles.css
-```
 
-Responsibilities
-
-- Layout
-- Components
-- Typography
-- Responsive behaviour
-- Animations
-- Utility classes
-
-No inline styling should be introduced unless technically unavoidable.
-
----
-
-# JavaScript Architecture
-
-The JavaScript layer is modular.
-
-## script.js
-
-Responsibilities
-
-- Navigation
-- Mobile menu
-- Hero interactions
-- Form validation
-- Page behaviour
-
----
-
-## communication.config.js
-
-Acts as the Single Source of Truth.
-
-Contains
-
-- Phone numbers
-- Email addresses
-- WhatsApp number
-- Message templates
-- Helper functions
-
-All communication references originate from this file.
-
----
-
-## floating-widget.js
-
-Responsible for
-
-- Floating Customer Assistant
-- Dynamic widget rendering
-- Context-aware links
-- Customer interaction
-
-Separating the widget into its own module improves maintainability.
-
----
-
-# Communication Architecture
-
-```
 User
-
-↓
-
+│
+▼
 Floating Widget
-
-↓
-
+│
+▼
 communication.config.js
+│
+├── WhatsApp (wa.me links)
+├── Email (mailto links)
+└── Telephone (tel links)
 
-↓
-
-WhatsApp
-
-Email
-
-Telephone
 ```
 
 No communication details should exist outside the configuration.
 
 ---
 
-# User Journey Architecture
+## User Journey Architecture
 
-Typical customer flow
+Typical customer flow:
 
 ```
+
 Homepage
-
-↓
-
+│
+▼
 Cargo Portal
-
-↓
-
+│
+▼
 Choose Submission Method
-
-↓
-
+│
+▼
 Document Submission
-
-↓
-
-Tracking ID
-
-↓
-
+│
+▼
+Processing Overlay
+│
+▼
+Tracking ID Displayed
+│
+▼
+SMS Confirmation
+│
+▼
 Cargo Processing
 
-↓
-
-Customer Updates
 ```
-
-Every page should guide customers toward the next logical action.
 
 ---
 
-# Responsive Architecture
+## Responsive Architecture
 
 The website follows a mobile-first approach.
 
-Breakpoints
+**Breakpoints:**
 
-Desktop
-
-Laptop
-
-Tablet
-
-Mobile
-
-Small Mobile
-
-Layouts collapse progressively while preserving usability.
+| Breakpoint | Width |
+|------------|-------|
+| Desktop | 1200px+ |
+| Laptop | 992px–1199px |
+| Tablet | 768px–991px |
+| Mobile | 576px–767px |
+| Small Mobile | Below 576px |
 
 ---
 
-# Component Architecture
+## Performance Architecture
 
-Reusable components include
+### Frontend Optimizations
 
-- Navigation
-- Hero
-- Buttons
-- Credentials Bar
-- Cards
-- Forms
-- Floating Customer Assistant
-- Footer
-
-All reusable components are documented in the Design System.
-
----
-
-# Asset Strategy
-
-Images
-
-- WebP
-- Optimised
-- Lazy loaded where appropriate
-
-Icons
-
-- SVG
-
-Fonts
-
-- Google Fonts
-- Optimised loading
-
----
-
-# SEO Architecture
-
-Current implementation
-
-- Semantic HTML
-- Meta descriptions
-- Open Graph metadata
-- Sitemap
-- Robots.txt
-- Manifest
-- Optimised headings
-
-Future additions
-
-- Structured Data
-- Local Business Schema
-- FAQ Schema
-
----
-
-# Performance Strategy
-
-Current optimisations
-
-- Compressed images
-- Optimised font loading
-- Lightweight JavaScript
+- Compressed WebP images
+- Optimized font loading (preload + swap)
+- Lightweight JavaScript (vanilla)
 - Minimal dependencies
 - Responsive images
+- Lazy loading for below-the-fold images
 
-Target
+### Backend Optimizations
 
-Lighthouse 90+
+- Modular SSOT architecture
+- Centralized configuration
+- Infrastructure isolation
+- Performance instrumentation
+- Notification queue
+- Parallel SMS delivery
+- Reduced synchronous processing
+- Comprehensive error handling
+- Request-scoped timing analysis
+
+### Target Lighthouse Scores
+
+| Metric | Target |
+|--------|--------|
+| Performance | 90+ |
+| Accessibility | 95+ |
+| Best Practices | 95+ |
+| SEO | 95+ |
 
 ---
 
-# Security Strategy
+## Performance Characteristics
 
-Current
+Performance instrumentation introduced during Backend V2 demonstrated that:
 
-- Static website
-- No server-side processing
+- Application logic executes efficiently.
+- Google Apps Script runtime contributes significantly to total request latency.
+- Google Drive operations vary depending on attachment size.
+- External SMS processing is isolated from the critical submission path through the notification queue.
+
+Future optimization should be guided by measured performance data rather than assumptions.
+
+---
+
+## Security Architecture
+
+### Current
+
+- Static website (no server-side processing)
 - No customer authentication
+- HTTPS via GitHub Pages
+- Input validation (frontend + backend)
+- Secure attachments (Google Drive permissions)
+- Script Properties used for sensitive configuration
+- Single Source of Truth prevents configuration duplication
+- Infrastructure access isolated through gateway modules
 
-Future
+### Future
 
-- Input validation
+- Customer authentication
+- Role-based access control
+- Secure document storage
 - API authentication
-- Secure uploads
-- User authentication
+- Audit logging
 
 ---
 
-# Deployment Architecture
+## Deployment Architecture
+
+```
 
 Developer
-
-↓
-
+│
+▼
+VS Code
+│
+▼
 Git
-
-↓
-
+│
+▼
 GitHub Repository
+│
+├── GitHub Actions → GitHub Pages (Frontend)
+└── clasp → Apps Script (Backend)
+│
+▼
+Production Platform
 
-↓
+````
 
-GitHub Actions
+### Frontend Deployment
 
-↓
+Automatic via GitHub Actions when pushing to main branch.
 
-GitHub Pages
+### Backend Deployment
 
-↓
+Manual via clasp:
 
-Production Website
-
-Deployment is fully automated.
-
----
-
-# Future Architecture (V2)
-
-The current architecture intentionally prepares for expansion.
-
-Planned additions
-
-Customer Dashboard
-
-Shipment Tracking
-
-Authentication
-
-Admin Portal
-
-CRM Integration
-
-Payment Gateway
-
-Database
-
-REST API
-
-Notification Service
-
-AI Assistant
-
-These systems will integrate without requiring a redesign of the current frontend.
+```bash
+clasp push
+clasp version "vX.X"
+clasp deploy
+````
 
 ---
 
-# Architectural Principles
+## Production Release Process
+
+Every production release follows the same workflow:
+
+1. Development in VS Code
+2. Local testing
+3. Git commit and push
+4. `clasp push`
+5. Create Apps Script version
+6. Deploy production version
+7. Verify production deployment
+8. Update project documentation
+
+Documentation updates are considered part of every production release.
+
+---
+
+## Architecture Status
+
+The Backend V2 architecture is considered frozen.
+
+Future development should prioritize business functionality rather than infrastructure redesign unless changes are required to address:
+
+- Critical defects
+- Security issues
+- Verified performance regressions
+- Platform compatibility changes
+
+This policy preserves the stability of the production baseline while allowing controlled evolution of the platform.
+
+---
+
+## Future Architecture (V3)
+
+Planned additions:
+
+- Customer Tracking Page
+- Shipment Status Lookup
+- Admin Operations Interface
+- Status Update Workflow
+- Automated Status-change SMS
+- Analytics Dashboard
+
+These systems will integrate without requiring a redesign of the current architecture.
+
+---
+
+## Architecture Summary
+
+The Quick Freights Platform combines a lightweight static frontend with a modular cloud backend built on Google Apps Script.
+
+The architecture emphasizes:
+
+- Simplicity
+- Maintainability
+- Single Source of Truth
+- Clear module ownership
+- AI-assisted development
+- Documentation-driven engineering
+- Production stability
+
+This architecture forms the approved foundation for all future platform enhancements.
+
+---
+
+## Architectural Principles
 
 The platform follows these principles:
 
@@ -503,15 +529,39 @@ The platform follows these principles:
 - Performance-first implementation
 - Accessibility by default
 - Maintainability over complexity
-
-Every new feature should follow these principles.
+- Infrastructure isolation
+- Modular design
 
 ---
 
-# Guiding Principle
+## Guiding Principle
 
-The Quick Freights website is more than a marketing site.
+The Quick Freights platform is more than a website.
 
 It is the foundation of a future digital logistics platform.
 
-All architectural decisions should prioritise scalability, maintainability and customer experience while preserving the simplicity and performance achieved in Version 1.
+All architectural decisions should prioritize scalability, maintainability and customer experience while preserving the simplicity and performance achieved in V1 and V2.
+
+---
+
+**Document Status:** Active (V3.0)
+
+```
+
+---
+
+## Summary of Changes
+
+| Change | Description |
+|--------|-------------|
+| **Architecture Overview** | Added AI-assisted maintainability and documentation-driven engineering |
+| **Backend Architecture Description** | Expanded with module responsibility and SSOT explanation |
+| **Backend Processing Pipeline** | New section showing submission sequence |
+| **SMS Flow** | Updated to reflect notification queue and parallel sending |
+| **Backend Optimizations** | Replaced with comprehensive list |
+| **Performance Characteristics** | New section capturing V2 findings |
+| **Security Architecture** | Added SSOT and infrastructure isolation items |
+| **Production Release Process** | New section reinforcing documentation-first approach |
+| **Architecture Status** | New section documenting freeze policy |
+| **Architecture Summary** | New closing section |
+```
