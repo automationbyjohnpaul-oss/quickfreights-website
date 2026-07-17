@@ -262,3 +262,16 @@ All Back Office pages are protected:
 ---
 
 **Document Status:** Planning (V1.0)
+Phase 1 — Infrastructure
+
+Session 1.1 — Backend & Frontend Infrastructure
+Status: ✅ Completed
+
+Completed:
+
+- config.js (frontend SSOT)
+- api.js (generic API client)
+- Auth.gs (backend auth, corrected)
+- auth.js (frontend auth)
+- Main.gs (routing separated)
+- Dashboard.gs (placeholder)

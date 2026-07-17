@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Back Office Login | Quick Freights Global Limited</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" type="image/svg+xml" href="../website/icons/favicon.svg" />
+  </head>
+  <body class="login-page">
+    <div class="login-container">
+      <div class="logo">
+        <h1>Quick <span class="gold">Freights</span></h1>
+        <p>Back Office Login</p>
+      </div>
+
+      <!-- Error message -->
+      <div id="loginError" class="login-error"></div>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="loginBtn">
+          <span class="btn-text">Log In</span>
+          <span class="spinner spinner-sm" style="display: none"></span>
+        </button>
+      </form>
+
+      <div class="divider">Quick Freights Global Limited</div>
+      <p
+        style="
+          text-align: center;
+          font-size: var(--font-size-xs);
+          color: var(--grey-400);
+          margin: 0;
+        "
+      >
+        RC: 8106184
+      </p>
+    </div>
+
+    <!-- Load modules -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+      (function () {
+        "use strict";
+
+        const form = document.getElementById("loginForm");
+        const passwordInput = document.getElementById("password");
+        const loginBtn = document.getElementById("loginBtn");
+        const btnText = loginBtn.querySelector(".btn-text");
+        const spinner = loginBtn.querySelector(".spinner");
+        const errorEl = document.getElementById("loginError");
+
+        // If already authenticated, redirect to dashboard
+        if (Auth.isAuthenticated()) {
+          window.location.href = "index.html";
+          return;
+        }
+
+        function setLoading(loading) {
+          if (loading) {
+            loginBtn.disabled = true;
+            btnText.textContent = "Logging in...";
+            spinner.style.display = "inline-block";
+          } else {
+            loginBtn.disabled = false;
+            btnText.textContent = "Log In";
+            spinner.style.display = "none";
+          }
+        }
+
+        function showError(msg) {
+          errorEl.textContent = msg;
+          errorEl.classList.add("active");
+          setTimeout(function () {
+            errorEl.classList.remove("active");
+          }, 5000);
+        }
+
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const password = passwordInput.value.trim();
+          if (!password) {
+            showError("Please enter your password.");
+            return;
+          }
+
+          setLoading(true);
+          try {
+            const result = await Auth.login(password);
+            if (result.success) {
+              window.location.href = "index.html";
+            } else {
+              showError(
+                result.message || "Invalid password. Please try again.",
+              );
+              passwordInput.value = "";
+              passwordInput.focus();
+            }
+          } catch (error) {
+            showError(error.message || "An unexpected error occurred.");
+          } finally {
+            setLoading(false);
+          }
+        });
+
+        // Enter key submits
+        passwordInput.addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            form.dispatchEvent(new Event("submit"));
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

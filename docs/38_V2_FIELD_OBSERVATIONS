@@ -1,0 +1,55 @@
+# 38 — V2 FIELD OBSERVATIONS
+
+## Quick Freights Global Limited Platform
+
+**Document Version:** 1.0
+**Status:** Active
+**Created:** July 2026
+**Purpose:** Bridge document between V2 operations and future V3 development
+
+---
+
+## Purpose
+
+This document captures real operational patterns observed during V2 production use.
+
+Each observation becomes a verified requirement for V3 development, replacing assumptions with evidence.
+
+---
+
+## Observation Log
+
+| #   | Date | Observation | Impact | Proposed V3 Improvement | Priority |
+| --- | ---- | ----------- | ------ | ----------------------- | -------- |
+| —   | —    | —           | —      | —                       | —        |
+
+---
+
+## How to Use This Document
+
+1. During daily V2 operations, note any friction, repeated actions, or manual work.
+2. Record each observation in the log above.
+3. After sufficient data is collected (30–90 days), review before resuming V3 development.
+4. Use observations to adjust the V3 roadmap in `39_V3_REVIEW_AND_REVISIONS.md`.
+
+---
+
+## Example Entries
+
+| #   | Date       | Observation                                            | Impact | Proposed V3 Improvement                           | Priority |
+| --- | ---------- | ------------------------------------------------------ | ------ | ------------------------------------------------- | -------- |
+| 1   | 2026-08-02 | Staff always search by BL Reference first              | Medium | Make BL search the default in Shipment Operations | High     |
+| 2   | 2026-08-05 | Customers call after Customs Hold with no notification | High   | Add "Customs Hold" status with SMS template       | High     |
+| 3   | 2026-08-08 | Manager compiles daily summary manually (45 min)       | High   | Auto-generate daily summary report                | Medium   |
+
+---
+
+## Related Documents
+
+- 31_V3_ROADMAP.md
+- 36_V3_BACK_OFFICE_BUILD_LOG.md
+- 39_V3_REVIEW_AND_REVISIONS.md (reserved)
+
+---
+
+**Document Status:** Active (V1.0)
