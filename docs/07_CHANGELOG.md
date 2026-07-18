@@ -342,4 +342,26 @@ Established performance instrumentation for future optimisation.
 
 ---
 
-**End of Changelog**
+## [1.2.0] - 2026-07-18
+
+### Added
+
+- **Premium SVG Icon System** (see `40_FRONTEND_ICON_STANDARD.md`)
+  - 26 minimal icons across 6 categories (status, logistics, forms, security, core, brand)
+  - All icons use `currentColor` and `viewBox="0 0 24 24"`, CSS-driven colors
+  - Dedicated `css/icons.css` with reusable wrappers, sizing, and animations
+  - Favicon migrated to `assets/icons/brand/favicon.svg` and linked across all pages
+- **Premium Trust Bar** on `index.html`, `about.html`, and `track.html`
+  - Self‑contained navy/gold checkmark icons replace old text-based checks
+  - SSOT typography in `styles.css` ensures consistent white/soft‑white text hierarchy
+
+### Changed
+
+- `track.html`: replaced emoji (✅/❌) with premium SVG success/error icons; added submit button arrow
+- `index.html`, `about.html`: replaced trust bar checkmarks with premium SVG icons
+- `styles.css`: simplified `.trust-check` to flexbox only; added trust bar typography block
+
+### Fixed
+
+- Trust bar text contrast restored on navy background
+  **End of Changelog**
